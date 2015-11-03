@@ -1,0 +1,183 @@
+body
+{
+  font-family:"AvenirLTStd-Roman";
+  color:#333333;
+  font-size:15px;
+  margin:0;
+  padding:0;
+  background-color:#fcfaf7;
+}
+
+input[type='text']
+{
+  font-size: 15px;
+  font-family:"AvenirLTStd-Roman";
+  font-weight:lighter;
+}
+
+input[type='password']
+{
+  font-size: 15px;
+  font-family:"AvenirLTStd-Roman";
+  font-weight:lighter;
+}
+
+/*--LOGIN---*/
+
+#login_box
+{
+  background-color:white;
+  padding:10px;
+}
+
+#parent
+{
+  display:table;
+  height:500px;
+  width:100%;
+}
+
+#child
+{
+  display:table-cell;
+  vertical-align:middle;
+}
+
+/*---TEMPLATE----*/
+
+#overall_table
+{
+  height:100%;
+  width:100%;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:0px;
+  padding:0px;
+  border-collapse: collapse;
+}
+
+#overall_table td
+{
+  padding:0;
+  margin:0;
+}
+
+#overall
+{
+  padding:0;
+  margin:0;
+}
+
+#top_bar, #side_bar_support, #side_bar_login, #side_bar_sign_up
+{
+  display:inline-block;
+  background-color:#3d3d3e;
+  color:white;
+  height:34px;
+  vertical-align:middle;
+  line-height:34px;
+  padding:0;
+  margin:0;
+}
+
+#top_bar
+{
+  width:83%;
+  text-align:left;
+}
+
+#side_bar_support
+{
+  width:7%;
+}
+
+#side_bar_login
+{
+      width:5%;
+}
+
+#side_bar_sign_up
+{
+  width:5%;
+}.hrf
+{
+    color:white;
+    text-decoration:none;
+}
+
+/*---Index--*/
+
+#logo
+{
+  width:200px;
+  height:200px;
+  margin:0 auto;
+  text-align:center;
+  background-color:white;
+}
+
+#desc
+{
+  width:300px;
+  height:100px;
+  text-align:center;
+  margin:0 auto;
+  background-color:white;
+}.box{
+  display:inline-block;
+  width:70px;
+}
+
+/*--Sign up-*/
+
+.emerald-flat-button
+{
+  isplay:inline-block;
+  position: relative;
+  vertical-align: top;
+  width: 50%;
+  height: 40px;
+  padding: 0;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #2ecc71;
+  order: 0;
+  border-bottom: 2px solid #28be68;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #28be68;
+  box-shadow: inset 0 -2px #28be68;
+  margin:0px;
+}
+
+/*-LINKS-*/
+/* unvisited link */
+a:link
+{
+  color: #2dce76;
+}
+
+/* visited link */
+
+a:visited
+{
+  color: #2dce76;
+}
+
+/* mouse over link */
+
+a:hover
+{
+  color: #2dce76;
+}
+
+/* selected link */
+
+a:active
+{
+  color: #2dce76;
+}

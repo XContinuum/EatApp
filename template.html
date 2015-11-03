@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EatApp</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <?php echo $head_param;?>
+</head>
+<body onLoad="initiate()">
+
+    <!-- NOT LOGGED IN -->
+
+    <!-- User panel -->
+
+    <table id="overall_table">
+
+      <tr style="height: 30px;">
+        <td>
+          <div id="overall"
+            ><div id="top_bar" align="center"><a href="index.php" class="hrf">EatApp</a></div
+            ><div id="side_bar_support"><a href="support.php" class="hrf">Support</a></div
+            ><div id="side_bar_login"><a href="login.php" class="hrf">Login</a></div
+            ><div id="side_bar_sign_up"><a href="sign_up.php" class="hrf">Sign up</a></div>
+          </div>
+        <td>
+      </tr>
+
+      <!-- Content -->
+
+      <tr style="height: 80%;">
+        <td valign="top">
+          <?php echo $content; ?>
+        </td>
+      </tr>
+
+      <!-- Terms of use -->
+
+      <tr style="height:10px;">
+        <td align="center" valign="top">
+          <div class="box">Terms</div>
+          <div class="box">Privacy</div>
+          <div class="box">Legal</div>
+          <div class="box">Support</div>
+        </td>
+      </tr>
+
+    <table>
+
+    <!-- NOT LOGGED IN -->
+
+</body>
+</html>

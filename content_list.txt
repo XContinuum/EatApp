@@ -1,0 +1,7 @@
+{ "List" :
+[{"Type":"Meat"},
+{"Type":"Vegan"},
+{"Type":"Contains peanut"},
+{"Type":"Peanut free"},
+{"Type":"Halal product"}
+]}

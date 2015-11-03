@@ -1,0 +1,98 @@
+<!-- Sign up form-->
+<div id="parent">
+<div id="child">
+<table align=center style="background-color:white;padding:10px;">
+    <tr>
+      <td align=center colspan=2>
+        <span style="font-size:20px;"><b>Sign up</b></span>
+      </td>
+    </tr>
+
+    <form action="requests/sign_up_request.php" method="post">
+        <tr>
+          <td>Email:</td>
+          <td>
+            <input type="text" value="" name="FA_Email" id="check_email"></input>
+            <span id="user-result"></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Password:</td>
+          <td>
+            <input type="password" name="FA_Password" onkeyup="checkPasswords()"></input>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Confirm password:</td>
+          <td><input type="password" name="FA_Confirm_Password" onkeyup="checkPasswords()"></input>
+          </td>   
+        </tr>
+
+        <tr>
+          <td>Restaurant name:</td>
+          <td>
+          <input type="text" value="" name="FA_Restaurant_Name"></input>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan=2 align=center><b>Location</b>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Country:</td>
+          <td>
+            <div id="country_list"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>State/Province:</td>
+          <td>
+            <input type="text" value="Ontario" name="FA_State_Province"></input>
+          </td>
+        </tr>
+
+        <tr>
+          <td>City:</td>
+          <td> <input type="text" value="Ottawa" name="FA_City"></input>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Postal code:</td>
+          <td> <input type="text" value="" name="FA_Postal_Code"> </input>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Adress:</td>
+          <td> <input type="text" value="" name="FA_Adress"> </input>
+        </tr></td>
+
+        <tr>
+          <td>Postal code:</td>
+          <td> <input type="text" value="" name="FA_Postal_Code"> </input> </tr></td>
+
+
+        <tr>
+          <td colspan=2>&#160;</td>
+        </tr>
+
+        <tr>
+            <td colspan=2 style="font-size:14px;"> I agree to the <a href="#">Terms of Service</a> and
+            <a href="#">Privacy Policy</a></td>
+        </tr>   
+
+        <tr>
+          <td align="center" colspan=2>
+            <input type="button" value="Login" class="emerald-flat-button" style="border-right:2px solid #28be68;"></input><input type="submit" value="Sign up" id="sign_up_button" name="sign_up_button" class="emerald-flat-button"></input>
+          </td>
+        </tr>   
+    </form>
+</table>
+</div>
+</div>
