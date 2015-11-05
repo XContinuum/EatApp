@@ -7,12 +7,14 @@
     //Collect data
     $FA_Email=$_POST['FA_Email'];
     $FA_Password=$_POST['FA_Password'];
+    $FA_Username=$_POST['FA_Username'];
     $FA_Confirm_Password=$_POST['FA_Confirm_Password'];
     $FA_Restaurant_Name=$_POST['FA_Restaurant_Name'];
 
-    $FA_Country=$_POST['FA_Password'];
+    $FA_Country=$_POST['FA_Country'];
     $FA_State_Province=$_POST['FA_State_Province'];
     $FA_City=$_POST['FA_City'];
+    $FA_Address=$_POST['FA_Address'];
     $FA_Postal_Code=$_POST['FA_Postal_Code'];
 
     //Registration
@@ -21,20 +23,20 @@
     if ($FA_Password!=$FA_Confirm_Password)
     {
         $register=false;
-        echo "Passwords not the same!";
+       // echo "Passwords not the same!";
     }
     else
     if (strlen($FA_Password)<6)
     {
         $register=false;
-        echo "Password has to be at least 6 characters!";
+       // echo "Password has to be at least 6 characters!";
     }
 
     if ($register==true)
     {
     $hash=PassHash::hash($FA_Password);
 
-    $sql = "INSERT INTO FA_RESTORANTS (FA_Email, FA_Pass) VALUES ('$FA_Email', '$hash')";
+    $sql = "INSERT INTO FA_RESTORANTS (FA_Email,FA_Pass,FA_Username,FA_Restaurant_Name, FA_Country,FA_State_Province,FA_City,FA_Address,FA_Postal_Code) VALUES ('$FA_Email', '$hash','$FA_Username','$FA_Restaurant_Name','$FA_Country','$FA_State_Province','$FA_City','$FA_Address','$FA_Postal_Code')";
 
     if (mysqli_query($conn, $sql))
     {
@@ -64,8 +66,7 @@
     else
     {
         //error
-        //echo "<script> location.replace('../sign_up.php'); </script>";
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "<script> location.replace('../sign_up.php'); </script>";
     }
     }
 

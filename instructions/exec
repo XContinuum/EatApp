@@ -4,6 +4,6 @@
 #
 
 echo "Please enter MySQL root password"
-mysql -u root -p -e "$(< query.sql)"
+mysql -u root -p -e "$(< $1)"
 
 echo -e "\nTables in the database were created!\n"

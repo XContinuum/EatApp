@@ -1,0 +1,57 @@
+<table align=center style="background-color:white;padding:10px;display:none;" id="menu_table">
+
+<!-- Header -->
+
+<tr>
+    <td width=20px>#</td>
+    <td width=100px>Meal/drink name</td>
+    <td width=140px>Price</td>
+    <td>General description</td>
+    <td>Upload picture</td>
+    <td width=100px>Contents (optional)</td>
+</tr>
+
+<!-- First row -->
+
+<tr>
+  <td>1</td>
+
+  <td>
+  <input type="text" name="Product_name_1">
+  </input>
+  </td>
+
+  <td>
+    <input type="text" style="width:60px;" name="Price_1"></input>
+    <select>
+      <option value="CAD" select>CAD</option>
+      <option value="USD">USD</option>
+    </select>
+  </td>
+
+  <td>
+  <input type="text" name="Description_1"></input>
+  </td>
+
+  <td>
+    <input type="button" value="upload picture"></input>
+  </td>
+
+  <td id="food_contents"></td>
+</tr>
+
+<!--Last row - Parameters-->
+
+  <tr>
+    <td colspan=6>
+    <div style="display:inline-block;width:33%;text-align:center;" onClick="addRow()">Add</div>
+    <div style="display:inline-block;width:33%;text-align:center;">
+      <input type="submit" value="save" name="save_menu_btn"></input>
+    </div>
+    </td>
+  </tr>
+</table>
+
+<input type="hidden" name="Row_Count" value="1" id="Row_Count"></input>
+
+<!--Last row - Parameters-->
