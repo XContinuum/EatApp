@@ -7,7 +7,8 @@
   else
   {
     require('requests/load_menu.php');
-    require('requests/get_restaurant_id.php');
+    require('requests/get_restaurant_id.php');
+
     $restaurant_id=get_restaurant_id();
     $menu=LoadMenu($restaurant_id);        
     ob_start();

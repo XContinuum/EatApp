@@ -7,34 +7,38 @@
         $price=array();
         $desc=array();
         $contents=array();
-        $sections=$_POST["FA_Sections"];
+        $sections=explode('.', $_POST["FA_Sections_order"]);
         $section_name=array();
 
         $final_query = "";
 
-        session_start();
+        //ASSEMBLE SECTIONS INTO AN ARRAY
+        array_pop($sections);
 
+        for($k=0;$k<count($sections);$k++)
+        {
+            $section_name[]=$_POST["Section_".$k];
+        }
+
+        //Get restaurant ID
+        session_start();
         $sql = "SELECT ID FROM FA_RESTORANTS WHERE FA_Token='".$_SESSION['token']."'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
-
-        //ASSEMBLE SECTIONS INTO AN ARRAY
-        for ($i=0;$i<count($sections);$i++)
-        {
-          $section_name.push($_POST["Section_".$i]);
-        }
-        //---
+        //----
 
         for ($i=0;$i<$_POST["Row_Count"];$i++)
         {
             //Divide into sections+++
             $section="none";
+            $stop=0;
 
-            for ($j=0;$j<count($sections);$j++)
+            for ($j=count($sections)-1;$j>=0;$j--)
             {
-                if ($i<($sections[j]-1))
+                if ($i>($sections[$j]-2) && $stop==0)
                 {
-                    $section=$section_name[j];
+                   $section=$section_name[$j];
+                   $stop=1;
                 }
             }
             //Divide into sections---
@@ -54,13 +58,13 @@
                 $str.=$selectedOption.".";
             }
 
-            echo $product[$i]." ".$price[$i]." ".$desc[$i]." ".$contents[$i][0];
-            echo "<br>";
 
             $final_query.="('".$row['ID']."','".($i+1)."','".$product[$i]."','".$price[$i]."','".$desc[$i]."','".$str."','".$section."')";
         }
 
         $sql="INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section) VALUES ".$final_query;
+
+        echo $final_query;
         mysqli_query($conn,$sql);
 
         echo "<script> location.replace('../setup_menu.php'); </script>";

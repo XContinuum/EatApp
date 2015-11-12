@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EatApp</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src='script.js'></script>
+    <?php echo $head_param; ?>
+</head>
+<body onLoad="initiate()">
+
+<!-- Top bar -->
+
+<table id="overall_table" border='0'>
+
+        <tr height="80px">
+            <td valign="top" style="background-color:#87c9ef;" colspan="3" align="right">
+            <a href="index.php" class="hrf"><img src="small_logo.png" style="float:left;"></a>
+            <div id="side_bar_home" class="highlighted" onmouseover="highlightMenu(this)">
+            <a href="index.php" class="hrf">Home</a></div>
+            <div id="side_bar_login" onmouseover="highlightMenu(this)"><a href="login.php" class="hrf">Login</a></div>
+            <div id="side_bar_sign_up" onmouseover="highlightMenu(this)"><a href="sign_up.php" class="hrf">Sign up</a></div>
+            <br><br>
+            </td>
+        </tr>
+
+        <!-- Content -->
+
+        <tr>
+          <td width="250px"></td>
+          <td valign="top" style="background-color:white;padding:10px;">
+          <div id="content">    <?php echo $content; ?>
+          </div></td>
+          <td width="250px"></td>
+        </tr>
+
+        <!-- Terms of use -->
+
+        <tr style="height:10px;">
+          <td align="center" height="10px" valign="top" colspan="3" style="font-size:17px;color:#babdc6;padding:6px;background-color:white;border-top:solid 1px #d2d7dc;">
+          <div class="box">Terms</div>    <div class="box">Support</div>
+          <div class="box">Contact</div>
+          </td>
+        </tr>
+</table>
+
+</body>
+</html>

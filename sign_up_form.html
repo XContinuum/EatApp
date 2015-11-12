@@ -4,31 +4,27 @@
 <div id="child">
 <form action="requests/sign_up_request.php" method="post">
 
-      <!-- Sign up -->
+      <!-- Sign up -->
 
-      <table align=center style="background-color:white;padding:10px;width:400px;" id="sign_up_table">
-            <tr>
-              <td align=center colspan=2><span style="font-size:20px;"><b>Sign up</b></span></td>
-            </tr>
+      <table align=center style="background-color:white;padding:10px;width:400px;" id="sign_up_table">
+            <tr><td align=center colspan=2><span style="font-size:20px;"><b>Sign up</b></span></td></tr>
 
             <!--Error msg-->
 
-            <tr>
-              <td colspan='2'><div id="error_box" style="color:#e5473c;"></div></td>
-            </tr>
+            <tr><td colspan='2'><div id="error_box" style="color:#e5473c;"></div></td></tr>
 
             <!--Error msg-->
 
             <tr>
               <td>Email:</td>
-              <td> <input type="text" value="" name="FA_Email" id="check_email"></input> <div id="user-result" style="display:inline-block;margin:0;padding:0;vertical-align: middle;"></div></td>
+              <td> <input type="text" value="" name="FA_Email" id="check_email">
+              </input> <div id="user-result" style="display:inline-block;margin:0;padding:0;vertical-align: middle;"></div></td>
             </tr>
-        
-            <tr>
+
+            <tr>
               <td>Username</td>
               <td> <input type="text" value="" name="FA_Username" id="check_username"></input>
-                  <div id="username-result" style="display:inline-block;margin:0;padding:0;vertical-align: middle;">
-                  </div>
+                  <div id="username-result" style="display:inline-block;margin:0;padding:0;vertical-align: middle;"></div>
               </td>
             </tr>
 
@@ -40,33 +36,33 @@
             <tr>
               <td>Confirm password:</td>
               <td><input type="password" name="FA_Confirm_Password" onkeyup="checkPasswords()"></input></td>
-            </tr>
-
+            </tr>
+              
             <tr>
               <td>Restaurant name:</td>
-              <td><input type="text" value="" name="FA_Restaurant_Name" id="restaurant_name" onkeyup="checkRestaurantName(this)"></input> </td>
+              <td><input type="text" value="" name="FA_Restaurant_Name" id="restaurant_name" onkeyup="checkRestaurantName(this)"></input></td>
             </tr>  
 
             <tr>
               <td colspan=2 style="font-size:14px;">
-                <label>
-                  <input type="checkbox" name="agreement" id="Agreement_checkbox" value="ch" onclick="OnChangeCheckbox(this)">
-                  I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                </label>
-              </td>
-            </tr>
-
-            <tr>
-              <td align="center" colspan=2><input type="button" value="Login" class="emerald-flat-button" style="border-right:2px solid #28be68;"></input><input type="button" value="Next" id="next_location" onclick="toggleTable();" class="emerald-flat-button"></input>
+              <label>
+              <input type="checkbox" name="agreement" id="Agreement_checkbox" value="ch" onclick="OnChangeCheckbox(this)">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
               </td>
             </tr>
-      </table>
 
 
-      <!--Location-->
+            <tr>
+              <td align="center" colspan=2><input type="button" value="Login" class="emerald-flat-button" style="border-right:2px solid #28be68;"></input
+                ><input type="button" value="Next" id="next_location" onclick="toggleTable();" class="emerald-flat-button"></input>
+              </td>
+            </tr>
 
-      <table align=center style="background-color:white;padding:10px;display:none;" id="sign_up_location_table">
-            <tr><td colspan=2 align=center><span style="font-size:20px;"><b>Location</b></span></td></tr>
+      </table>
+
+      <!--Location-->
+
+      <table align=center style="background-color:white;padding:10px;display:none;" id="sign_up_location_table">
+            <tr><td colspan=2 align=center><span style="font-size:20px;"><b>Location</b></span></td></tr>
 
             <!--Error msg-->
 
@@ -81,11 +77,12 @@
             <tr><td>Postal code:</td><td> <input type="text" onkeyup="Check_postal_code(this)" value="" name="FA_Postal_Code"> </input> </td></tr>
 
             <tr>
-              <td align="center" colspan=2>
-                <input type="submit" name="sign_up_button" value="Next" id="finalize_sign_up" class="emerald-flat-button" disabled="true" ></input>
-              </td>
+            <td align="center" colspan=2>
+            <input type="submit" name="sign_up_button" value="Next" id="finalize_sign_up" class="emerald-flat-button" disabled="true" ></input>
+            </td>
             </tr>
-      </table>
+
+      </table>
 
       <!--Location-->
 

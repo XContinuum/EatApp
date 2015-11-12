@@ -1,12 +1,17 @@
 <?php
   session_start();
-
   if (!isset($_SESSION['token']))
   {
     header("Location: index.php");
   }
   else
   {
+    //Load menu+++
+    require('requests/load_menu.php');
+    require('requests/get_restaurant_id.php');
+    $restaurant_id=get_restaurant_id();    $menu=FillMenuBlanks($restaurant_id);
+    //LOad menu---
+
     ob_start();
     require_once('setup_menu_form.html');
     $content = ob_get_clean();

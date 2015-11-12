@@ -10,7 +10,7 @@
     ob_start();
     require_once($page);
     $content = ob_get_clean();
-    $head_param.= "<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>";
+    $head_param .= "<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>";
     $head_param.= "<script src='jquery_functions.js'></script>";
     include("template.html");
   }

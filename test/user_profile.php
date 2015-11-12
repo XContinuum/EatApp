@@ -1,8 +1,7 @@
 <?php
    if (isset($_GET['username']))
-   {
-      echo $_GET['username'];
-   }
-
-   echo "lol";
+    {
+        echo $_GET['username'];
+    }
+    echo "lol";
 ?>

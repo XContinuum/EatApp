@@ -1,5 +1,5 @@
 body
-{
+{
   font-family:"AvenirLTStd-Roman";
   color:#333333;
   font-size:15px;
@@ -8,17 +8,17 @@ body
   background-color:#fcfaf7;
 }
 
-input[type='password'], input[type='text']
+input[type='password'], input[type='text']
 {
   font-size: 15px;
   font-family:"AvenirLTStd-Roman";
   font-weight:lighter;
 }
 
-input[type='password']:focus, input[type='text']:focus
-{
-   outline: none;
- }
+input[type='password']:focus, input[type='text']:focus
+{
+  outline: none;
+}
 
 #parent
 {
@@ -33,7 +33,7 @@ input[type='password']:focus, input[type='text']:focus
   vertical-align:middle;
 }
 
-/*---TEMPLATE----*/
+/*---TEMPLATE----*/
 
 #overall_table
 {
@@ -56,14 +56,14 @@ input[type='password']:focus, input[type='text']:focus
 }
 
 #overall
-{
+{
   padding:0;
   margin:0;
-}
+}
 
-#top_bar, #side_bar_support, #side_bar_settings, #side_bar_log_out,#side_bar_profile
-{
-  display:inline-block;
+#top_bar, #side_bar_support, #side_bar_settings, #side_bar_log_out,#side_bar_profile
+{
+  display:inline-block;
   background-color:#3d3d3e;
   color:white;
   height:34px;
@@ -73,24 +73,24 @@ input[type='password']:focus, input[type='text']:focus
   margin:0;
 }
 
-#top_bar
-{
+#top_bar
+{
   width:76%;
   text-align:left;
 }
 
-#side_bar_support
+#side_bar_support
 {
   width:7%;
 }
 
-#side_bar_settings
-{
+#side_bar_settings
+{
   width:7%;
-}
+}
 
 #side_bar_log_out
-{
+{
   width:5%;
 }
 
@@ -103,10 +103,9 @@ input[type='password']:focus, input[type='text']:focus
   text-decoration:none;
 }
 
-/*---Index--*/
-
-#logo
-{
+/*---Index--*/
+#logo
+{
   width:200px;
   height:200px;
   margin:0 auto;
@@ -114,47 +113,46 @@ input[type='password']:focus, input[type='text']:focus
   background-color:white;
 }
 
-#desc
+#desc
 {
-  width:300px;
+  width:300px;
   height:100px;
   text-align:center;
   margin:0 auto;
   background-color:white;
-}.box
+}.box
 {
   display:inline-block;
   width:70px;
 }
 
-/*-LINKS-*/
-
+/*-LINKS-*/
 /* unvisited link */
 a:link
 {
   color: #2dce76;
-}
+}
 
-/* visited link */
+/* visited link */
 a:visited
 {
   color: #2dce76;
 }
 
 /* mouse over link */
-a:hover
+a:hover
 {
   color: #2dce76;
 }
 
 /* selected link */
-a:active
+a:active
 {
   color: #2dce76;
 }
 
-/*FEATURED STYLES*/
-.select-style
+/*FEATURED STYLES*/
+.select-style
 {
   display:inline-block;
   padding: 2px;
@@ -165,7 +163,9 @@ a:active
   overflow: hidden;
   background-color: #fff;
   background: #fff url("images/arrow.png") no-repeat 45px 50%;
-}.select-style select
+}
+
+.select-style select
 {
   font-size: 14px;
   font-family:"AvenirLTStd-Roman";
@@ -179,13 +179,13 @@ a:active
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-}.select-style select:focus
-{
+}.select-style select:focus
+{
   outline: none;
 }
 
 input[type=button],input[type=submit], input[type=text]
-{
+{
   color:#4a5d6f;
   font-family:"AvenirLTStd-Light";
   font-size:15px;
@@ -209,4 +209,4 @@ a:active
 input[type=button]:focus,input[type=submit]:focus
 {
   outline: none;
-}
+}

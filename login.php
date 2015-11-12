@@ -16,4 +16,4 @@
     $content = ob_get_clean();
     include("template.html");
   }
-?>
+?>

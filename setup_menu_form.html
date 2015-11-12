@@ -1,50 +1,61 @@
 <div id="parent">
-<div id="child">        
-<form action="requests/save_menu.php" method="POST">
-      <table align=center style="background-color:white;padding:10px;" id="menu_table">
+<div id="child">
+<form action="requests/save_menu.php" method="POST">
+<table align=center style="background-color:white;padding:10px;" id="menu_table">
 
-            <!-- Header -->
+      <!-- Header -->
 
-            <tr>
-                <td width=20px>#</td>
-                <td align='center'>Picture</td>
-                <td align='center'>Meal/drink name</td>
-                <td align='center'>Price</td>
-                <td align='center'>General description</td>
-                <td align='center'>Content</td>
-                <td></td>
-            </tr>
+      <tr>
+        <td width=20px>#</td>
+        <td align='center'>Picture</td>
+        <td align='center'>Meal/drink name</td>    <td align='center'>Price</td>
+        <td align='center'>General description</td>
+        <td align='center'>Content</td>
+        <td></td>
+      </tr>
 
-            <!-- First row -->
+      <!-- First row -->
 
-            <tr>
-                  <td>1</td><td><img src="images/upload_picture.png"></td><td>
-                  <input type="text" name="Product_name_1"></input></td><td>
-                  <input type="text" style="width:60px;" name="Price_1"></input>
-                  <div class="select-style"><select>    <option value="CAD" select>CAD</option>    <option value="USD">USD</option></select></div>
-                  </td><td><input type="text" name="Description_1"></input>
-                  </td><td id="food_contents"></td><td>
-                  <a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a></td>
-            </tr>
+      <!--
+      <tr>
+        <td>1</td>
+        <td><img src="images/upload_picture.png"></td>
+        <td><input type="text" name="Product_name_1"></input></td>
 
-            <!-- First row -->
+        <td>
+            <input type="text" style="width:60px;" name="Price_1">
+            </input><div class="select-style"><select>
+            <option value="CAD" select>CAD</option>
+            <option value="USD">USD</option></select></div>
+        </td>
 
-            <!--Last row - Parameters-->
+        <td><input type="text" name="Description_1"></input></td>
+        <td id="food_contents"></td>
+        <td><a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a></td>
+      </tr>
+      -->
 
-            <tr>
-                  <td colspan=7><div style="display:inline-block;width:30%;text-align:center;" onClick="addRow()">
-                  <img src="images/add_row.png"></div><div style="display:inline-block;width:30%;text-align:center;" onClick="addSection()">
-                  <img src="images/add_section.png"></div><div style="display:inline-block;width:30%;text-align:center;">
-                  <input type="submit" value="save menu" name="save_menu_btn"></input></div>
-                  </td>
-            </tr>
-      </table>
+      <!-- First row -->
 
-      <input type="hidden" name="Row_Count" value="1" id="Row_Count"></input>
-      <select id="FA_Sections" multiple></select>
+      <?php echo $menu; ?>
+
+      <!--Last row - Parameters-->
+
+      <tr>
+        <td colspan=7>
+        <div style="display:inline-block;width:30%;text-align:center;" onClick="addRow()">
+        <img src="images/add_row.png"></div><div style="display:inline-block;width:30%;text-align:center;" onClick="addSection()">
+        <img src="images/add_section.png"></div><div style="display:inline-block;width:30%;text-align:center;">
+        <input type="submit" value="save menu" name="save_menu_btn"></input>
+        </div></td>
+      </tr>
+</table>
+
+<input type="text" name="Row_Count" value="1" id="Row_Count"></input>
+<input type="text" name="FA_Sections_order" value="" id="FA_Sections"></input>
 </form>
 
-<!--Last row - Parameters-->
+<!--Last row - Parameters-->
 
 </div>
 </div>

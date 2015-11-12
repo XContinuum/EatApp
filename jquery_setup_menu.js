@@ -2,13 +2,13 @@ $(document).ready(
   function()
   {
     $(".js-example-basic-multiple").select2();
+    moveRows();
   }
 );
 
-
 var obj;
-function readTextFile(file)
-{
+function readTextFile(file)
+{
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", file, false);
   xhttp.send();
@@ -16,12 +16,11 @@ function readTextFile(file)
 }
 
 function initiate()
-{
+{
   //Load list of countries
   var text=readTextFile("content_list.txt");
   obj=JSON.parse(text);
   var string="<select name='Food_Contents_1[]' class='js-example-basic-multiple' multiple='multiple' style='width:200px;border:0px;'>";
-
   for (i=0;i<obj.List.length;i++)
   {
     var type=obj.List[i].Type;
@@ -37,14 +36,14 @@ function readTextFile(file)
   $(".js-example-basic-multiple").select2();
 }
 
-var section=0;
+var section=0;
 var order=1;
-var sections=[];
+var sections=[];
 
 function moveRows()
 {
-  //Move rows
-  $('.up,.down').unbind('click').bind('click',
+  //Move rows
+  $('.up,.down').unbind('click').bind('click',
     function(e)
     {
       var row = $(this).parents("tr:first");
@@ -62,49 +61,55 @@ var order=1;
         row.insertAfter(row.next());
       }
 
-      //Iterate through all first cells in each row
-      $('#FA_Sections').find('option').remove().end();
 
-      //Delete all options+++
+      //Iterate through all first cells in each row
+      document.getElementById('FA_Sections').value='';
       var skip=0;
       sections=[];
-      
-      //Parse throught the table and rename first cell to adjust movement of rows
-      $('#menu_table').find('tr').each(function(i, el)
-      {
-        if ($(el).index()<order+section+1 && $(el).index()>0)
-        {
-          if ($(el).find('td').eq(0).attr('colspan')!=7)
-          {
-            /*            ADJUST NAMES TO SEND CORRECT ORDER TO PHP FILE            */
-            $(el).find("input[name^='Product_name_']").attr('name','Product_name_'+(i-skip));
-            $(el).find("input[name^='Price_']").attr('name','Price_'+(i-skip));
-            $(el).find("input[name^='Description_']").attr('name','Description_'+(i-skip));
-            $(el).find("input[name^='Food_Contents_']").attr('name','Food_Contents_'+(i-skip));
-            $(el).find('td').eq(0).html(i-skip);
-          }
-          else
-          {
-            var add_index=sections.length;
-            skip++;
-            sections.push(i);
-            //Adjust the index of sections+++
-            $('#FA_Sections').append($('<option>', {value: "section"+i,text: i-add_index}));
-          }
-        }
-      });
-      //-----
-   });
-}
 
-function addRow()
+      //Parse throught the table and rename first cell to adjust movement of rows
+      var count=0;
+      $('#menu_table').find('tr').each(
+        function(i, el)
+        {
+          if ($(el).index()<order+section+1 && $(el).index()>0)
+          {
+            if ($(el).find('td').eq(0).attr('colspan')!=7)
+            {
+               /*            ADJUST NAMES TO SEND CORRECT ORDER TO PHP FILE            */
+               $(el).find("input[name^='Product_name_']").attr('name','Product_name_'+(i-skip));
+               $(el).find("input[name^='Price_']").attr('name','Price_'+(i-skip));
+               $(el).find("input[name^='Description_']").attr('name','Description_'+(i-skip));
+               $(el).find("input[name^='Food_Contents_']").attr('name','Food_Contents_'+(i-skip));
+               $(el).find('td').eq(0).html(i-skip);
+               count++;
+             }
+            else
+            {
+              var add_index=sections.length;
+              skip++;
+              sections.push(i);
+
+              //Adjust the index of sections+++
+              document.getElementById('FA_Sections').value=document.getElementById('FA_Sections').value+(i-add_index)+'.';
+            }
+          }
+        });
+
+
+      $("input[name=Row_Count]").val(count);
+      //-----
+     });
+ }
+
+
+function addRow()
 {
   order++;
-  var x = document.getElementById("menu_table").rows.length;
-  var table = document.getElementById("menu_table");
-
+  var x = document.getElementById("menu_table").rows.length;
+  var table = document.getElementById("menu_table");
   // Create an empty <tr> element and add it to the 1st position of the table:
-  var row = table.insertRow(x-2);
+  var row = table.insertRow(x-2);
 
   // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
   var cell1 = row.insertCell(0);
@@ -113,7 +118,7 @@ var order=1;
   var cell4 = row.insertCell(3);
   var cell5 = row.insertCell(4);
   var cell6 = row.insertCell(5);
-  var cell7 = row.insertCell(6);
+  var cell7 = row.insertCell(6);    
 
   //Add some text to the new cells:
   cell1.innerHTML = order;
@@ -129,29 +134,29 @@ var order=1;
   for (i=0;i<obj.List.length;i++)
   {
     var type=obj.List[i].Type;
-    var final_id=type.replace(/\s+/g, '_').toLowerCase();
+    var final_id=type.replace(/\s+/g, '_').toLowerCase();
     string+="<option value="+final_id+">";
-    string+=type;
-    string+="</option>";
+    string+=type;        string+="</option>";
   }
+
   string+="</select>";
   cell6.innerHTML=string;    
   cell7.innerHTML="<a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a>";
-  //Load food content choices in a select box---
+  //Load food content choices in a select box---
+
   $(".js-example-basic-multiple").select2();
   document.getElementById("Row_Count").value=order;
   moveRows();
 }
 
-
-
 function addSection()
-{
+{
   var x = document.getElementById("menu_table").rows.length;
   var table = document.getElementById("menu_table");
   section++;
   var row = table.insertRow(x-2);
   var cell1 = row.insertCell(0);
+
   cell1.setAttribute("colspan","7");
   cell1.setAttribute("align","center")
   var result="<input type='text' value='Section "+section+"' name='Section_"+(section-1)+"'></input>";
@@ -160,28 +165,21 @@ function addSection()
   document.getElementById("Row_Count").value=x-2;
   //Remove sections
   $('.remove_section').unbind('click').bind('click',
-  function(e)
-  {
-    var row=$(this).parents("tr:first");
-    row.remove();
-    section--;
+    function(e)
+    {
+      var row=$(this).parents("tr:first");
+      row.remove();
+      section--;
+      ReviewSectionIndexing();
+    });
+
     ReviewSectionIndexing();
-  });        
-
-  ReviewSectionIndexing();
-}
-
-
+}
 
 function ReviewSectionIndexing()
 {
-  $('#FA_Sections').find('option').remove().end();
-
-  //Delete all options+++
-  var skip=0;
-  sections=[];
-
-  $('#menu_table').find('tr').each(
+  document.getElementById('FA_Sections').value='';
+  var skip=0;sections=[];$('#menu_table').find('tr').each(
     function(i, el)
     {
       if ($(el).index()<order+section+1 && $(el).index()>0 && $(el).find('td').eq(0).attr('colspan')==7)
@@ -194,7 +192,7 @@ function addSection()
         input.attr('name','Section_'+add_index);
 
         //Adjust the index of sections+++
-        $('#FA_Sections').append($('<option>', {value: "section"+i,text: i-add_index}));
+        document.getElementById('FA_Sections').value=document.getElementById('FA_Sections').value+(i-add_index)+'.';
       }
     });
-}
+}
