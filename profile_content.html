@@ -1,33 +1,50 @@
-<div id="parent">
-<div id="child">
-<table align=center style="background-color:white;padding:10px;">
-      <tr>
-      <td rowspan='2' valign='top'>
+<div>
+    <table align="center" border="0" id="user_table">
+        <!-- Top info-->
+        <tr height="150px">
+            <td width="200px" align="center">
+            <div class="circleBase user_pic"></div>
+            </td>
 
-      <!-- Menu -->
+            <td style="text-align:left;padding-top:20px;" valign="top">
+                <div style="font-size:17px;"><b>Name</b></div>
+                <div>Location</div>
+                <div>Phone number</div>
+                <div>Opening hours</div>
+                <div>Highlights</div>
+                <div>Cost</div>
+            </td>
+        </tr>
+        <!-- Top info-->
+        <tr>
+            <td colspan="2" id="menu_row">
+                <div class="menu_elem">Menu</div><div class="menu_elem">Pictures</div><div class="menu_elem">Reviews</div><div class="menu_elem">Contact</div>
+            </td>
+        </tr>
 
-      <table style="border:1px solid black;">
 
-            <tr>
-            <td width=20px>#</td>
-            <td>Picture</td>
-            <td width=130px>Meal/drink name</td>
-            <td width=90px>Price</td>
-            <td>Description</td>
-            <td width=150px>Contents</td>
-            </tr>
+        <tr style="text-align:right;height:50px;">
+            <td colspan="2">
+            <?php echo $last_modified; ?>
+            </td>
+        </tr>
 
-            <?php echo $menu; ?>
-
-      </table>
-
-      <!-- Menu -->
-
-      <br>
-      <a href="setup_menu.php">Edit menu</a>
-      <?php echo $last_modified; ?>
-      </td>
-      </tr>
-</table>
-</div>
+          <tr>
+            <td colspan='2' valign='top' height="200px">
+                <!-- Menu -->
+                <?php echo $menu; ?>
+                <!-- Menu -->
+                <?php
+                    if($menu!="")
+                    {
+                        echo "<a href='setup_menu.php'>Edit menu</a>";
+                    }
+                    else
+                    {
+                        echo "<a href='setup_menu.php'>Add menu</a>";
+                    }
+                ?>
+            </td>
+        </tr>
+    </table>
 </div>

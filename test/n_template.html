@@ -10,10 +10,10 @@
 <body onLoad="initiate()">
 <!-- Top bar -->
 <table id="overall_table" border='0'>
-<tr height="100px">
+<tr height="80px">
 <td valign="top" style="background-color:#87c9ef;" colspan="3" align="right">
 
-    <a href="index.php" class="hrf"><img src="logo.png" style="float:left;"></a>
+    <a href="index.php" class="hrf"><img src="small_logo.png" style="float:left;"></a>
 
 
     <div id="side_bar_home" class="highlighted" onmouseover="highlightMenu(this)"><a href="index.php" class="hrf">Home</a></div>
@@ -22,23 +22,12 @@
     <br>
     <br>
 
-    <div id="search_box">
-        <br>
-         Search for a restaurant in your area by filling in the maximum price for a drink or food<br>
-        <div id="search_input">
-        <input type="text" value="" placeholder="Search" style="border:none;color:#babdc6;padding:5px;"></input>
-        </div>
-    </div>
-
 </td></tr>
 <!-- Content -->
 <tr>
 <td width="250px"></td>
 <td valign="top" style="background-color:white;padding:10px;">
     <div id="content">
-    <img src="approved.png" style="padding:2px;"> <div style="color:#4a5d6f;padding:7px;">Your current location: Ottawa, ON</div>
-
-    <div id="map"></div>
     <?php echo $content; ?>
     </div>
 </td>
@@ -51,6 +40,8 @@
     <div class="box">Terms</div>
     <div class="box">Support</div>
     <div class="box">Contact</div>
+
+
 
 </td>
 </tr>

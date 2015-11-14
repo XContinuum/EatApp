@@ -32,5 +32,7 @@ CREATE TABLE FA_MENUS (
 
   FA_Section varchar(200),
 
+  FA_Last_Modified date,
+
   FOREIGN KEY (RESTAURANT_ID) REFERENCES FA_RESTORANTS(ID)
 );

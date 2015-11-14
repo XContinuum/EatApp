@@ -7,9 +7,12 @@
         $result = mysqli_query($conn,$sql);
 
         $menu="";
+        $count=0;
 
         while($row = mysqli_fetch_array($result))
         {
+            $count++;
+
             $menu.="<tr>";
             $menu.="<td>".$row['FA_Order']."</td>";
             $menu.="<td></td>";
@@ -23,7 +26,7 @@
             $reslt="";
             for ($i=0;$i<count($contents);$i++)
             {
-            $reslt.=$contents[$i]." ";
+                $reslt.=$contents[$i]." ";
             }
 
             $menu.="<td>".$reslt."</td>";
@@ -33,6 +36,11 @@
         }
 
         mysqli_close($conn);
+
+        if ($count==0)
+        {
+            $menu="0";
+        }
 
         return $menu;
     }

@@ -2,18 +2,17 @@
 <html>
     <head>
         <title>EatApp</title>
-            <link rel="stylesheet" type="text/css" href="style.css">
+            <link rel="stylesheet" type="text/css" href="n_style.css">
             <script src="https://maps.googleapis.com/maps/api/js"></script>
-            <script src='script.js'></script>
-            <?php echo $head_param; ?>
+            <script src='n_script.js'></script>
     </head>
 <body onLoad="initiate()">
 <!-- Top bar -->
 <table id="overall_table" border='0'>
 <tr height="100px">
-<td valign="top" style="background-color:#87c9ef;" colspan="3" align="right">
+<td valign="top" id="top_bar" colspan="3" align="right">
 
-    <a href="index.php" class="hrf"><img src="logo.png" style="float:left;"></a>
+    <a href="index.php" class="hrf"><img src="images/logo.png" style="float:left;"></a>
 
 
     <div id="side_bar_home" class="highlighted" onmouseover="highlightMenu(this)"><a href="index.php" class="hrf">Home</a></div>
@@ -36,7 +35,7 @@
 <td width="250px"></td>
 <td valign="top" style="background-color:white;padding:10px;">
     <div id="content">
-    <img src="approved.png" style="padding:2px;"> <div style="color:#4a5d6f;padding:7px;">Your current location: Ottawa, ON</div>
+    <img src="images/approved.png" style="padding:2px;"> <div style="color:#4a5d6f;padding:7px;">Your current location: Ottawa, ON</div>
 
     <div id="map"></div>
     <?php echo $content; ?>
