@@ -1,156 +1,110 @@
-body
+/*
+--------USER
+*/
+#user_table
 {
-    font-family:"AvenirLTStd-Roman";
-    color:#333333;
-    font-size:15px;
-    margin:0;
-    padding:0;
-    background-color:#fcfaf7;
+    width:50%;
+    border-collapse:collapse;
 }
 
-input[type='password'], input[type='text']
+#menu_table
 {
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
-    font-weight:lighter;
+    border:solid 1px black;
+    border-collapse:collapse;
 }
-input[type='password']:focus, input[type='text']:focus
+#menu_table td
 {
-    outline: none;
+    padding:5px;
 }
 
-#parent
+.circleBase
 {
-    display:table;
-    height:500px;
-    width:100%;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if don't care about IE8 */
 }
-#child
+.user_pic
 {
-    display:table-cell;
-    vertical-align:middle;
+    width:120px;
+    height:120px;
+    background:#f1f1f1;
 }
-/*---TEMPLATE----*/
-#overall_table
+/*Menu section*/
+.menu_elem
 {
     height:100%;
-    width:100%;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:0px;
-    padding:0px;
-    border-collapse: collapse;
-}
-#overall_table td
-{
-    padding:0; margin:0;
-}
-#overall
-{
-    padding:0; margin:0;
-}
-
-#top_bar, #side_bar_support, #side_bar_settings, #side_bar_log_out,#side_bar_profile
-{
+    width:24.7%;
     display:inline-block;
-    background-color:#3d3d3e;
-    color:white;
-    height:34px;
-
     vertical-align:middle;
     line-height:34px;
-    padding:0;
-    margin:0;
-}
-#top_bar
-{
-    width:76%;
-    text-align:left;
-}
-#side_bar_support
-{
-    width:7%;
-}
-#side_bar_settings
-{
-    width:7%;
-}
-#side_bar_log_out
-{
-    width:5%;
-}
-#side_bar_profile
-{
-    width:5%;
-}
-.hrf{
-    color:white;
-    text-decoration:none;
-}
-/*---Index--*/
-#logo
-{
-    width:200px;
-    height:200px;
-    margin:0 auto;
     text-align:center;
+}
+#menu_row
+{
+    border-top:solid 1px #d2d7dc;
+    border-bottom:solid 1px #d2d7dc;
+    height:30px;
+}
+
+.under td
+{
+    border-bottom:solid 1px black;
+}
+
+/*
+
+------ SET UP MENU
+
+*/
+
+.m_table
+{
     background-color:white;
 }
-#desc
+
+.m_table td
 {
-    width:300px;
-    height:100px;
+    padding:0px;
+    border:solid 1px #ced1d7;
+}
+
+#operations
+{
+    width:100%;
+    border-collapse:collapse;
+}
+
+#operations td
+{
+    width:33%;
+    border:solid 0px black;
     text-align:center;
-    margin:0 auto;
-    background-color:white;
 }
-.box
-{
-  display:inline-block;
-  width:70px;
-}
-/*-LINKS-*/
-/* unvisited link */
-a:link {
-    color: #2dce76;
-}
-/* visited link */
-a:visited {
-    color: #2dce76;
-}
-/* mouse over link */
-a:hover {
-    color: #2dce76;
-}
-/* selected link */
-a:active {
-    color: #2dce76;
-}
-/*FEATURED STYLES*/
+
+
+/*SELECT*/
 .select-style
 {
     display:inline-block;
-    padding: 2px;
-    margin: 2px;
-    border: 1px solid #d2d7dc;
-    width: 55px;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
+    border: 1px solid #ccc;
+    background-color:#fff;
+    width: 50px;
 
-    background: #fff url("images/arrow.png") no-repeat 45px 50%;
+    padding: 5px;
+    margin: 0px;
+    margin-right:5px;
+
+    border-radius: 3px;
+    overflow: hidden;
+
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 45px 50%;
 }
 .select-style select
 {
-    font-size: 14px;
+    font-size: 15px;
     font-family:"AvenirLTStd-Roman";
 
-    color:#4a5d6f;
     padding: 1px 5px;
-    width: 55px;
+    width: 50px;
     border: none;
     box-shadow: none;
     background-color: transparent;
@@ -159,32 +113,33 @@ a:active {
     -moz-appearance: none;
     appearance: none;
 }
-.select-style select:focus
-{
-    outline: none;
-}
-input[type=button],input[type=submit], input[type=text]
-{
-    color:#4a5d6f;
-    font-family:"AvenirLTStd-Light";
-    font-size:15px;
 
-    padding:5px;
-    margin:0px;
-    background-color:#ffffff;
-    border:1px solid #d2d7dc;
-    -moz-border-radius:20px;
-    -webkit-border-radius:20px;
-    border-radius:20px;
-}
-input[type=text]
+.empty_select
 {
-    -moz-border-radius:8px;
-    -webkit-border-radius:8px;
-    border-radius:8px;
-    color:black;
+    display:inline-block;
+    border:solid 0px black;
+    overflow: hidden;
 }
-input[type=button]:focus,input[type=submit]:focus
+
+.empty_select select
 {
-    outline: none;
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
+
+    width: 36px;
+    padding-right:2px;
+    padding-left:2px;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+.empty_select select:focus
+{
+    outline:none;
 }

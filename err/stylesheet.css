@@ -1,0 +1,72 @@
+body
+{
+    font-family:"AvenirLTStd-Roman";
+    margin:0;
+    padding:0;
+    background-color:#fbfbfb;
+    overflow-y:hidden;
+}
+
+input[type='password'], input[type='text']
+{
+    font-size: 15px;
+    font-family:"AvenirLTStd-Light";
+    font-weight:lighter;
+    border:solid 1px #ced1d7;
+    padding-left:15px;
+}
+input[type='password']:focus, input[type='text']:focus
+{
+    outline:none;
+}
+/*---TEMPLATE----*/
+#overall_table
+{
+    border:solid 0px black;
+    height:740px;
+    width:100%;
+    margin:0px;
+    padding:0px;
+    border-collapse:collapse;
+    background-color:#f7f9fa;
+}
+#search_box
+{
+    font-size:20px;
+    font-family:"AvenirLTStd-Light";
+    border:solid 1px #4d85f2;
+    padding-left:15px;
+    width:500px;
+    height:40px;
+}
+#overall_table td
+{
+    padding:0;
+    margin:0;
+}
+#name
+{
+    font-size:35px;
+    font-family:"AvenirLTStd-Heavy";
+}
+.light_style
+{
+ font-family:"AvenirLTStd-Light";
+ font-size:20px;
+ padding-bottom:8px;
+}
+#decor_table
+{
+    border:solid 0px black;
+    padding:0px;
+    margin:0px;
+    width:100%;
+    border-collapse:collapse;
+}
+
+/*LINKS*/
+a:link,a:active,a:visited,a:hover,a:active
+{
+    color:#4a5d6f;
+    text-decoration:none;
+}

@@ -53,6 +53,7 @@
 
             $str="";
 
+
             foreach ($_POST["Food_Contents_" . ($i+1)] as $selectedOption)
             {
                 $str.=$selectedOption.".";
@@ -67,7 +68,7 @@
         echo $final_query;
         mysqli_query($conn,$sql);
 
-        echo "<script> location.replace('../setup_menu.php'); </script>";
+        echo "<script> location.replace('../user/setup_menu.php'); </script>"; //MOD 2017
 
         mysqli_close($conn);
     }

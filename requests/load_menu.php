@@ -3,7 +3,8 @@
     {
         require ("server_connection.php");
 
-        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
+        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section ";
+        $sql.= "FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
         $result = mysqli_query($conn,$sql);
 
         $menu="";
@@ -14,10 +15,9 @@
             $count++;
 
             $menu.="<tr>";
-            $menu.="<td>".$row['FA_Order']."</td>";
             $menu.="<td></td>";
             $menu.="<td>".$row['FA_Product_Name']."</td>";
-            $menu.="<td>".$row['FA_Price']." CAD</td>";
+            $menu.="<td>".$row['FA_Price']."$</td>";
             $menu.="<td>".$row['FA_Desc']."</td>";
 
 
@@ -63,9 +63,8 @@
             $menu.="<td>".$order."</td>";
             $menu.="<td><img src='images/upload_picture.png'></td>";
             $menu.="<td><input type='text' name='Product_name_".$order."' value='".$row['FA_Product_Name']."'></input></td>";
-            $menu.="<td><input type='text' style='width:60px;' name='Price_".$order."' value='".$row['FA_Price']."'></input>";
-            $menu.="</input><div class='select-style'><select><option value='CAD' select>CAD</option><option value='USD'>USD</option></select></td>";
-            $menu.="<td> <input type='text' name='Description_".$order."' value='".$row['FA_Desc']."'></input></td>";
+            $menu.="<td><input type='text' style='width:40px;' name='Price_".$order."' value='".$row['FA_Price']."'></input></td>";
+            $menu.="<td><input type='text' name='Description_".$order."' value='".$row['FA_Desc']."'></input></td>";
 
 
             $contents=explode(".",$row['FA_Contents']);
@@ -77,7 +76,7 @@
             }
 
             $menu.="<td id='food_contents'>".$reslt."</td>";
-            $menu.="<td><a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a></td>";
+            $menu.="<td><a class='up' href='#'><img src='images/up_arrow.png'></a> <a class='down' href='#'><img src='images/down_arrow.png'></a></td>";
 
             $menu.="</tr>";
         }
@@ -86,7 +85,13 @@
 
         if ($count==0)
         {
-            $menu="<tr><td>1</td><td><img src='images/upload_picture.png'></td><td><input type='text' name='Product_name_1'></input></td><td><input type='text' style='width:60px;' name='Price_1'></input><div class='select-style'><select><option value='CAD' select>CAD</option><option value='USD'>USD</option></select></div></td><td><input type='text' name='Description_1'></input></td><td id='food_contents'></td><td><a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a></td></tr>";
+            $menu="<tr><td>1</td>";
+            $menu.="<td><img src='images/upload_picture.png'></td>";
+            $menu.="<td><input type='text' name='Product_name_1'></input></td>";
+            $menu.="<td><input type='text' style='width:60px;' name='Price_1'></input></td>";
+            $menu.="<td><input type='text' name='Description_1'></input></td>";
+            $menu.="<td id='food_contents'></td>";
+            $menu.="<td><a class='up' href='#'><img src='images/up_arrow.png'></a> <a class='down' href='#'><img src='images/down_arrow.png'></a></td></tr>";
         }
 
         return $menu;
@@ -101,7 +106,7 @@
         $result = mysqli_query($conn,$sql);
         $final_result= mysqli_fetch_assoc($result);
 
-        $time = date_default_timezone_set($final_result["FA_Last_Modified"]);
+        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime changed MOD 2017
 
         return "Last updated ".humanTiming($time)." ago";
     }

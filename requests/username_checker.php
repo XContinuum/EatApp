@@ -1,7 +1,8 @@
 <?php
     if(isset($_POST["username"]))
     {
-        if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+        if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')
+        {
             die();
         }
         $ini_array=parse_ini_file("settings.ini", true);

@@ -38,7 +38,7 @@
         }
         else
         {
-            echo "<script> location.replace('../login.php?error=1'); </script>";
+            echo "<script> location.replace('../login/index.php?error=1'); </script>";
         }
 
         mysqli_close($conn);

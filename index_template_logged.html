@@ -2,59 +2,59 @@
 <html>
     <head>
         <title>EatApp</title>
-            <link rel="stylesheet" type="text/css" href="n_style_logged.css">
-            <script src="https://maps.googleapis.com/maps/api/js"></script>
-            <script src='n_script.js'></script>
+            <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 <body onLoad="initiate()">
-<!-- Top bar -->
 <table id="overall_table" border='0'>
-<tr height="100px">
-<td valign="top" id="top_bar" colspan="3" align="right">
-
-    <a href="index.php" class="hrf"><img src="images/logo.png" style="float:left;"></a>
-
-
-    <div id="side_bar_home" class="highlighted" onmouseover="highlightMenu(this)"><a href="index.php">Home</a></div>
-    <div id="side_bar_profile" onmouseover="highlightMenu(this)"><a href="profile.php">Profile</a></div>
-    <div id="side_bar_logout" onmouseover="highlightMenu(this)"><a href="requests/log_out_request.php">Logout</a></div>
-    <br>
-    <br>
-
-    <div id="search_box">
-        <br>
-         Search for a restaurant in your area by filling in the maximum price for a drink or food<br>
-        <div id="search_input">
-        <input type="text" value="" placeholder="Search" style="border:none;color:#babdc6;padding:5px;"></input>
-        </div>
-    </div>
-
-</td></tr>
-<!-- Content -->
+<!-- Top bar -->
 <tr>
-<td width="250px"></td>
-<td valign="top" style="background-color:white;padding:10px;">
-    <div id="content">
-    <img src="images/approved.png" style="padding:2px;"> <div style="color:#4a5d6f;padding:7px;">Your current location: Ottawa, ON</div>
-
-    <div id="map"></div>
-    <?php echo $content; ?>
-    </div>
-</td>
-<td width="250px"></td>
-</tr>
-<!-- Terms of use -->
-<tr style="height:10px;">
-<td align="center" height="10px" valign="top" colspan="3" style="font-size:17px;color:#babdc6;padding:6px;background-color:white;border-top:solid 1px #d2d7dc;">
-
-    <div class="box">Terms</div>
-    <div class="box">Support</div>
-    <div class="box">Contact</div>
-
-
-
+    <td height="10px" align="right">
+    <div style="display:inline-block;margin:10px;"><a href=<?php echo "'/".$user_name."'";?> style="color:#848b98;"><?php echo $user_name;?></a></div>
+    <div style="display:inline-block;margin:10px;"><a href="requests/log_out_request.php" style="color:#848b98;">Logout</a></div>
 </td>
 </tr>
+<!-- Search form -->
+<tr>
+    <td valign="top" align="center">
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+            <a href="index.php" class="hrf"><img src="images/logo.png"></a>
+        <br>
+            <div id="name">Eat App</div>
+            <div class="light_style">Search for different menus for a good price</div>
+            <input type="text" value="" placeholder="Search" id="search_box"></input>
+    </td>
+</tr>
+<!-- Decorative border -->
+<tr>
+    <td height="10px">
+        <table id="decor_table">
+        <tr>
+            <td>
+                <img src="images/Left.png" style="padding:0px;margin:0px;vertical-align:bottom;">
+            </td>
+
+            <td width="100%" valign="bottom">
+                <div style="width:100%;height:7px;background-color:#ffb47d;"></div>
+            </td>
+            <td>
+                <img src="images/Right.png" style="padding:0px;margin:0px;vertical-align:bottom;">
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+<!-- Social media -->
+<tr>
+    <td align="center" valign="center" style="background-color:#ffa25e;" height="100px">
+        <a href="https://twitter.com/eatappca" target="_blank"><img src="images/twitter.png" style="padding-right:20px;"></a>
+        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src="images/facebook.png"></a>
+    </td>
+</tr>
+
 </table>
 </body>
 </html>

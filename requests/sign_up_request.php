@@ -61,19 +61,19 @@
         $_SESSION['token']=$token;
         $_SESSION['time']=$t;
 
-        echo "<script> location.replace('../setup_menu.php'); </script>";
+        echo "<script> location.replace('../user/setup_menu.php'); </script>"; // MOD 2017
     }
     else
     {
         //error
-        echo "<script> location.replace('../sign_up.php'); </script>";
+        echo "<script> location.replace('../sign_up/sign_up.php'); </script>"; // MOD 2017
     }
     }
 
     if ($register==false)
     {
         //error
-        echo "<script> location.replace('../sign_up.php'); </script>";
+        echo "<script> location.replace('../sign_up/sign_up.php'); </script>"; // MOD 2017
     }
 
     mysqli_close($conn);

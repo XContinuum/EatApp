@@ -1,0 +1,48 @@
+<div>
+<form action="../requests/save_menu.php" method="POST"> <!-- MOD 2017 -->
+<table align="center" id="menu_table" class="m_table">
+<!-- Header -->
+<tr class="under">
+    <td width='20px'>#</td>
+    <td align='center'>Picture</td>
+    <td align='center'>Meal/drink name</td>
+    <td align='center'>Price
+    	<div class='empty_select'>(<select><option value='CAD' select>CAD</option><option value='USD'>USD</option></select>)
+    </td>
+    <td align='center'>General description</td>
+    <td align='center'>Content</td>
+    <td></td>
+</tr>
+
+<?php echo $menu; ?>
+<!--Last row - Parameters-->
+<tr>
+	<td colspan="7">
+			<!-- Operations -->
+			<table id="operations">
+			<tr>
+				<td>
+				<div onClick="addRow()"><img src="images/add_row.png"></div>
+				</td>
+
+				<td>
+				<div onClick="addSection()"><img src="images/add_section.png"></div>
+				</td>
+
+				<td>
+				<input type="submit" value="save menu" name="save_menu_btn"></input>
+				</td>
+			</tr>
+			</table>
+			<!-- Operations -->
+	</td>
+</tr>
+</table>
+
+<div align="center">
+<input type="text" name="Row_Count" value="1" id="Row_Count" style="width:50px;"></input>
+<input type="text" name="FA_Sections_order" value="" id="FA_Sections" style="width:50px;"></input>
+</div>
+</form>
+<!--Last row - Parameters-->
+</div>

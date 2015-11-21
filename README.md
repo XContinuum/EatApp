@@ -3,8 +3,8 @@
 
 ## Features
 
-  - New blue design
-  - Map added
+  - New orange design
+  - Added .htaccess (eatapp.ca/username)
 
 ## Screenshots
 

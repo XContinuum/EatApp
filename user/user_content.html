@@ -1,0 +1,60 @@
+<div>
+    <table align="center" id="user_table">
+        <!-- Top info-->
+        <tr height="150px">
+            <td width="200px" align="center">
+            <div class="circleBase user_pic"></div>
+            </td>
+
+            <td style="text-align:left;padding-top:20px;" valign="top">
+                <div style="font-size:17px;"><b><?php echo $username;?></b></div>
+                <div>Location</div>
+                <div>Phone number</div>
+                <div>Opening hours</div>
+                <div>Highlights</div>
+                <div>Cost</div>
+            </td>
+        </tr>
+        <!-- Top info-->
+        <tr>
+            <td colspan="2" id="menu_row">
+                <div class="menu_elem" onClick="show_partition('Menu')">Menu</div><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
+            </td>
+        </tr>
+
+
+
+          <tr>
+            <td colspan='2' valign='top' height="200px" align="center">
+                <br>
+            <!--MENU-->
+            <div id="partition_menu">
+
+                <div style="width:100%;text-align:left;font-size:13px;">
+                    <?php echo $last_modified; ?>
+                </div>
+
+                <?php echo $menu; ?>
+
+                <div style="width:100%;text-align:left;">
+                <?php
+                    if($menu!="")
+                    {
+                        echo "<a href='../user/setup_menu.php'>Edit menu</a>"; //MOD 2017
+                    }
+                    else
+                    {
+                        echo "<a href='../user/setup_menu.php'>Add menu</a>"; //MOD 2017
+                    }
+                ?>
+                </div>
+            </div>
+            <!--MENU-->
+            <div id="partition_pictures" style="display:none;">Pictures</div>
+            <div id="partition_reviews" style="display:none;">Reviews</div>
+            <div id="partition_contact" style="display:none;">Contacts</div>
+
+            </td>
+        </tr>
+    </table>
+</div>
