@@ -4,11 +4,13 @@
         <title>EatApp</title>
             <link rel="stylesheet" type="text/css" href= <?php setLink("/style.css");?> >
             <link rel="stylesheet" type="text/css" href= <?php setLink("/style_logged.css");?> >
-            <?php echo $head_param; ?>
+            <?php echo $head_param;?>
     </head>
 <body onLoad="initiate()">
 
 <div style="position:absolute;top:0px;left:0px;"><a href=<?php setLink("index.php");?>><img src=<?php setLink("images/x_small_logo.png");?>></a></div>
+
+<div style="position:absolute;top:5px;right:10px;"><a href=<?php setLink("/requests/log_out_request.php");?>>Log out</a></div>
 
 <table id="overall_table" border='0'>
 <!-- Content -->

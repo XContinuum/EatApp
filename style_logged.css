@@ -7,12 +7,12 @@
     border-collapse:collapse;
 }
 
-#menu_table
+#menu_list
 {
     border:solid 1px black;
     border-collapse:collapse;
 }
-#menu_table td
+#menu_list td
 {
     padding:5px;
 }
@@ -48,6 +48,7 @@
 .under td
 {
     border-bottom:solid 1px black;
+    padding:15px;
 }
 
 /*
@@ -59,12 +60,44 @@
 .m_table
 {
     background-color:white;
+    padding:0px;
+    border-collapse:collapse;
 }
 
 .m_table td
 {
     padding:0px;
     border:solid 1px #ced1d7;
+}
+
+#menu_header td
+{
+    padding:5px;
+}
+
+.m_table input[type="text"]
+{
+    margin:0px;
+    border-width:0px;
+}
+
+input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
+{
+    font-size: 16px;
+}
+
+
+.add_image
+{
+    padding-left:11px;
+}
+
+.m_table textarea
+{
+    font-size: 15px;
+    font-family:"AvenirLTStd-Light";
+    border:solid 0px #ced1d7;
+    resize: none;
 }
 
 #operations
@@ -75,11 +108,101 @@
 
 #operations td
 {
+    padding: 5px;
     width:33%;
     border:solid 0px black;
     text-align:center;
 }
 
+#success
+{
+    position:fixed;
+    top:-23px;
+    left:0px;
+    background-color:#58e489;
+    color:white;
+    width:100%;
+    height:20px;
+    text-align:center;
+    padding-top:3px;
+}
+
+.add_image_btn
+{
+    width:90px;
+}
+
+.delete_button
+{
+    border:solid 0px black;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+
+    width:60px;
+    height:30px;
+    background-color:#fc5d5d;
+    color:white;
+    font-weight: bold;
+    padding:0px;
+    margin-top:5px;
+    margin-bottom:5px;
+
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
+}
+
+.tags
+{
+    color:white;
+    display:inline-block;
+    background-color:#31dc78;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+    border-radius:20px;
+    padding: 5px;
+    margin:2px;
+    padding-right:10px;
+    padding-left:10px;
+}
+
+.wrap
+{
+    width:150px;
+    white-space:nowrap;
+    overflow-y:hidden;
+    overflow-x:scroll;
+    -webkit-overflow-scrolling:touch;
+}
+
+/*INPUT TYPE=FILE*/
+.custom-file-input::-webkit-file-upload-button
+{
+  visibility: hidden;
+}
+.custom-file-input::before
+{
+  content: 'Select picture';
+  color:white;
+  background-color:#4d85f2;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before
+{
+  border-color: black;
+}
+.custom-file-input:active::before
+{
+
+}
 
 /*SELECT*/
 .select-style

@@ -30,6 +30,7 @@ CREATE TABLE FA_MENUS (
   FA_Price double NOT NULL,
   FA_Desc varchar(200),
   FA_Contents varchar(200),
+  FA_Pic varchar(200),
 
   FA_Section varchar(200),
 

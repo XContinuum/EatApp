@@ -1,16 +1,17 @@
 html
 {
-  width:100%; /* MOD 2017 */
-  height: 100%; /* MOD 2017 */
+  width:100%;
+  height:100%; /* MOD 2017 */
 }
+
 body
 {
     font-family:"AvenirLTStd-Roman";
     margin:0;
     padding:0;
     background-color:#fbfbfb;
-    overflow-y:hidden;
-    height:100%; /* MOD 2017 */
+    height: 100%; /* MOD 2017 */
+    /*overflow-y:hidden;*/
 }
 
 input[type='password'], input[type='text']
@@ -25,11 +26,17 @@ input[type='password']:focus, input[type='text']:focus
 {
     outline:none;
 }
+
+
+textarea:focus
+{
+    outline:none;
+}
 /*---TEMPLATE----*/
 #overall_table
 {
     border:solid 0px black;
-    height:100%;/* 740px; MOD 2017 */
+    height:100%; /* 740px MOD 2017 */
     width:100%;
     margin:0px;
     padding:0px;

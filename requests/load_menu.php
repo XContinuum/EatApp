@@ -3,34 +3,60 @@
     {
         require ("server_connection.php");
 
-        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section ";
+        $res_username=getInfoFromID($restaurant_id,"FA_Username");
+
+        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic ";
         $sql.= "FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
         $result = mysqli_query($conn,$sql);
 
         $menu="";
         $count=0;
 
+        $old_section_name="none";
+
         while($row = mysqli_fetch_array($result))
         {
             $count++;
 
+            //Section+++
+            if ($old_section_name!=$row['FA_Section'])
+            {
+                $section_name=$row['FA_Section'];
+                $menu.="<tr><td colspan='4' align='center' style='border:solid 1px black;'><b>$section_name</b></td></tr>";
+                $old_section_name=$row['FA_Section'];
+            }
+
             $menu.="<tr>";
-            $menu.="<td></td>";
-            $menu.="<td>".$row['FA_Product_Name']."</td>";
-            $menu.="<td>".$row['FA_Price']."$</td>";
-            $menu.="<td>".$row['FA_Desc']."</td>";
+            //Section---
+
+            //PICTURE+++
+            if ($row['FA_Pic']!="none")
+            {
+                $pic=$row['FA_Pic'];
+                $menu.="<td width='100px'><img src='../restaurant_data/Pictures/$res_username/$pic' style='width:100%;'></td>";
+            }
+            else
+            {
+                $menu.="<td width='100px'></td>";
+            }
+            //PICTURE---
+
+            $menu.="<td width='250px'>".$row['FA_Product_Name']."</td>";
+            $menu.="<td width='90px' align='right'>".$row['FA_Price']."$</td>";
 
 
+            //CONTENTS+++
             $contents=explode(".",$row['FA_Contents']);
+            array_pop($contents);
 
             $reslt="";
             for ($i=0;$i<count($contents);$i++)
             {
-                $reslt.=$contents[$i]." ";
+                $reslt.="<div class='tags'>#".str_ireplace("_"," ",$contents[$i])."</div> ";
             }
 
-            $menu.="<td>".$reslt."</td>";
-
+            $menu.="<td width='160px' align='right'><div class='wrap'>".$reslt."</div></td>";
+            //CONTENTS---
 
             $menu.="</tr>";
         }
@@ -45,57 +71,93 @@
         return $menu;
     }
 
-     function FillMenuBlanks($restaurant_id)
+    function FillMenuBlanks($restaurant_id)
     {
         require ("server_connection.php");
 
-        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
+        $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
         $result = mysqli_query($conn,$sql);
 
         $menu="";
         $count=0;
 
-        while($row = mysqli_fetch_array($result))
+        //Sections
+        $previous_section="";
+        $section_count=0;
+
+        while($row=mysqli_fetch_array($result))
         {
             $count++;
-            $order=$row['FA_Order'];
-            $menu.="<tr>";
-            $menu.="<td>".$order."</td>";
-            $menu.="<td><img src='images/upload_picture.png'></td>";
-            $menu.="<td><input type='text' name='Product_name_".$order."' value='".$row['FA_Product_Name']."'></input></td>";
-            $menu.="<td><input type='text' style='width:40px;' name='Price_".$order."' value='".$row['FA_Price']."'></input></td>";
-            $menu.="<td><input type='text' name='Description_".$order."' value='".$row['FA_Desc']."'></input></td>";
 
-
-            $contents=explode(".",$row['FA_Contents']);
-
-            $reslt="";
-            for ($i=0;$i<count($contents);$i++)
+            if ($row['FA_Section']!=$previous_section && $row['FA_Section']!="none")
             {
-            $reslt.=$contents[$i]." ";
+                $section_count++;
+                $menu.=insertSection($section_count,$row['FA_Section']);
+                $previous_section=$row['FA_Section'];
             }
 
-            $menu.="<td id='food_contents'>".$reslt."</td>";
-            $menu.="<td><a class='up' href='#'><img src='images/up_arrow.png'></a> <a class='down' href='#'><img src='images/down_arrow.png'></a></td>";
-
-            $menu.="</tr>";
+            $menu.=fillTable($row['FA_Order'],$row['FA_Product_Name'],$row['FA_Price'],$row['FA_Desc'],$row['FA_Contents'],$row['FA_Pic']);
         }
 
         mysqli_close($conn);
 
         if ($count==0)
-        {
-            $menu="<tr><td>1</td>";
-            $menu.="<td><img src='images/upload_picture.png'></td>";
-            $menu.="<td><input type='text' name='Product_name_1'></input></td>";
-            $menu.="<td><input type='text' style='width:60px;' name='Price_1'></input></td>";
-            $menu.="<td><input type='text' name='Description_1'></input></td>";
-            $menu.="<td id='food_contents'></td>";
-            $menu.="<td><a class='up' href='#'><img src='images/up_arrow.png'></a> <a class='down' href='#'><img src='images/down_arrow.png'></a></td></tr>";
-        }
+            $menu=fillTable('1','','','','','none');
+
 
         return $menu;
     }
+
+    function fillTable($order,$product,$price,$description,$food_content,$pic)
+    {
+            $row="";
+            $row.="<tr>";
+            $row.="<td>$order</td>";
+
+            //PICTURE
+            $res_username=get_restaurant_username();
+
+            $row.="<td>";
+
+            if ($pic!="none")
+            {
+                //show picture
+                $row.="<label><input name='food_images_$order' style='display:none;' type='file' value='Select picture'></input><img src='../restaurant_data/Pictures/$res_username/$pic' style='width:50px;' align='center'></img></label>";
+            }
+            else
+            {
+                //no pictures
+                $row.="<label><input name='food_images_$order' style='width:110px;display:none;' type='file' value='Select picture'></input><img src='images/upload_picture.png'></img></label>";
+                $row.="";
+            }
+
+            $row.="<input type='text' name='picture_url_$order' value='$pic' style='display:none;'></input>";
+
+            $row.="</td>";
+            //PICTURE
+
+
+            $row.="<td><input type='text' name='Product_name_$order' value='$product' placeholder='Meal'></input></td>";
+            $row.="<td><input type='text' style='width:40px;' name='Price_$order' value='$price' placeholder='Price'></input></td>";
+            $row.="<td><textarea name='Description_$order' placeholder='Description'>$description</textarea></td>";
+            $row.="<td class='food_contents'>$food_content</td>";
+            $row.="<td><a class='up'><img src='images/up_arrow.png'></a> ";
+            $row.="<a class='down'><img src='images/down_arrow.png'></a> ";
+            $row.="<a class='delete_row'><img src='images/delete.png'></a></td>";
+            $row.="</tr>";
+
+            return $row;
+    }
+
+    function insertSection($order,$section_name)
+    {
+        $row="<tr align='center'><td colspan='7'>";
+        $row.="<input type='text' placeholder='Section ".$order."' name='Section_".($order-1)."' value='$section_name'></input>";
+        $row.="<input type='button' value='Delete' class='remove_section delete_button'></input></td></tr>";
+
+        return $row;
+    }
+
 
 
     function getLastModified($restaurant_id)
@@ -106,7 +168,7 @@
         $result = mysqli_query($conn,$sql);
         $final_result= mysqli_fetch_assoc($result);
 
-        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime changed MOD 2017
+        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime MOD 2017
 
         return "Last updated ".humanTiming($time)." ago";
     }

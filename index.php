@@ -1,34 +1,19 @@
 <?php
-    session_start();
-    if (isset($_SESSION['token']))
-    {
-        $user_name=get_restaurant_username();
+    require("requests/receive_information.php");
+    $username=get_restaurant_username();
 
-        include("index_template_logged.html");
+    if ($username!=-1)
+    {
+        //Restaurant logged
+        $panel="<div style='display:inline-block;margin:10px;'><a href='/".$username."' style='color:#848b98;'>".$username."</a></div>";
+        $panel.="<div style='display:inline-block;margin:10px;'><a href='requests/log_out_request.php' style='color:#848b98;'>Logout</a></div>";
     }
     else
     {
-        include("index_template.html");
+        //Restaurant not logged
+        $panel="<div style='display:inline-block;margin:10px;'><a href='sign_up/index.php' style='color:#848b98;'>Sign up</a></div>";
+        $panel.="<div style='display:inline-block;margin:10px;'><a href='login/index.php' style='color:#848b98;'>Login</a></div>";
     }
 
-
-    function get_restaurant_username()
-    {
-        require('requests/server_connection.php');
-
-        session_start();
-
-        $sql = "SELECT FA_Username FROM FA_RESTORANTS WHERE FA_Token='".$_SESSION['token']."'";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-
-        if (isset($_SESSION['token']))
-        {
-            return $row['FA_Username'];
-        }
-        else
-        {
-            return -1;
-        }
-    }
+    include("index_template.html");
 ?>

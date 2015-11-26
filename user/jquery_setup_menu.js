@@ -1,11 +1,26 @@
+var obj; //list with all the possible food contents
+var section=0; //number of sections
+var rows_count=1; //the number of rows in the table
+var columns_count=7; //total number of columns in the table
+
 $(document).ready(
     function()
     {
-        $(".js-example-basic-multiple").select2();
-        moveRows();
+        addMoveRowsEvent();
+
+        jQuery('#success').animate({ top: '0px'}, 400, 'swing',function(){
+
+        //wait 2 seconds
+        setTimeout(function(){
+        jQuery('#success').animate({ top: '-23px'}, 400, 'swing');
+        }, 2000);
+
+        }
+        );
+
     }
 );
-var obj;
+
 function readTextFile(file)
 {
     var xhttp = new XMLHttpRequest();
@@ -14,167 +29,213 @@ function readTextFile(file)
 
     return xhttp.responseText;
 }
-function initiate()
-{
-    //Load list of countries
-    var text=readTextFile("../content_list.txt"); // MOD 2017
-    obj=JSON.parse(text);
 
-    var string="<select name='Food_Contents_1[]' class='js-example-basic-multiple' multiple='multiple' style='width:200px;border:0px;'>";
+function returnMultiselect(number)
+{
+    var multiselect="<select name='Food_Contents_"+number+"[]' class='js-example-basic-multiple' multiple='multiple' style='width:200px;border:0px;'>";
     for (i=0;i<obj.List.length;i++)
     {
         var type=obj.List[i].Type;
         var final_id=type.replace(/\s+/g, '_').toLowerCase();
 
-        string+="<option value="+final_id+">";
-        string+=type;
-        string+="</option>";
+        multiselect+="<option value="+final_id+">";
+        multiselect+=type;
+        multiselect+="</option>";
     }
-    string+="</select>";
+    multiselect+="</select>";
 
-    document.getElementById("food_contents").innerHTML=string;
-    $(".js-example-basic-multiple").select2();
+    return multiselect;
 }
-var section=0;
-var order=1;
-var sections=[];
 
-function moveRows()
+function returnMultiselectOptions(number,list)
 {
-//Move rows
-$('.up,.down').unbind('click').bind('click', function(e)
+    var multiselect="<select name='Food_Contents_"+(number+1)+"[]' class='js-example-basic-multiple' multiple='multiple' style='width:200px;border:0px;'>";
+    var selected;
+
+    for (i=0;i<obj.List.length;i++)
+    {
+        var type=obj.List[i].Type;
+        var final_id=type.replace(/\s+/g, '_').toLowerCase();
+        selected="";
+
+        for (j=0;j<list.length;j++)
+        {
+           if (list[j]==final_id)
+            {
+                selected="selected='selected'";
+            }
+        }
+
+        multiselect+="<option value="+final_id+" "+selected+">";
+        multiselect+=type;
+        multiselect+="</option>";
+    }
+    multiselect+="</select>";
+
+    return multiselect;
+}
+
+function initiate()
 {
-    var row = $(this).parents("tr:first");
+    var text=readTextFile("../content_list.txt");
+    obj=JSON.parse(text);
+
+    //Load selected tags+++
+    var food_tags=document.getElementsByClassName("food_contents");
+
+    for (var i=0;i<food_tags.length;i++)
+    {
+        var selected=food_tags[i].innerHTML;
+        var list=selected.split(".");
+
+        food_tags[i].innerHTML=returnMultiselectOptions(i,list);
+    }
+    $(".js-example-basic-multiple").select2();
+    //Load selected tags---
+
+    reiterateIDs();
+}
+
+/*
+    Adding even of moving rows up/down and deleting them
+*/
+function addMoveRowsEvent()
+{
+$('.up,.down,.delete_row').unbind('click').bind('click', function(e)
+{
+    var row=$(this).parents("tr:first");
+    var x=document.getElementById("menu_table").rows.length;
 
     if ($(this).is(".up"))
     {
         if (row.index()>1)
-        {
-        row.insertBefore(row.prev());
-        }
+            row.insertBefore(row.prev());
     }
     else
-        if (row.index()<order+section)
+        if ($(this).is(".down"))
         {
-            row.insertAfter(row.next());
+            if(row.index()<rows_count+section)
+                row.insertAfter(row.next());
         }
+        else
+            if ($(this).is(".delete_row"))
+                {
+                    if (x>3)
+                    {
+                    row.remove();
+                    rows_count--;
+                    }
+                }
 
-    //Iterate through all first cells in each row
-    document.getElementById('FA_Sections').value='';
+    reiterateIDs();
+});
+}
 
-    var skip=0;
-    sections=[];
+/*
+    Reindexes the names of inputs to be in the proper order when sending to the database
+*/
+function reiterateIDs()
+{
+    var count=0; //number of rows in the table
+    var section_count=0; //number of sections
+
+    var x=document.getElementById("menu_table").rows.length;
+
     //Parse throught the table and rename first cell to adjust movement of rows
-    var count=0;
-
     $('#menu_table').find('tr').each(function(i, el)
     {
-        if ($(el).index()<order+section+1 && $(el).index()>0)
+        if ($(el).index()<x-1 && $(el).index()>0)
         {
-            if ($(el).find('td').eq(0).attr('colspan')!=7)
+            if ($(el).find('td').eq(0).attr('colspan')!=columns_count)
             {
             /*
             ADJUST NAMES TO SEND CORRECT ORDER TO PHP FILE
             */
-                $(el).find("input[name^='Product_name_']").attr('name','Product_name_'+(i-skip));
-                $(el).find("input[name^='Price_']").attr('name','Price_'+(i-skip));
-                $(el).find("input[name^='Description_']").attr('name','Description_'+(i-skip));
-                $(el).find("input[name^='Food_Contents_']").attr('name','Food_Contents_'+(i-skip));
+                $(el).find("input[name^='Product_name_']").attr('name','Product_name_'+(i-section_count));
+                $(el).find("input[name^='Price_']").attr('name','Price_'+(i-section_count));
+                $(el).find("input[name^='Description_']").attr('name','Description_'+(i-section_count));
+                $(el).find("input[name^='Food_Contents_']").attr('name','Food_Contents_'+(i-section_count));
 
-                $(el).find('td').eq(0).html(i-skip);
+                $(el).find("input[name^='food_images_']").attr('name','food_images_'+(i-section_count));
+                $(el).find("input[name^='picture_url_']").attr('name','picture_url_'+(i-section_count));
+
+
+                $(el).find('td').eq(0).html(i-section_count); //rename the first cell
                 count++;
             }
             else
             {
-                var add_index=sections.length;
-
-                skip++;
-                sections.push(i);
-
-                //Adjust the index of sections+++
-                  document.getElementById('FA_Sections').value=document.getElementById('FA_Sections').value+(i-add_index)+'.';
+                section_count++; //number of sections
             }
         }
     });
+
+    rows_count=count; //global
+
     $("input[name=Row_Count]").val(count);
-    //-----
-
+    ReviewSectionIndexing();
 }
 
-);
-}
-
+/*
+    Adds a row to the end of the table
+*/
 function addRow()
 {
-order++;
-var x = document.getElementById("menu_table").rows.length;
-var table = document.getElementById("menu_table");
+    rows_count++;
+    var all_rows=document.getElementById("menu_table").rows.length; //current number of rows
+    var row=document.getElementById("menu_table").insertRow(all_rows-1);
 
-    // Create an empty <tr> element and add it to the 1st position of the table:
-    var row = table.insertRow(x-2);
+    var cells=[];
 
-    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
+    for (var i=0;i<columns_count;i++)
+        cells[i] = row.insertCell(i);
 
-    var cell7 = row.insertCell(6);
+    cells[0].innerHTML=rows_count;
 
+    //Picture
+    var pic="<label><input name='food_images_"+rows_count+"' style='width:110px;display:none;' type='file' value='Select picture'></input><img src='images/upload_picture.png'></img></label>";
+    pic+="<input type='text' name='picture_url_"+rows_count+"' value='none' style='display:none;'></input>";
+    cells[1].innerHTML=pic;
+    //Picture
 
-    //Add some text to the new cells:
-    cell1.innerHTML = order;
-    cell2.innerHTML="<img src='images/upload_picture.png'>";
-    cell3.innerHTML = "<input type='text' name='Product_name_"+order+"'></input>";
-    cell4.innerHTML = "<input type='text' style='width:60px;' name='Price_"+order+"'></input><div class='select-style'><select><option value='CAD' select>CAD</option><option value='USD'>USD</option></select><div>";
-    cell5.innerHTML="<input type='text' name='Description_"+order+"'></input>";
-    //cell6.innerHTML="<input type='button' value='upload picture'></input></td>";
+    cells[2].innerHTML="<input type='text' name='Product_name_"+rows_count+"' placeholder='Meal'></input>";
+    cells[3].innerHTML="<input type='text' style='width:60px;' name='Price_"+rows_count+"' placeholder='Price'></input>";
+    cells[4].innerHTML="<textarea name='Description_"+rows_count+"' placeholder='Description'></textarea>";
+    cells[5].innerHTML=returnMultiselect(rows_count);
 
-    //Load food content choices in a select box+++
-    var string="<select name='Food_Contents_"+order+"[]' class='js-example-basic-multiple' multiple='multiple' style='width:200px;border:0px;'>";
-    for (i=0;i<obj.List.length;i++)
-    {
-        var type=obj.List[i].Type;
-        var final_id=type.replace(/\s+/g, '_').toLowerCase();
-
-        string+="<option value="+final_id+">";
-        string+=type;
-        string+="</option>";
-    }
-    string+="</select>";
-    cell6.innerHTML=string;
-
-
-    cell7.innerHTML="<a class='up' href='#'>Up</a> <a class='down' href='#'>Down</a>";
-    //Load food content choices in a select box---
+    cells[6].innerHTML="<a class='up'><img src='images/up_arrow.png'></a> ";
+    cells[6].innerHTML+="<a class='down'><img src='images/down_arrow.png'></a> ";
+    cells[6].innerHTML+="<a class='delete_row'><img src='images/delete.png'></a>";
 
     $(".js-example-basic-multiple").select2();
 
-    document.getElementById("Row_Count").value=order;
-    moveRows();
+    $("input[name=Row_Count]").val(rows_count);
+    addMoveRowsEvent();
 }
+
+/*
+    Adds a section to the end of the table
+*/
 function addSection()
 {
-    var x = document.getElementById("menu_table").rows.length;
-    var table = document.getElementById("menu_table");
-
     section++;
 
-    var row = table.insertRow(x-2);
+    var x=document.getElementById("menu_table").rows.length;
+    var row=document.getElementById("menu_table").insertRow(x-1);
+    var cell=row.insertCell(0);
 
-    var cell1 = row.insertCell(0);
-    cell1.setAttribute("colspan","7");
-    cell1.setAttribute("align","center")
-    var result="<input type='text' value='Section "+section+"' name='Section_"+(section-1)+"'></input>";
-    result+="<input type='button' value='delete' class='remove_section'></input>";
-    cell1.innerHTML=result;
+    cell.setAttribute("colspan",columns_count);
+    cell.setAttribute("align","center");
 
-    document.getElementById("Row_Count").value=x-2;
+    //Set up the section row+++
+    var result="<input type='text' placeholder='Section "+section+"' name='Section_"+(section-1)+"'></input>";
+    result+="<input type='button' value='Delete' class='remove_section delete_button'></input>";
+    cell.innerHTML=result;
+    document.getElementsByName("Section_"+(section-1))[0].select();
 
-    //Remove sections
-    $('.remove_section').unbind('click').bind('click', function(e){
+    //Add event to remove sections
+    $('.remove_section').unbind('click').bind('click', function(e)
+    {
         var row=$(this).parents("tr:first");
         row.remove();
         section--;
@@ -184,26 +245,33 @@ function addSection()
 
     ReviewSectionIndexing();
 }
+
+/*
+    Reindexes the section name to be in the proper order when sending to the database
+*/
 function ReviewSectionIndexing()
 {
- document.getElementById('FA_Sections').value='';
+    document.getElementById('FA_Sections').value="";
 
-var skip=0;
-sections=[];
-$('#menu_table').find('tr').each(function(i, el)
-{
-    if ($(el).index()<order+section+1 && $(el).index()>0 && $(el).find('td').eq(0).attr('colspan')==7)
+    var section_count=0;
+    var x=document.getElementById("menu_table").rows.length;
+
+    $('#menu_table').find('tr').each(function(i, el)
     {
-        var add_index=sections.length;
+        if ($(el).index()<x-1 && $(el).index()>0)
+        {
+            if ($(el).find('td').eq(0).attr('colspan')==columns_count)
+            {
+                section_count++;
 
-        skip++;
-        sections.push(i);
+                var input=$(el).find('td').eq(0).find('input[type=text]');
+                input.attr('name','Section_'+section_count);
+                input.attr('placeholder','Section '+section_count);
+                //Adjust the index of sections+++
+                document.getElementById('FA_Sections').value=document.getElementById('FA_Sections').value+(i-section_count+1)+'.';
+            }
+        }
+    });
 
-        var input=$(el).find('td').eq(0).find('input[type=text]');
-        input.attr('value',add_index);
-        input.attr('name','Section_'+add_index);
-        //Adjust the index of sections+++
-        document.getElementById('FA_Sections').value=document.getElementById('FA_Sections').value+(i-add_index)+'.';
-    }
-});
+    section=section_count;
 }

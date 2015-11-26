@@ -48,7 +48,6 @@ function initiate()
     document.getElementById("finalize_sign_up").style.backgroundColor="#babdc6";
 }
 
-
 //Load country list for location menu---
 $(document).ready(
     function(){

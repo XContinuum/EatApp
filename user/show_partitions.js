@@ -1,3 +1,4 @@
+//Switch sections depending on the div clicked
 function show_partition(obj)
 {
     menu=document.getElementById("partition_menu");

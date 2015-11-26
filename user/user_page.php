@@ -1,23 +1,22 @@
 <?php
-    $head_param ="<script src='user/show_partitions.js'></script>"; // MOD 2017
+    $head_param ="<script src='/user/show_partitions.js'></script>";
 
     $restaurant_id=get_restaurant_id();
     $menu=LoadMenu($restaurant_id);
     $last_modified=getLastModified($restaurant_id);
 
+    $address=getInfo($username,'FA_Address');
+    $restaurant_name=getInfo($username,'FA_Restaurant_Name');
+    //$phone_number=getInfo($username,'FA_Phone');
+    //$opening_time=getInfo($username,'FA_Opening_time');
+
     if ($menu!="0")
     {
         //if menu is set
-        $first_row="<table id='menu_table'>";
-        $first_row.="<tr class='under'>";
-        $first_row.="<td>Picture</td>";
-        $first_row.="<td width=200px>Meal</td>";
-        $first_row.="<td width=90px>Price (CAD)</td>";
-        $first_row.="<td>Description</td>";
-        $first_row.="<td width=150px>Contents</td></tr>";
+        $first_row="<table id='menu_list' style='background-color:white;border:solid 1px #ced1d7;'>";
 
         $a=$menu;
-        $menu=$first_row.$a."</table>";
+        $menu="<table id='menu_list'>".$first_row.$a."</table>";
     }
     else
     {

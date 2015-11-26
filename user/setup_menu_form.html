@@ -1,13 +1,27 @@
+<!-- Success -->
+<div id="success" <?php echo $success_style;?>>
+Menu successfuly saved!
+</div>
+<!-- Success -->
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div style="font-size:25px;" align="center"><a href=<?php echo setLink("/".$res_username);?>><img src="images/back_arrow.png"></a> Set up menu</div>
+<br>
 <div>
-<form action="../requests/save_menu.php" method="POST"> <!-- MOD 2017 -->
+<form action="../requests/save_menu.php" method="POST" enctype="multipart/form-data">
 <table align="center" id="menu_table" class="m_table">
 <!-- Header -->
-<tr class="under">
-    <td width='20px'>#</td>
-    <td align='center'>Picture</td>
+<tr class="under" id="menu_header">
+    <td width='20px'></td>
+    <td align='center' width="50px">Picture</td>
     <td align='center'>Meal/drink name</td>
     <td align='center'>Price
-    	<div class='empty_select'>(<select><option value='CAD' select>CAD</option><option value='USD'>USD</option></select>)
+    	<div class='empty_select'>(<select name="currency"><option value='CAD' select>CAD</option><option value='USD'>USD</option></select>)
     </td>
     <td align='center'>General description</td>
     <td align='center'>Content</td>
@@ -22,15 +36,15 @@
 			<table id="operations">
 			<tr>
 				<td>
-				<div onClick="addRow()"><img src="images/add_row.png"></div>
+				<input type="button" value="add row" onClick="addRow()" class="button_sign_up"></input>
 				</td>
 
 				<td>
-				<div onClick="addSection()"><img src="images/add_section.png"></div>
+				<input type="button" value="add section" onClick="addSection()" class="button_sign_up"></input>
 				</td>
 
 				<td>
-				<input type="submit" value="save menu" name="save_menu_btn"></input>
+				<input type="submit" value="save menu" name="save_menu_btn" class="button_sign_up"></input>
 				</td>
 			</tr>
 			</table>
@@ -40,8 +54,8 @@
 </table>
 
 <div align="center">
-<input type="text" name="Row_Count" value="1" id="Row_Count" style="width:50px;"></input>
-<input type="text" name="FA_Sections_order" value="" id="FA_Sections" style="width:50px;"></input>
+<input type="text" name="Row_Count" value="1" id="Row_Count" style="width:50px;display:none;" readonly="readonly"></input>
+<input type="text" name="FA_Sections_order" value="" id="FA_Sections" style="width:50px;display:none;" readonly="readonly"></input>
 </div>
 </form>
 <!--Last row - Parameters-->

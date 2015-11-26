@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp -a balamou/. ../restaurant_data/Pictures/balamou/

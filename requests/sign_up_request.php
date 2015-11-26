@@ -66,14 +66,14 @@
     else
     {
         //error
-        echo "<script> location.replace('../sign_up/sign_up.php'); </script>"; // MOD 2017
+        echo "<script> location.replace('../sign_up/index.php'); </script>"; // MOD 2017
     }
     }
 
     if ($register==false)
     {
         //error
-        echo "<script> location.replace('../sign_up/sign_up.php'); </script>"; // MOD 2017
+        echo "<script> location.replace('../sign_up/index.php'); </script>"; // MOD 2017
     }
 
     mysqli_close($conn);

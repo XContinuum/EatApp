@@ -12,7 +12,7 @@
 
         if (isset($_SESSION['token']))
         {
-            return $row['FA_Username'];
+            return strtolower($row['FA_Username']);
         }
         else
         {
@@ -53,6 +53,19 @@
         return $row[$info];
     }
 
+     //fetch different infos about the restaurant based on the id
+    function getInfoFromID($restaurant_id,$info)
+    {
+        require("server_connection.php");
+
+        $sql = "SELECT FA_Username,FA_Restaurant_Name,FA_Postal_Code,FA_Address FROM FA_RESTORANTS WHERE ID='$restaurant_id'";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_close($conn);
+
+        return $row[$info];
+    }
+
 
     //check if username is in the database
     function checkUsernameStatus($username_)
@@ -82,4 +95,5 @@
         $path=$ini_array['server']['path'];
         echo "'".$path.$string."'";
     }
+
 ?>
