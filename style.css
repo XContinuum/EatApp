@@ -1,7 +1,36 @@
+/* MOD 2017 removed eatapp.ca */
+/*
+@font-face {font-family: "AvenirLTStd-Black"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Black.otf);}
+@font-face {font-family: "AvenirLTStd-BlackOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-BlackOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Book"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Book.otf);}
+@font-face {font-family: "AvenirLTStdBlackOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-BookOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Heavy"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Heavy.otf);}
+@font-face {font-family: "AvenirLTStd-HeavyOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-HeavyOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Light"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Light.otf);}
+@font-face {font-family: "AvenirLTStd-LightOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-LightOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Medium"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Medium.otf);}
+@font-face {font-family: "AvenirLTStd-MediumOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-MediumOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Oblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Oblique.otf);}
+@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}*/
+
+
+@font-face {font-family: "AvenirLTStd-Black"; src:url(Fonts/AvenirLTStd-Black.otf);}
+@font-face {font-family: "AvenirLTStd-BlackOblique"; src:url(Fonts/AvenirLTStd-BlackOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Book"; src:url(Fonts/AvenirLTStd-Book.otf);}
+@font-face {font-family: "AvenirLTStdBlackOblique"; src:url(Fonts/AvenirLTStd-BookOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Heavy"; src:url(Fonts/AvenirLTStd-Heavy.otf);}
+@font-face {font-family: "AvenirLTStd-HeavyOblique"; src:url(Fonts/AvenirLTStd-HeavyOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Light"; src:url(Fonts/AvenirLTStd-Light.otf);}
+@font-face {font-family: "AvenirLTStd-LightOblique"; src:url(Fonts/AvenirLTStd-LightOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Medium"; src:url(Fonts/AvenirLTStd-Medium.otf);}
+@font-face {font-family: "AvenirLTStd-MediumOblique"; src:url(Fonts/AvenirLTStd-MediumOblique.otf);}
+@font-face {font-family: "AvenirLTStd-Oblique"; src:url(Fonts/AvenirLTStd-Oblique.otf);}
+@font-face {font-family: "AvenirLTStd-Roman"; src:url(Fonts/AvenirLTStd-Roman.otf);}
+
 html
 {
-  width:100%;
-  height:100%; /* MOD 2017 */
+    width:100%;
+    height:100%;
 }
 
 body
@@ -10,9 +39,10 @@ body
     margin:0;
     padding:0;
     background-color:#fbfbfb;
-    height: 100%; /* MOD 2017 */
-    /*overflow-y:hidden;*/
+    width:100%;
+    height:100%;
 }
+
 
 input[type='password'], input[type='text']
 {
@@ -36,7 +66,8 @@ textarea:focus
 #overall_table
 {
     border:solid 0px black;
-    height:100%; /* 740px MOD 2017 */
+    /*height:740px;*/
+    height:100%;
     width:100%;
     margin:0px;
     padding:0px;
@@ -193,11 +224,11 @@ font-size:14px;
 /* Wrong/Approved field*/
 .wrong_field
 {
-    border:solid 1px #fa6d65;
+    border:solid 1px #fa6d65 !important;
 }
 .approved_field
 {
-    border:solid 1px #31dc78;
+    border:solid 1px #31dc78 !important;
 }
 /*LOCATION*/
 #sign_up_location_table
@@ -248,4 +279,9 @@ font-size:14px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+.select-style select:focus
+{
+    outline:none;
 }

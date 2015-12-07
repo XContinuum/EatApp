@@ -1,6 +1,7 @@
 <?php
-    if (checkUsernameStatus($username)==1)
+    if (checkUsernameStatus($username)==1 && (checkIfValidated($username)==1 || isAdminLogged()==1))
     {
+        //If the user exists and it is validated or the admin is logged
         $head_param ="<script src='/user/show_partitions.js'></script>";
 
         $restaurant_name=getInfo($username,'FA_Restaurant_Name');
@@ -9,8 +10,19 @@
         //$opening_time
 
 
+        $inside_menu=LoadMenu(getInfo($username,'ID'));
         $last_modified=getLastModified(getInfo($username,'ID'));
-        $menu="<table style='width:100%;'>".LoadMenu(getInfo($username,'ID'))."</table>";
+
+
+        //NO MENU+++
+        if ($inside_menu=="0")
+        {
+            $inside_menu="The restaurant haven't uploaded the menu";
+            $last_modified="";
+        }
+        //NO MENU---
+
+        $menu="<table style='width:100%;'>".$inside_menu."</table>";
 
         ob_start();
         require_once("restaurant_view.html");

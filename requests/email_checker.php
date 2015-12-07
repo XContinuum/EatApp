@@ -1,7 +1,8 @@
 <?php
     if(isset($_POST["email"]))
     {
-        if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+        if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')
+        {
             die();
         }
         $ini_array=parse_ini_file("settings.ini", true);
@@ -26,10 +27,13 @@
         $statement->execute();
         $statement->bind_result($email);
 
-        if($statement->fetch()){
-            die("<img src='images/not_available.png'></img>");
-        }else{
-            die("<img src='images/available.png'></img>");
+        if($statement->fetch())
+        {
+            die("0"); //not available
+        }
+        else
+        {
+            die("1"); //available
         }
     }
 ?>

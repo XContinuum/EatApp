@@ -17,7 +17,7 @@ function readTextFile(file)
 function initiate()
 {
     //Load list of countries
-    var text=readTextFile("../country_list.txt"); // MOD 2017
+    var text=readTextFile("country_list.txt");
     var obj=JSON.parse(text);
     var string="<div class='select-style'><select name='FA_Country'>";
     var sel="";
@@ -55,70 +55,64 @@ $(document).ready(
     var x_timer;
     $("#check_email").keyup(function (e)
     {
-    clearTimeout(x_timer);
-    var email = $(this).val();
-    x_timer = setTimeout(function(){check_email_ajax(email);}, 1000);
+        clearTimeout(x_timer);
+        var email = $(this).val();
+        x_timer = setTimeout(function(){check_email_ajax(email);}, 1000);
     });
 
 
     var x_timer2;
     $("#check_username").keyup(function (e)
     {
-    clearTimeout(x_timer2);
-    var username = $(this).val();
-    x_timer2 = setTimeout(function(){check_username_ajax(username);}, 1000);
+        clearTimeout(x_timer2);
+        var username = $(this).val();
+        x_timer2 = setTimeout(function(){check_username_ajax(username);}, 1000);
     });
+
+
+
 
     //check email
     function check_email_ajax(email)
     {
-    $("#user-result").html("<img src='images/loading.png'></img>");
-
-    $.post('../requests/email_checker.php', {'email':email}, function(data) // MOD 2017
+    $.post('../requests/email_checker.php', {'email':email}, function(data)
     {
        var result=$.trim(data);
 
-    if (result == "<img src='images/not_available.png'></img>")
-       {
+    if (result == "0") //not available
+    {
        //Email taken
        $("#check_email").removeClass();
-       $("#check_email").attr('class', 'wrong_field');
-
+       $("#check_email").addClass('wrong_field');
 
        setError("Email is not available");
 
        email_available=0;
        setLogin();
-
-       $("#user-result").html(data);
-       }
-       else
-    if (result == "<img src='images/available.png'></img>")
+    }
+    else
+      if (result == "1")
        {
-       //Email format is invalid
-       if (!isValidEmailAddress(email))
-       {
-       $("#check_email").removeClass();
-       $("#check_email").attr('class', 'wrong_field');
+        //Email format is invalid
+        if (!isValidEmailAddress(email))
+        {
+            $("#check_email").removeClass();
+            $("#check_email").addClass('wrong_field');
 
-        setError("Email has an improper format");
-        email_available=0;
-        setLogin();
+            setError("Email has an improper format");
+            email_available=0;
+            setLogin();
+        }
+        else
+            {
+            //Everything is fine
+            $("#check_email").removeClass();
+            $("#check_email").addClass('approved_field');
 
-       $("#user-result").html("<img src='images/not_available.png'></img>");
-       }
-       else
-       {
-       //Everything is fine
-       $("#check_email").removeClass();
-       $("#check_email").attr('class', 'approved_field');
-
-       setError("");
-       email_available=1;
-       setLogin();
-       $("#user-result").html(data);
-
-       }
+            setError("");
+            email_available=1;
+            setLogin();
+            }
        }
  });
 
@@ -127,61 +121,55 @@ $(document).ready(
 //check username
 function check_username_ajax(username)
 {
-    $("#username-result").html("<img src='images/not_available.png'></img>");
-
-    $.post('../requests/username_checker.php', {'username':username}, // MOD 2017
+    $.post('../requests/username_checker.php', {'username':username},
        function(data)
     {
     var result=$.trim(data);
 
-    if (result == "<img src='images/not_available.png'></img>")
+    if (result == "0") //Username is not available
     {
-    //Username taken
-    $("#check_username").removeClass();
-    $("#check_username").attr('class', 'wrong_field');
+        //Username taken
+        $("#check_username").removeClass();
+        $("#check_username").addClass('wrong_field');
 
-    setError("Username is not available");
-    user_name_available=0;
-    setLogin();
-
-    $("#username-result").html(data);
+        setError("Username is not available");
+        user_name_available=0;
+        setLogin();
     }
     else
-    if (result == "<img src='images/available.png'></img>")
-    {
-    //Username format is invalid
-    if (username.length<0 || /[\W]/.test(username)==true)
-    {
-    $("#check_username").removeClass();
-    $("#check_username").attr('class', 'wrong_field');
+        if (result == "1") //Username is available
+        {
+            //Username format is invalid
+            if (username.length<0 || /[\W]/.test(username)==true)
+            {
+                $("#check_username").removeClass();
+                $("#check_username").addClass('wrong_field');
 
-
-    setError("Username has an improper format");
-    user_name_available=0;
-    setLogin();
-
-    $("#username-result").html("<img src='images/not_available.png'></img>");
-    }
-    else
-    {
-    //Everything is fine
-    $("#check_username").removeClass();
-    $("#check_username").attr('class', 'approved_field');
-    setError("");
-    user_name_available=1;
-    setLogin();
-
-    $("#username-result").html(data);
-    }
-    }
+                setError("Username has an improper format");
+                user_name_available=0;
+                setLogin();
+            }
+            else
+                {
+                    //Everything is fine
+                    $("#check_username").removeClass();
+                    $("#check_username").addClass('approved_field');
+                    setError("");
+                    user_name_available=1;
+                    setLogin();
+                }
+         }
     });
-    }
-    //+++
-    });
-    function isValidEmailAddress(emailAddress) {
-        var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+}
+//+++
+
+});
+
+    function isValidEmailAddress(emailAddress)
+    {
+      var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
       return pattern.test(emailAddress);
-};
+    };
 
 
 //Show error in div
@@ -298,7 +286,7 @@ function setLogin()
     if (email_available==1 && passwords_valid==1 && user_name_available==1 && agreement==1 && restaurant_name_valid==1)
     {
         login=true;
-        document.getElementById('next_location').style.backgroundColor="#87c9ef";
+        document.getElementById('next_location').style.backgroundColor="#ffa25e";
     }
     else
     {
@@ -371,7 +359,7 @@ function final_result()
     {
         //Enable button
         document.getElementById("finalize_sign_up").disabled=false;
-        document.getElementById("finalize_sign_up").style.backgroundColor="#87c9ef";
+        document.getElementById("finalize_sign_up").style.backgroundColor="#ffa25e";
     }
     else
         {

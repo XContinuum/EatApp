@@ -1,5 +1,5 @@
 <?php
-    if (isset($_POST["login_submit"]))
+if (isset($_POST["login_submit"]))
     {
         require ("hash_algorithm.php");
         require ("server_connection.php");
@@ -33,12 +33,45 @@
 
             $_SESSION['token']=$token;
             $_SESSION['time']=$t;
-            echo "<script> location.replace('../index.php'); </script>";
 
+            header("Location: ../index.php");
         }
         else
         {
-            echo "<script> location.replace('../login/index.php?error=1'); </script>";
+            //Checking if ADMIN Logged in+++
+            $sql = "SELECT FA_Username,FA_Pass FROM FA_ADMIN_PANEL WHERE FA_Username='$FA_Email'";
+            $result = mysqli_query($conn,$sql);
+            $row = mysqli_fetch_assoc($result);
+            //---
+
+            if (PassHash::check_password($row["FA_Pass"], $FA_Password))
+            {
+                 //Logged in!
+                $salt=rand(403,600) . "P20x" . rand(760,930);
+                $string=time() . $salt . $row["FA_Username"] . $salt;
+                $token=sha1($string);
+
+                $t=3600; //set time of destruction
+
+                if (isset($_POST["remember_me"]))
+                {
+                    $t=3600*24*365; //set time of destruction
+                }
+
+                $sql = "UPDATE FA_ADMIN_PANEL SET FA_Token='$token' WHERE FA_Username='$FA_Email'";
+                mysqli_query($conn,$sql);
+
+                session_start();
+
+                $_SESSION['admin_token']=$token;
+                $_SESSION['time']=$t;
+
+                header("Location: ../panel/admin/index.php");
+            }
+            else
+            {
+                header("Location: ../login/index.php?error=1");
+            }
         }
 
         mysqli_close($conn);

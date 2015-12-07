@@ -16,7 +16,11 @@ CREATE TABLE FA_RESTORANTS (
   FA_Address varchar(100),
   FA_Postal_Code varchar(100),
 
-  FA_Token varchar(100) NOT NULL DEFAULT '0'
+  FA_Token varchar(100) NOT NULL DEFAULT '0',
+  FA_Hash varchar(100) NOT NULL DEFAULT '0',
+  FA_Active int DEFAULT 0,
+
+  FA_Validated int DEFAULT 0
 );
 
 
@@ -37,4 +41,13 @@ CREATE TABLE FA_MENUS (
   FA_Last_Modified date,
 
   FOREIGN KEY (RESTAURANT_ID) REFERENCES FA_RESTORANTS(ID)
+);
+
+
+CREATE TABLE FA_ADMIN_PANEL (
+  ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  FA_Username varchar(100) NOT NULL,
+  FA_Pass varchar(100) NOT NULL,
+
+  FA_Token varchar(100) NOT NULL DEFAULT '0'
 );

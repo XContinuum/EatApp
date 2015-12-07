@@ -3,7 +3,7 @@
 
 ## Features
 
-  - Can upload menu pictures
+  - Added admin panel
 
 ## Screenshots
 
@@ -11,7 +11,7 @@
 
 ## Database
 
-  <img src="instructions/screenshots/FA_RESTORANTS.png" width="30%"/> <img src="instructions/screenshots/FA_MENUS.png" width="30%"/>
+  <img src="instructions/screenshots/FA_RESTORANTS.png" width="30%"/> <img src="instructions/screenshots/FA_MENUS.png" width="30%"/> <img src="instructions/screenshots/FA_ADMIN_PANEL.png" width="30%"/>
 
 ## Contributors
   :bowtie: Michel Balamou

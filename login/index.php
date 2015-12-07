@@ -1,33 +1,29 @@
 <?php
-    session_start();
+    require("../requests/receive_information.php");
 
-    if (isset($_SESSION['token']))
+    if (isAdminLogged()==1)
     {
+        //Admin logged
+        header("Location: ../panel/admin/index.php");
+    }
+    else
+    if (isUserLogged()==1)
+    {
+        //User is logged
         header("Location: ../index.php");
     }
     else
     {
+        //No one is logged
         $error="";
 
         if ($_GET["error"]=="1")
-        {
             $error="<div id='error_box' style='top:0px;'>Login or password incorrect!</div>";
-        }
 
         ob_start();
         require_once('login_box.html');
         $content = ob_get_clean();
 
         include("../template.html");
-    }
-
-
-    function setLink($string)
-    {
-        $ini_array=parse_ini_file("../requests/settings.ini", true); // MOD 2017
-
-        $path=$ini_array['server']['path']; // MOD 2017
-        //$path="http://localhost:8888/";
-        echo "'".$path.$string."'";
     }
 ?>

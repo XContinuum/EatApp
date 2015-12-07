@@ -1,10 +1,17 @@
+html
+{
+    width:100%;
+    height:100%;
+}
+
 body
 {
     font-family:"AvenirLTStd-Roman";
     margin:0;
     padding:0;
     background-color:#fbfbfb;
-    overflow-y:hidden;
+    width:100%;
+    height:100%;
 }
 
 input[type='password'], input[type='text']
@@ -23,7 +30,7 @@ input[type='password']:focus, input[type='text']:focus
 #overall_table
 {
     border:solid 0px black;
-    height:740px;
+    height:100%;
     width:100%;
     margin:0px;
     padding:0px;

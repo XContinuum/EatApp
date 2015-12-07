@@ -5,7 +5,6 @@
         {
             die();
         }
-        
         $ini_array=parse_ini_file("settings.ini", true);
 
         $servername=$ini_array['server']['servername'];
@@ -30,11 +29,11 @@
 
         if($statement->fetch())
         {
-            die("<img src='images/not_available.png'></img>");
+            die("0"); //Not available
         }
         else
         {
-            die("<img src='images/available.png'></img>");
+            die("1"); //Available
         }
     }
 ?>

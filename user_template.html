@@ -8,11 +8,15 @@
     </head>
 <body onLoad="initiate()">
 
-<div style="position:absolute;top:0px;left:0px;"><a href=<?php setLink("index.php");?>><img src=<?php setLink("images/x_small_logo.png");?>></a></div>
-
-<div style="position:absolute;top:5px;right:10px;"><a href=<?php setLink("/requests/log_out_request.php");?>>Log out</a></div>
-
 <table id="overall_table" border='0'>
+<!-- Top panel -->
+<tr style='border-bottom:solid 1px #d2d7dc;height:40px;'>
+    <td valign='top'>
+    <div style="float:left;"><a href=<?php setLink("");?>><img style="height:40px;" align="left" src=<?php setLink("/images/x_small_logo.png");?>></a></div>
+
+    <? echo $panel; ?>
+   </td>
+</tr>
 <!-- Content -->
 <tr>
 <td valign="top">
@@ -40,12 +44,11 @@
     </table>
 </td>
 </tr>
-
 <!-- Social media -->
 <tr>
     <td align="center" valign="center" style="background-color:#ffa25e;" height="50px">
-        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("images/twitter.png");?> style="padding-right:20px;height:40px;width:40px;"></a>
-        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("images/facebook.png");?> style="height:40px;width:40px;"></a>
+        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?> style="padding-right:20px;height:40px;width:40px;"></a>
+        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?> style="height:40px;width:40px;"></a>
     </td>
 </tr>
 </table>

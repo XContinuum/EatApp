@@ -71,7 +71,7 @@
         return $menu;
     }
 
-    function FillMenuBlanks($restaurant_id)
+     function FillMenuBlanks($restaurant_id)
     {
         require ("server_connection.php");
 
