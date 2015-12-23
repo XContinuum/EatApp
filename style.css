@@ -1,5 +1,3 @@
-/* MOD 2017 removed eatapp.ca */
-/*
 @font-face {font-family: "AvenirLTStd-Black"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Black.otf);}
 @font-face {font-family: "AvenirLTStd-BlackOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-BlackOblique.otf);}
 @font-face {font-family: "AvenirLTStd-Book"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Book.otf);}
@@ -11,21 +9,7 @@
 @font-face {font-family: "AvenirLTStd-Medium"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Medium.otf);}
 @font-face {font-family: "AvenirLTStd-MediumOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-MediumOblique.otf);}
 @font-face {font-family: "AvenirLTStd-Oblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Oblique.otf);}
-@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}*/
-
-
-@font-face {font-family: "AvenirLTStd-Black"; src:url(Fonts/AvenirLTStd-Black.otf);}
-@font-face {font-family: "AvenirLTStd-BlackOblique"; src:url(Fonts/AvenirLTStd-BlackOblique.otf);}
-@font-face {font-family: "AvenirLTStd-Book"; src:url(Fonts/AvenirLTStd-Book.otf);}
-@font-face {font-family: "AvenirLTStdBlackOblique"; src:url(Fonts/AvenirLTStd-BookOblique.otf);}
-@font-face {font-family: "AvenirLTStd-Heavy"; src:url(Fonts/AvenirLTStd-Heavy.otf);}
-@font-face {font-family: "AvenirLTStd-HeavyOblique"; src:url(Fonts/AvenirLTStd-HeavyOblique.otf);}
-@font-face {font-family: "AvenirLTStd-Light"; src:url(Fonts/AvenirLTStd-Light.otf);}
-@font-face {font-family: "AvenirLTStd-LightOblique"; src:url(Fonts/AvenirLTStd-LightOblique.otf);}
-@font-face {font-family: "AvenirLTStd-Medium"; src:url(Fonts/AvenirLTStd-Medium.otf);}
-@font-face {font-family: "AvenirLTStd-MediumOblique"; src:url(Fonts/AvenirLTStd-MediumOblique.otf);}
-@font-face {font-family: "AvenirLTStd-Oblique"; src:url(Fonts/AvenirLTStd-Oblique.otf);}
-@font-face {font-family: "AvenirLTStd-Roman"; src:url(Fonts/AvenirLTStd-Roman.otf);}
+@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}
 
 html
 {
@@ -57,7 +41,6 @@ input[type='password']:focus, input[type='text']:focus
     outline:none;
 }
 
-
 textarea:focus
 {
     outline:none;
@@ -66,7 +49,6 @@ textarea:focus
 #overall_table
 {
     border:solid 0px black;
-    /*height:740px;*/
     height:100%;
     width:100%;
     margin:0px;
@@ -74,6 +56,13 @@ textarea:focus
     border-collapse:collapse;
     background-color:#f7f9fa;
 }
+
+#overall_table td
+{
+    padding:0;
+    margin:0;
+}
+
 #search_box
 {
     font-size:20px;
@@ -83,11 +72,7 @@ textarea:focus
     width:500px;
     height:40px;
 }
-#overall_table td
-{
-    padding:0;
-    margin:0;
-}
+
 #name
 {
     font-size:35px;
@@ -284,4 +269,27 @@ font-size:14px;
 .select-style select:focus
 {
     outline:none;
+}
+
+
+/*ADMIN*/
+#admin_table
+{
+    width:700px;
+    border:solid 1px black;
+    background-color:white;
+    border-collapse:collapse;
+}
+
+#admin_table td
+{
+    border-right:solid 1px black;
+    padding:2px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+#validated
+{
+    display:none;
 }

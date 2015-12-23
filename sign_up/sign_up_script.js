@@ -4,7 +4,6 @@ var user_name_available=2;
 var agreement=0;
 var restaurant_name_valid=2;
 var login=false;
-
 //Load country list for location menu+++
 function readTextFile(file)
 {
@@ -122,7 +121,7 @@ $(document).ready(
 function check_username_ajax(username)
 {
     $.post('../requests/username_checker.php', {'username':username},
-       function(data)
+    function(data)
     {
     var result=$.trim(data);
 
@@ -140,7 +139,7 @@ function check_username_ajax(username)
         if (result == "1") //Username is available
         {
             //Username format is invalid
-            if (username.length<0 || /[\W]/.test(username)==true)
+            if (username.length<=0 || /[\W]/.test(username)==true)
             {
                 $("#check_username").removeClass();
                 $("#check_username").addClass('wrong_field');

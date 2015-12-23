@@ -5,6 +5,8 @@
 {
     width:50%;
     border-collapse:collapse;
+    background-color:white;
+    height:100%;
 }
 
 #menu_list

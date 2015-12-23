@@ -13,7 +13,7 @@
 
         $panel="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:10px;'>";
         $panel.="<a href='../requests/log_out_request.php'>Logout</a></div>";
-        $panel.="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:10px;'>";
+        $panel.="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:15px;'>";
         $panel.="<a href='/$get_username'>$get_username</a></div>";
     }
     else
@@ -23,7 +23,7 @@
 
             $panel="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:10px;'>";
             $panel.="<a href='../requests/log_out_request.php'>Logout</a></div>";
-            $panel.="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:10px;'>";
+            $panel.="<div style='float:right;vertical-align:top;margin-top:10px;margin-right:15px;'>";
             $panel.="<a href='../panel/admin/index.php'>$get_username</a></div>";
         }
         else

@@ -17,26 +17,26 @@
     //IF HASHES ARE EQUAL
     if ($row['FA_Hash']==$FA_Hash)
     {
-    	$content="<br><br><div align='center'>Your account has been activated!<br>";
+    	  $content="<br><br><div align='center'>Your account has been activated!<br>";
 
-		  $sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
-    	$result=mysqli_query($conn,$sql);
+		    $sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
+    	  $result=mysqli_query($conn,$sql);
 
-    	if ($logged==1)
-    		$content.="<a href='/$username'>Go to profile</a></div>";
-    	else
-    		$content.="<a href='login/index.php'>Log in</a></div>";
-  	}
-  	else
-  	{
-  		//IF HASHES ARE NOT EQUAL
-  		$content="<br><br><div align='center'>Activation code has expired.";
+    	  if ($logged==1)
+    		   $content.="<a href='/$username'>Go to profile</a></div>";
+        else
+    		      $content.="<a href='login/index.php'>Log in</a></div>";
+	   }
+	   else
+	   {
+    		//IF HASHES ARE NOT EQUAL
+    		$content="<br><br><div align='center'>Activation code has expired.";
 
-  		if ($logged==1)
-  			$content.=" <a href='requests/resend_email.php'>Resend email verification.</a></div>";
-  		else
-  			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
-  	}
+    		if ($logged==1)
+    			$content.=" <a href='requests/resend_email.php'>Resend email verification.</a></div>";
+    		else
+    			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
+    }
 
  	  mysqli_close($conn);
 

@@ -3,7 +3,7 @@
 
 ## Features
 
-  - Added admin panel
+  - Backup before switching to new design (gradient background)
 
 ## Screenshots
 

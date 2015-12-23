@@ -1,13 +1,20 @@
 <?php
     require("../../requests/receive_information.php");
 
-    $username=getAdminUsername();
-
     if (isAdminLogged()==1)
     {
         //Admin logged
+        $username=getAdminUsername();
+
+
         $content="<div align='center'>Welcome back, ".$username."</div>";
-        $content.="<br><br><div align='center'>".getUnvalidatedUsers()."</div>";
+        $content.="<br><br>";
+
+        $content.="<div align='center'><input type='button' value='unvalidated' onClick='show(0);'></input>";
+        $content.="<input type='button' value='validated' onClick='show(1);''></input></div>";
+
+        $content.="<br><div align='center' id='validated'>".getUsers(1)."</div>";
+        $content.="<div align='center' id='not_validated'>".getUsers(0)."</div>";
     }
     else
     {
@@ -21,21 +28,39 @@
     include("../../template.html");
 
 
-    function getUnvalidatedUsers()
+    function getUsers($val)
     {
-        $list="<table style='width:700px;border:solid 1px black;background-color:white;padding:5px;'>";
-        $list.="<tr><td><b>Username</b></td><td><b>Restaurant Name</b></td><td><b>Email</b></td><td><b>Validate</b></td><td><b>Ban</b></td><td><b>Registered</b></td></tr>";
+        $list="<table id='admin_table'>";
+        $list.="<tr><td><b>Username</b></td>";
+        $list.="<td><b>Restaurant Name</b></td>";
+        $list.="<td><b>Email</b></td>";
+        $list.="<td><b>Email activated</b></td>";
+        $list.="<td><b>Validate</b></td>";
+        $list.="<td><b>Ban</b></td>";
 
         require("server_connection.php");
 
-        $sql = "SELECT ID,FA_Username,FA_Restaurant_Name,FA_Email FROM FA_RESTORANTS WHERE FA_Validated='0' LIMIT 10";
+        $sql = "SELECT ID,FA_Username,FA_Restaurant_Name,FA_Email,FA_Active FROM FA_RESTORANTS WHERE FA_Validated='$val' ORDER BY FA_Dat_Reg ASC LIMIT 10 ";
         $result = mysqli_query($conn,$sql);
 
+        $button_value='validate';
 
+        if ($val==1)
+        $button_value='unvalidate';
 
         while ($row = mysqli_fetch_array($result, MYSQL_ASSOC))
         {
-            $list.="<tr><td><a href='$path/".$row['FA_Username']."'>".$row['FA_Username']."</a></td><td>".$row['FA_Restaurant_Name']."</td><td>".$row['FA_Email']."<td><input type='button' value='validate' onClick=\"validate('".$row['ID']."');\"></input></td>";
+            $active="<span style='color:red;'>no</span>";
+
+            if ($row['FA_Active']==1)
+                $active="<span style='color:green;'>yes</span>";
+
+
+            $list.="<tr><td><a href='$path/".$row['FA_Username']."'>".$row['FA_Username']."</a></td>";
+            $list.="<td>".$row['FA_Restaurant_Name']."</td>";
+            $list.="<td>".$row['FA_Email']."</td>";
+            $list.="<td>".$active."</td>";
+            $list.="<td><input type='button' value='$button_value' onClick=\"$button_value('".$row['ID']."');\"></input></td>";
             $list.="<td><input type='button' value='ban' onClick=\"ban('".$row['ID']."');\"></input></td></tr>";
         }
 

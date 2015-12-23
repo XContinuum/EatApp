@@ -6,12 +6,20 @@
             <link rel="stylesheet" type="text/css" href= <?php setLink("/style_logged.css");?> >
             <?php echo $head_param;?>
     </head>
+
+    <style>
+    /*panel font color*/
+    #panel a
+    {
+        color:white;
+    }
+    </style>
 <body onLoad="initiate()">
 
 <table id="overall_table" border='0'>
 <!-- Top panel -->
-<tr style='border-bottom:solid 1px #d2d7dc;height:40px;'>
-    <td valign='top'>
+<tr style='height:40px;background-color:#3d3d3e;'>
+    <td valign='top' id='panel'>
     <div style="float:left;"><a href=<?php setLink("");?>><img style="height:40px;" align="left" src=<?php setLink("/images/x_small_logo.png");?>></a></div>
 
     <? echo $panel; ?>

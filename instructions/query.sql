@@ -20,7 +20,8 @@ CREATE TABLE FA_RESTORANTS (
   FA_Hash varchar(100) NOT NULL DEFAULT '0',
   FA_Active int DEFAULT 0,
 
-  FA_Validated int DEFAULT 0
+  FA_Validated int DEFAULT 0,
+  FA_Dat_Reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 

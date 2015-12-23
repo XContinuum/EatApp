@@ -26,4 +26,5 @@
 
         include("../template.html");
     }
+
 ?>

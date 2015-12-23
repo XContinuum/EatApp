@@ -13,12 +13,14 @@
         $inside_menu=LoadMenu(getInfo($username,'ID'));
         $last_modified=getLastModified(getInfo($username,'ID'));
 
+        $sort_price="<div style='width:100%;text-align:right;''><input type='text' placeholder='search item by price' style='font-size:16px;padding-left:12px;width:200px;height:25px;''></input></div>";
 
         //NO MENU+++
         if ($inside_menu=="0")
         {
             $inside_menu="The restaurant haven't uploaded the menu";
             $last_modified="";
+            $sort_price="";
         }
         //NO MENU---
 

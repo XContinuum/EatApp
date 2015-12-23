@@ -1,5 +1,4 @@
 RewriteEngine On
-#RewriteRule ^([\w\-]+)$ user/index.php?username=$1 [NC,L] redirect path from /username to the given one
 RewriteRule ^([A-Za-z0-9\-_]+)$ user/index.php?username=$1 [NC,L]
 
 #Error files directories
