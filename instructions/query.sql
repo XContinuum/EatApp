@@ -1,3 +1,6 @@
+/*
+  Version 1.8
+*/
 CREATE DATABASE TheFoodApp;
 USE TheFoodApp;
 
@@ -21,7 +24,21 @@ CREATE TABLE FA_RESTORANTS (
   FA_Active int DEFAULT 0,
 
   FA_Validated int DEFAULT 0,
-  FA_Dat_Reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  FA_Dat_Reg TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  /* NEW v1.8 */
+  FA_Phone_number varchar(100) DEFAULT '',
+  FA_Website varchar(100) DEFAULT '',
+
+  FA_Pic varchar(200),
+
+  Schedule_Monday varchar(50) DEFAULT '',
+  Schedule_Tuesday varchar(50) DEFAULT '',
+  Schedule_Wednesday varchar(50) DEFAULT '',
+  Schedule_Thursday varchar(50) DEFAULT '',
+  Schedule_Friday varchar(50) DEFAULT '',
+  Schedule_Saturday varchar(50) DEFAULT '',
+  Schedule_Sunday varchar(50) DEFAULT ''
 );
 
 

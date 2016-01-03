@@ -1,0 +1,288 @@
+/*
+----------SIGN UP
+*/
+
+input[type='time_picker']
+{
+    font-size: 15px;
+    font-family:"AvenirLTStd-Light";
+    font-weight:lighter;
+    border:solid 1px #ced1d7;
+    padding-left:15px;
+    width:70px;
+    padding:5px;
+}
+
+input[type='time_picker']:focus
+{
+    outline:none;
+}
+
+
+
+#error_box
+{
+    position:fixed;
+    top:-23px;
+    left:0;
+    background-color:#fa6d65;
+    color:white;
+    width:100%;
+    height:20px;
+    text-align:center;
+    padding-top:3px;
+}
+#sign_up_table
+{
+    width:450px;
+    font-family:"AvenirLTStd-Light";
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    text-align:left;
+    padding:40px;
+    padding-top:15px;
+    padding-bottom:30px;
+
+    background-color:white;
+    box-shadow: 0px 0px 2px #dad9d9;
+}
+#sign_up_table input[type='text'], input[type='password']
+{
+    width:200px;
+    padding:5px;
+}
+.button_sign_up
+{
+    border:solid 0px black;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    width:49%;
+    height:35px;
+    background-color:#ffa25e;
+    color:white;
+    font-weight: bold;
+    padding:0px;
+
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
+}
+.pic_result
+{
+    display:inline-block;
+    margin:0;
+    padding:0;
+    padding-top:4px;
+    width:24px;
+    height:24px;
+}
+/* Wrong/Approved field*/
+.wrong_field
+{
+    border:solid 1px #fa6d65 !important;
+}
+.approved_field
+{
+    border:solid 1px #31dc78 !important;
+}
+/*LOCATION*/
+#sign_up_location_table
+{
+    font-family:"AvenirLTStd-Light";
+    display:none;
+    width:300px;
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    text-align:left;
+    padding:40px;
+    padding-top:30px;
+    padding-bottom:30px;
+    text-align:left;
+
+
+    background-color:white;
+    box-shadow: 0px 0px 2px #dad9d9;
+}
+#sign_up_location_table input[type=text], input[type=password]
+{
+    width:200px;
+    padding:5px;
+}
+
+/*Additional information*/
+#sign_up_more_table
+{
+    display: none;
+    width:450px;
+    font-family:"AvenirLTStd-Light";
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    text-align:left;
+    padding:40px;
+    padding-top:15px;
+    padding-bottom:30px;
+
+    background-color:white;
+    box-shadow: 0px 0px 2px #dad9d9;
+}
+
+#sign_up_more_table input[type=text], input[type=week],input[type=time]
+{
+    font-family:"AvenirLTStd-Light";
+    width:200px;
+    padding:5px;
+}
+/*Pictures*/
+#sign_up_picture_table
+{
+    display: none;
+    width:450px;
+    font-family:"AvenirLTStd-Light";
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    text-align:left;
+    padding:40px;
+    padding-top:15px;
+    padding-bottom:30px;
+
+    background-color:white;
+    box-shadow: 0px 0px 2px #dad9d9;
+}
+
+
+/*SELECT*/
+.select-style
+{
+    padding: 5px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    width: 200px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 185px 50%;
+}
+.select-style select
+{
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
+
+    padding: 1px 5px;
+    width: 175px;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-style select:focus
+{
+    outline:none;
+}
+
+
+/*UPLOAD IMAGE*/
+#modify_image
+{
+    display:none;
+    position:fixed;
+    background-color: white;
+    top: 40%;
+    left: 50%;
+    height:450px;
+    width:400px;
+    margin-top:-180px; /*set to a negative number 1/2 of your height*/
+    margin-left:-200px; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    padding:15px;
+}
+#modify_image table
+{
+    border-collapse:collapse;
+}
+#modify_image td
+{
+    padding: 0px;
+}
+
+#opaque_background
+{
+    position:fixed;
+    display: none;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+
+    background-color: #303437;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
+    filter: alpha(opacity=70);  /* IE 5-7 */
+    -moz-opacity:0.7;          /* Netscape */
+    -khtml-opacity:0.7;        /* Safari 1.x */
+    opacity:0.7;               /* Good browsers */
+}
+
+.set_picture_btn
+{
+    display:inline-block;
+    border:solid 0px black;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    width:100px;
+    height:35px;
+    background-color:#4d85f2;
+    color:white;
+    font-weight: bold;
+    padding:0px;
+
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
+}
+
+/*INPUT TYPE=FILE*/
+.custom-file-input::-webkit-file-upload-button
+{
+  visibility: hidden;
+}
+.custom-file-input::before
+{
+  content:'Select picture';
+  color:white;
+  background-color:#4d85f2;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before
+{
+  border-color: black;
+}
+.custom-file-input:active::before
+{
+
+}

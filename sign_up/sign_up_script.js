@@ -5,6 +5,7 @@ var agreement=0;
 var restaurant_name_valid=2;
 var login=false;
 //Load country list for location menu+++
+
 function readTextFile(file)
 {
     var xhttp = new XMLHttpRequest();
@@ -43,13 +44,16 @@ function initiate()
     document.getElementById("country_list").innerHTML=string;
 
     //disable button
-    document.getElementById("next_location").style.backgroundColor="#babdc6";
-    document.getElementById("finalize_sign_up").style.backgroundColor="#babdc6";
+    //document.getElementById("finalize_sign_up").style.backgroundColor="#babdc6";
 }
+
 
 //Load country list for location menu---
 $(document).ready(
     function(){
+     $("input[type=time_picker]").helloWorld();
+
+
 
     var x_timer;
     $("#check_email").keyup(function (e)
@@ -245,23 +249,6 @@ function checkRestaurantName(field)
     }
 }
 
-function toggleTable()
-{
-    if (login==true)
-    {
-    var lTable = document.getElementById("sign_up_table");
-    var lTableLocation = document.getElementById("sign_up_location_table");
-    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
-    lTableLocation.style.display = (lTable.style.display == "table") ? "none" : "table";
-    }
-}
-function hideLocationTable()
-{
-    var lTable = document.getElementById("sign_up_location_table");
-    var lTableLocation = document.getElementById("menu_table");
-    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
-    lTableLocation.style.display = (lTable.style.display == "table") ? "none" : "table";
-}
 //Set login value
 function setLogin()
 {
@@ -286,10 +273,12 @@ function setLogin()
     {
         login=true;
         document.getElementById('next_location').style.backgroundColor="#ffa25e";
+        document.getElementById('next_location').disabled=false;
     }
     else
     {
         login=false;
+        document.getElementById('next_location').disabled=true;
         document.getElementById('next_location').style.backgroundColor="#babdc6";
     }
 
@@ -357,13 +346,107 @@ function final_result()
     if (city_length==1 && address_length==1 && postal_code_length==1)
     {
         //Enable button
-        document.getElementById("finalize_sign_up").disabled=false;
-        document.getElementById("finalize_sign_up").style.backgroundColor="#ffa25e";
+        document.getElementById("next_more").disabled=false;
+        document.getElementById("next_more").style.backgroundColor="#ffa25e";
     }
     else
         {
         //Disable button
-        document.getElementById("finalize_sign_up").disabled=true;
-        document.getElementById("finalize_sign_up").style.backgroundColor="#babdc6";
+        document.getElementById("next_more").disabled=true;
+        document.getElementById("next_more").style.backgroundColor="#babdc6";
         }
 }
+
+
+
+
+
+function showSchedule()
+{
+  if (document.getElementById('always_open').checked)
+    {
+        $("#schedule_show").hide();
+    }
+  else
+    {
+       $("#schedule_show").show();
+    }
+}
+
+function hideSchedulePart(week)
+{
+    var elements=document.getElementsByClassName(week);
+
+    for (var i=0; i<elements.length; i++)
+    {
+        if (document.getElementById(week+"_open").checked)
+        {
+            elements[i].style.display="block";
+        }
+        else
+        {
+            elements[i].style.display="none";
+        }
+    }
+
+
+}
+
+
+function showTable(tableId)
+{
+document.getElementById("sign_up_table").style.display="none";
+document.getElementById("sign_up_location_table").style.display="none";
+document.getElementById("sign_up_more_table").style.display="none";
+document.getElementById("sign_up_picture_table").style.display="none";
+
+document.getElementById(tableId).style.display="table";
+}
+
+
+
+
+
+
+
+
+//Upload image+++
+$(function ()
+{
+    $(":file").change(function()
+    {
+        if (this.files && this.files[0])
+        {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+var $superParent;
+
+function imageIsLoaded(e)
+{
+    $("#opaque_background").show();
+    $("#modify_image").show();
+
+    $("body").cleanAll("#uploaded_image");
+
+    $("#uploaded_image").attr("src", e.target.result);
+    $("#uploaded_image").imageCrop("290","290");
+
+    $("#apply_cropping").applyCrop("#crop_info","#final_image");
+
+    $("#cancel_image").click(function(e)
+        {
+            $("#opaque_background").hide();
+            $("#modify_image").hide();
+            $("#final_image").width("0px").height("0px");
+
+            var control = $("#imageToUpload");
+            control.replaceWith(control=control.clone(true));
+
+        });
+};
+ //Upload image---

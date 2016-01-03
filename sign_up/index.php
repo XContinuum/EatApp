@@ -15,6 +15,7 @@
         else
         {
             //Neither are logged
+            $title="EatApp - Sign up";
             $page='sign_up_form.html';
 
             ob_start();
@@ -22,7 +23,11 @@
             $content=ob_get_clean();
 
             $head_param= "<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>";
+            $head_param.= "<script src='imagecrop.js'></script>";
             $head_param.= "<script src='sign_up_script.js'></script>";
+            $head_param.="<link rel='stylesheet' type='text/css' href='sign_up_style.css' >";
+
+            $head_param.="<script src='time_picker.js'></script>";
 
             include("../template.html");
         }

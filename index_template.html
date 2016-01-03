@@ -4,56 +4,93 @@
         <title>EatApp</title>
             <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-<body onLoad="initiate()">
-<table id="overall_table" border='0'>
-<!-- Top bar -->
-<tr>
-    <td height="10px" align="right">
-    <?php echo $panel;?>
- </td>
-</tr>
-<!-- Search form -->
-<tr>
-    <td valign="top" align="center">
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-            <img src="images/logo.png">
-        <br>
-            <div id="name">Eat App</div>
-            <div class="light_style">Search for different menus for a good price</div>
-            <input type="text" value="" placeholder="Search" id="search_box"></input>
-    </td>
-</tr>
-<!-- Decorative border -->
-<tr>
-    <td height="10px">
-        <table id="decor_table">
-        <tr>
-            <td>
-                <img src="images/Left.png" style="padding:0px;margin:0px;vertical-align:bottom;">
-            </td>
+    <script>
+    function increase(item)
+    {
+        decreaseAll();
+        item.style.fontSize="45px";
+    }
+    function decreaseAll()
+    {
+        var standard="30px";
+        document.getElementById("meat").style.fontSize=standard;
+        document.getElementById("soup").style.fontSize=standard;
+        document.getElementById("ice_cream").style.fontSize=standard;
+        document.getElementById("pizza").style.fontSize=standard;
+        document.getElementById("hamburger").style.fontSize=standard;
+        document.getElementById("fries").style.fontSize=standard;
+        document.getElementById("shrimp").style.fontSize=standard;
+    }
 
-            <td width="100%" valign="bottom">
-                <div style="width:100%;height:7px;background-color:#ffb47d;"></div>
+    function addTag(query)
+    {
+       var search_box=document.getElementById("search_box");
+       search_box.value=search_box.value+" #"+query;
+    }
+
+    function show_drop_down()
+    {
+        document.getElementById("drop_down_panel").style.display="block";
+    }
+
+    function hide_drop_down()
+    {
+        document.getElementById("drop_down_panel").style.display="none";
+    }
+
+    function changeBackground(item)
+    {
+        document.getElementById("item1").style.backgroundColor="white";
+        document.getElementById("item2").style.backgroundColor="white";
+        document.getElementById("item3").style.backgroundColor="white";
+
+        item.style.backgroundColor="#4d85f2";
+    }
+    </script>
+<body>
+    <table id="overall_table">
+        <tr>
+            <td style='height:30px;' align='right'>
+<?php echo $panel; ?>
+<div id="drop_down_panel" onMouseOver='show_drop_down();' onMouseOut='hide_drop_down();'>
+    <a href=<?php echo "'".$username."'"; ?>><div style="width:100%;height:33%;line-height:2em;" onMouseOver="changeBackground(this);" id="item1">profile</div></a>
+    <a href="#"><div style="width:100%;height:33%;line-height:2em;" onMouseOver="changeBackground(this);" id="item2">settings</div></a>
+    <a href="requests/log_out_request.php"><div style="width:100%;height:34%;line-height:2em;" onMouseOver="changeBackground(this);" id="item3">log out</div></a>
+</div>
             </td>
-            <td>
-                <img src="images/Right.png" style="padding:0px;margin:0px;vertical-align:bottom;">
+        </tr>
+        <tr>
+            <td align='center'>
+                <img src='images/logo.png'>
+                <br>
+                <img style='margin-left:120px;margin-top:-30px;' src='images/logo_text.png'>
+                <br>
+                <br>
+                <input type='text' id='search_box'></input>
+<br>
+<br>
+<br>
+<!-- Meat Soup Ice-Cream Pizza Hamburger Fries Tomato-->
+<div style="font-size:30px;height:50px;vertical-align:bottom;width:250px;" onMouseOut="decreaseAll();">
+    <div class="in_row" style="height:90%;"></div>
+    <div class="in_row" id="meat" onMouseOver="increase(this);" onClick="addTag('meat');">&#x1F357;</div
+    ><div class="in_row" id="soup" onMouseOver="increase(this);" onClick="addTag('soup');">&#x1F35D;</div
+    ><div class="in_row" id="ice_cream" onMouseOver="increase(this);" onClick="addTag('ice_cream');">&#x1F367;</div
+    ><div class="in_row" id="pizza" onMouseOver="increase(this);" onClick="addTag('pizza');">&#x1F355;</div
+    ><div class="in_row" id="hamburger" onMouseOver="increase(this);" onClick="addTag('hamburger');">&#x1F354;</div
+    ><div class="in_row" id="fries" onMouseOver="increase(this);" onClick="addTag('fries');">&#x1F35F;</div
+    ><div class="in_row" id="shrimp" onMouseOver="increase(this);" onClick="addTag('sea_food');">&#x1F364;</div>
+</div>
+<!--EMOJIS-->
+
+
+            </td>
+        </tr>
+        <tr>
+            <td align='center' style='height:100px;'>
+<a href="https://twitter.com/eatappca" target="_blank"><img src='images/twitter.png'></a><a href='https://www.facebook.com/eatappca/' target="_blank"><img src='images/facebook.png'></a>
             </td>
         </tr>
     </table>
-</td>
-</tr>
-<!-- Social media -->
-<tr>
-    <td align="center" valign="center" style="background-color:#ffa25e;" height="100px">
-        <a href="https://twitter.com/eatappca" target="_blank"><img src="images/twitter.png" style="padding-right:20px;"></a>
-        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src="images/facebook.png"></a>
-    </td>
-</tr>
-
-</table>
 </body>
 </html>

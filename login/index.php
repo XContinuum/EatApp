@@ -16,6 +16,7 @@
     {
         //No one is logged
         $error="";
+        $title="EatApp - Login";
 
         if ($_GET["error"]=="1")
             $error="<div id='error_box' style='top:0px;'>Login or password incorrect!</div>";
@@ -26,5 +27,4 @@
 
         include("../template.html");
     }
-
 ?>

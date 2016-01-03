@@ -1,4 +1,4 @@
-@font-face {font-family: "AvenirLTStd-Black"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Black.otf);}
+/*@font-face {font-family: "AvenirLTStd-Black"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Black.otf);}
 @font-face {font-family: "AvenirLTStd-BlackOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-BlackOblique.otf);}
 @font-face {font-family: "AvenirLTStd-Book"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Book.otf);}
 @font-face {font-family: "AvenirLTStdBlackOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-BookOblique.otf);}
@@ -9,8 +9,9 @@
 @font-face {font-family: "AvenirLTStd-Medium"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Medium.otf);}
 @font-face {font-family: "AvenirLTStd-MediumOblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-MediumOblique.otf);}
 @font-face {font-family: "AvenirLTStd-Oblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Oblique.otf);}
-@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}
+@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}*/
 
+/*Index*/
 html
 {
     width:100%;
@@ -19,14 +20,50 @@ html
 
 body
 {
+    background: #e5e5e5; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #f2f2f2 20%, #929394 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  #f2f2f2 20%,#929394 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  #f2f2f2 20%,#929394 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter:progid: DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#a1a2a3',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    /*a1a2a3*/
+    background-repeat:no-repeat;
+    background-size:150% 150%;
+    background-position:center;
+
     font-family:"AvenirLTStd-Roman";
     margin:0;
     padding:0;
-    background-color:#fbfbfb;
     width:100%;
     height:100%;
 }
 
+
+#search_box
+{
+    font-size:20px;
+    font-family:"AvenirLTStd-Light";
+    border:solid 1px #4d85f2;
+    padding-left:15px;
+    width:500px;
+    height:40px;
+}
+
+.abc
+{
+    display:inline-block;
+    padding-right:10px;
+    padding-top:10px;
+}
+
+.abc a
+{
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
+    font-family:"AvenirLTStd-Light";
+    font-size: 18;
+    color:black;
+    text-decoration: none;
+}
 
 input[type='password'], input[type='text']
 {
@@ -41,9 +78,72 @@ input[type='password']:focus, input[type='text']:focus
     outline:none;
 }
 
+
+
 textarea:focus
 {
     outline:none;
+}
+
+/*Profile picture circle*/
+#profile_picture
+{
+    display:inline-block;
+    border-radius:50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width:35px;
+    height:35px;
+    background:black;
+    opacity:0.3;
+    filter:alpha(opacity=30); /* For IE8 and earlier */
+
+    border:0px;
+    margin:5px;
+}
+
+#drop_down_panel
+{
+    display:none;
+    position:absolute;
+    top:50px;
+    right:10px;
+    height:103px;
+    width:153px;
+    background-color:white;
+    text-align:center;
+    font-family:"AvenirLTStd-Light";
+    font-size:18px;
+}
+#drop_down_panel a
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 18px;
+    color:black;
+    text-decoration: none;
+}
+
+#username_bar
+{
+    display:inline-block;
+    vertical-align:top;
+    padding-top:17px;
+    margin-right:5px;
+}
+
+#username_bar a
+{
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
+    font-family:"AvenirLTStd-Light";
+    font-size: 18;
+    color:black;
+    text-decoration: none;
+}
+
+/*Emoji inline class*/
+.in_row
+{
+ display:inline-block;
 }
 /*---TEMPLATE----*/
 #overall_table
@@ -54,13 +154,13 @@ textarea:focus
     margin:0px;
     padding:0px;
     border-collapse:collapse;
-    background-color:#f7f9fa;
 }
 
 #overall_table td
 {
     padding:0;
     margin:0;
+    border:solid 0px black;
 }
 
 #search_box
@@ -99,23 +199,37 @@ textarea:focus
   display:inline-block;
   width:80px;
 }
-/*LINKS*/
-a:link,a:active,a:visited,a:hover,a:active
-{
-    color:#4a5d6f;
-    text-decoration:none;
-}
-
 /*
 ----------LOGIN
 */
+#error_box
+{
+    position:fixed;
+    top:-23px;
+    left:0;
+    background-color:#fa6d65;
+    color:white;
+    width:100%;
+    height:20px;
+    text-align:center;
+    padding-top:3px;
+}
+
 #login_box
 {
-    border:solid 1px #ced1d7;
+    font-family:"AvenirLTStd-Light";
+
     text-align:left;
     padding:45px;
     padding-top:30px;
     padding-bottom:30px;
+    background-color:white;
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    box-shadow: 0px 0px 2px #dad9d9;
 }
 
 #login_box input[type='text'], input[type='password']
@@ -145,130 +259,8 @@ a:link,a:active,a:visited,a:hover,a:active
 {
 font-family:"AvenirLTStd-Light";
 font-size:14px;
-}
-/*
-----------SIGN UP
-*/
-#error_box
-{
-    position:fixed;
-    top:-23px;
-    left:0;
-    background-color:#fa6d65;
-    color:white;
-    width:100%;
-    height:20px;
-    text-align:center;
-    padding-top:3px;
-}
-#sign_up_table
-{
-    width:450px;
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:30px;
-    padding-bottom:30px;
-    background-color:#f7f9fa;
-}
-#sign_up_table input[type='text'], input[type='password']
-{
-    width:200px;
-    padding:5px;
-}
-.button_sign_up
-{
-    border:solid 0px black;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    width:49%;
-    height:35px;
-    background-color:#ffa25e;
-    color:white;
-    font-weight: bold;
-    padding:0px;
-
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
-}
-.pic_result
-{
-    display:inline-block;
-    margin:0;
-    padding:0;
-    padding-top:4px;
-    width:24px;
-    height:24px;
-}
-/* Wrong/Approved field*/
-.wrong_field
-{
-    border:solid 1px #fa6d65 !important;
-}
-.approved_field
-{
-    border:solid 1px #31dc78 !important;
-}
-/*LOCATION*/
-#sign_up_location_table
-{
-    display:none;
-    width:300px;
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:30px;
-    padding-bottom:30px;
-    background-color:#f7f9fa;
-    text-align:left;
-}
-#sign_up_location_table input[type=text], input[type=password]
-{
-    width:200px;
-    padding:5px;
-}
-/*SELECT*/
-.select-style
-{
-    padding: 5px;
-    margin: 0px;
-    border: 1px solid #ccc;
-    width: 200px;
-    border-radius: 3px;
-    overflow: hidden;
-    background-color: #fff;
-
-    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 185px 50%;
-}
-.select-style select
-{
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
-
-    padding: 1px 5px;
-    width: 175px;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.select-style select:focus
-{
-    outline:none;
+color:black;
+text-decoration:none;
 }
 
 

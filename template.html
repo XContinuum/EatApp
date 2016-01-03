@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EatApp</title>
+        <title><? echo $title; ?></title>
             <link rel="stylesheet" type="text/css" href= <?php setLink("/style.css");?> >
             <?php echo $head_param; ?>
     </head>
@@ -9,9 +9,8 @@
 <table id="overall_table" border='0'>
 <!-- Top bar -->
 <tr>
-    <td height="10px" align="center">
-    <a href=<?php setLink("");?>><img src=<?php setLink("/images/small_logo.png");?> style="margin-top:15px;"></a>
-    <div id="name">Eat App</div>
+    <td height="10px" align="center" style="padding:0px;" valign="top">
+    <a href=<?php setLink("");?>><img src=<?php setLink("/images/secondary_logo.png");?>></a>
     </td>
 </tr>
 <!-- Content -->
@@ -22,31 +21,12 @@
     </div>
 </td>
 </tr>
-<!-- Decorative border -->
-<tr>
-    <td height="10px">
-        <table id="decor_table">
-        <tr>
-            <td>
-                <img src= <?php setLink("/images/Left.png"); ?> style="padding:0px;margin:0px;vertical-align:bottom;">
-            </td>
-
-            <td width="100%" valign="bottom">
-                <div style="width:100%;height:7px;background-color:#ffb47d;"></div>
-            </td>
-            <td>
-                <img src= <?php setLink("/images/Right.png"); ?> style="padding:0px;margin:0px;vertical-align:bottom;">
-            </td>
-        </tr>
-    </table>
-</td>
-</tr>
 
 <!-- Social media -->
 <tr>
-    <td align="center" valign="center" style="background-color:#ffa25e;" height="50px">
-        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?> style="padding-right:20px;height:40px;width:40px;"></a>
-        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?> style="height:40px;width:40px;"></a>
+    <td align="center" valign="center" height="50px">
+        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?>></a
+        ><a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?>></a>
     </td>
 </tr>
 </table>

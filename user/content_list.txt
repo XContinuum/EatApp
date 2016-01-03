@@ -3,5 +3,6 @@
 {"Type":"Vegan"},
 {"Type":"Contains peanut"},
 {"Type":"Peanut free"},
-{"Type":"Halal product"}
+{"Type":"Halal product"},
+{"Type":"Sea good"}
 ]}

@@ -168,7 +168,7 @@
         $result = mysqli_query($conn,$sql);
         $final_result= mysqli_fetch_assoc($result);
 
-        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); //strtotime MOD 2017
+        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime MOD 2017
 
         return "Last updated ".humanTiming($time)." ago";
     }

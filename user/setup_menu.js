@@ -77,7 +77,7 @@ function returnMultiselectOptions(number,list)
 
 function initiate()
 {
-    var text=readTextFile("../content_list.txt");
+    var text=readTextFile("content_list.txt");
     obj=JSON.parse(text);
 
     //Load selected tags+++
