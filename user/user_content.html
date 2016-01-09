@@ -1,23 +1,28 @@
-<div>
+<div style="height:100%;">
     <table align="center" id="user_table">
         <!-- Top info-->
         <tr height="150px">
             <td width="200px" align="center">
-            <div class="circleBase user_pic"></div>
+            <div class="circleBase user_pic"><img src=<?php echo "'".$image_src."'"; ?> id="userpic" /></div>
             </td>
 
-            <td style="text-align:left;padding-top:20px;font-size:14px;font-weight:lighter;" valign="top">
-                <div style="font-size:17px;"><b><?php echo $restaurant_name;?></b></div>
+            <td style="text-align:left;padding-top:20px;font-size:15px;font-weight:lighter;" valign="top">
+                <div style="font-size:20px;"><b><?php echo $restaurant_name;?></b></div>
                 <div><?php echo $username;?></div>
                 <br>
-                <div><?php echo $address;?></div>
-                <div><?php echo $phone_number;?></div>
-                <div><?php echo $opening_time;?></div>
+                <div>Address: <?php echo $address;?></div>
+                <div>Phone number: <?php echo $phone_number;?></div>
+                <div>Website: <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?></div>
             </td>
+
+            <td valign="top" width="20px">
+                <img src=<? echo setLink("/user/images/settings.png");?> style="margin-top:5px;margin-right:5px;"/>
+            </td>
+
         </tr>
         <!-- Top info-->
         <tr>
-            <td colspan="2" id="menu_row">
+            <td colspan="3" id="menu_row">
                 <div class="menu_elem" onClick="show_partition('Menu')">Menu</div><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
             </td>
         </tr>
@@ -25,16 +30,19 @@
 
 
           <tr>
-            <td colspan='2' valign='top' height="200px" align="center">
+            <td colspan="3" valign="top" align="center">
                 <br>
             <!--MENU-->
             <div id="partition_menu">
+                <table id="menu_section">
+                <tr>
+                    <td>
+                        <?php echo $last_modified; ?>
+                    </td>
+                </tr>
 
-                <div style="width:49%;text-align:left;font-size:13px;display:inline-block;">
-                    <?php echo $last_modified; ?>
-                </div>
-
-                <div style="width:49%;text-align:right;display:inline-block;">
+                <tr>
+                    <td align="center" height="50px">
                 <?php
                     if($menu!="")
                     {
@@ -46,10 +54,15 @@
                         echo "<a href='user/setup_menu.php' style='color:#848b98;'>Add menu</a>";
                     }
                 ?>
-                </div>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td>
                 <?php echo $menu; ?>
-
+                  </td>
+                </tr>
+                </table>
             </div>
             <!--MENU-->
             <div id="partition_pictures" style="display:none;">

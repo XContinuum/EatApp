@@ -3,14 +3,11 @@
 
 ## Features
 
-  - New gradient background
-  - Time picking (for restaurant schedules)
-  - Image cropping
-  - Scheduling added
+  - Hint box for searches partially works
 
 ## Screenshots
 
-  <img src="instructions/screenshots/index.png" width="30%"/> <img src="instructions/screenshots/login.png" width="30%"/> <img src="instructions/screenshots/sign_up/sign_up_1.png" width="30%"/>
+  <img src="instructions/screenshots/index/index.png" width="30%"/> <img src="instructions/screenshots/login.png" width="30%"/> <img src="instructions/screenshots/sign_up/sign_up_1.png" width="30%"/>
 
 ##  Database
 

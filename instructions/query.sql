@@ -30,7 +30,7 @@ CREATE TABLE FA_RESTORANTS (
   FA_Phone_number varchar(100) DEFAULT '',
   FA_Website varchar(100) DEFAULT '',
 
-  FA_Pic varchar(200),
+  FA_Pic varchar(200) DEFAULT 'none',
 
   Schedule_Monday varchar(50) DEFAULT '',
   Schedule_Tuesday varchar(50) DEFAULT '',

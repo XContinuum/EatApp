@@ -1,13 +1,12 @@
 (function($)
 {
-    $.fn.helloWorld=function()
+    $.fn.setTimePicker=function()
     {
         $(document).HideTicker(); //hides div when not on div
 
         return this.each( function()
         {
             $(this).val("9:00 AM");
-
 
 
              $(this).click(function(e)
@@ -38,17 +37,17 @@
                 }
 
                 var code="<table style='width:100%;'>";
-                code+="<tr><td><div id='hour_up'>Up</div></td><td><div id='minute_up'>Up</div></td><td><div id='time_slot_up'>Up</div></td></tr>";
+                code+="<tr><td><img id='hour_up' src='../images/time_up.png'/></td><td><img id='minute_up' src='../images/time_up.png'/></td><td><img id='time_slot_up' src='../images/time_up.png'/></td></tr>";
                 code+="<tr><td><div id='hour'>"+h+"</div></td><td><div id='minute'>"+m+"</div></td><td><div id='time_slot'>"+t_slot+"</div></td></tr>";
-                code+="<tr><td><div id='hour_down'>Down</div></td><td><div id='minute_down'>Down</div></td><td><div id='time_slot_down'>Down</div></td></tr>";
+                code+="<tr><td><img id='hour_down' src='../images/time_down.png'/></td><td><img id='minute_down' src='../images/time_down.png'/></td><td><img id='time_slot_down' src='../images/time_down.png'/></td></tr>";
                 code+="</table>";
 
                var pos=$(this).position();
                 $("<div class='ticker'></div>").html(code).css({
                 top: pos.top+$(this).height()+13,
                 left: pos.left,
-                width: '190px',
-                height: '70px',
+                width: '120px',
+                height: '60px',
                 border:'1px solid #ced1d7',
                 position: 'absolute',
                 padding:"5px",

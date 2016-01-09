@@ -17,6 +17,7 @@
         while($row = mysqli_fetch_array($result))
         {
             $count++;
+            $colspan_img="";
 
             //Section+++
             if ($old_section_name!=$row['FA_Section'])
@@ -33,29 +34,43 @@
             if ($row['FA_Pic']!="none")
             {
                 $pic=$row['FA_Pic'];
-                $menu.="<td width='100px'><img src='../restaurant_data/Pictures/$res_username/$pic' style='width:100%;'></td>";
+                $menu.="<td width='100px'><img src='../restaurant_data/Pictures/$res_username/$pic' style='width:50px;border-radius:50%;box-shadow: 0px 0px 2px #999999;' /></td>";
             }
             else
             {
-                $menu.="<td width='100px'></td>";
+                //$menu.="<td width='100px'></td>";
+                $colspan_img="colspan='2'";
             }
             //PICTURE---
 
-            $menu.="<td width='250px'>".$row['FA_Product_Name']."</td>";
-            $menu.="<td width='90px' align='right'>".$row['FA_Price']."$</td>";
+            $menu.="<td width='50%' $colspan_img>".$row['FA_Product_Name']."</td>";
+            $menu.="<td width='50%' align='right'>".$row['FA_Price']."$</td>";
 
 
             //CONTENTS+++
+            $tag_width="160px";
+
+            if ($contents!="none" && $contents!="")
+            {
             $contents=explode(".",$row['FA_Contents']);
             array_pop($contents);
 
             $reslt="";
-            for ($i=0;$i<count($contents);$i++)
+                for ($i=0;$i<count($contents);$i++)
+                {
+                    $reslt.="<div class='tags'>#".str_ireplace("_"," ",$contents[$i])."</div> ";
+                }
+
+            $reslt="<div class='wrap'>".$reslt."</div>";
+            }
+            else
             {
-                $reslt.="<div class='tags'>#".str_ireplace("_"," ",$contents[$i])."</div> ";
+                $reslt="";
+                $tag_width="0%";
             }
 
-            $menu.="<td width='160px' align='right'><div class='wrap'>".$reslt."</div></td>";
+            $menu.="<td width='$tag_width' align='right'>".$reslt."</td>";
+
             //CONTENTS---
 
             $menu.="</tr>";
@@ -71,7 +86,7 @@
         return $menu;
     }
 
-     function FillMenuBlanks($restaurant_id)
+    function FillMenuBlanks($restaurant_id)
     {
         require ("server_connection.php");
 
@@ -122,16 +137,18 @@
             if ($pic!="none")
             {
                 //show picture
-                $row.="<label><input name='food_images_$order' style='display:none;' type='file' value='Select picture'></input><img src='../restaurant_data/Pictures/$res_username/$pic' style='width:50px;' align='center'></img></label>";
+                $row.="<label><input name='food_images_$order' style='display:none;' type='file' value='Select picture'></input>";
+                $row.="<img src='../restaurant_data/Pictures/$res_username/$pic' style='width:50px;border-radius:50%;' align='center' id='display_image_$order'></img></label>";
             }
             else
             {
                 //no pictures
-                $row.="<label><input name='food_images_$order' style='width:110px;display:none;' type='file' value='Select picture'></input><img src='images/upload_picture.png'></img></label>";
-                $row.="";
+                $row.="<label><input name='food_images_$order' style='width:110px;display:none;' type='file' value='Select picture'></input>";
+                $row.="<img src='images/upload_picture.png' id='display_image_$order'></img></label>";
             }
 
-            $row.="<input type='text' name='picture_url_$order' value='$pic' style='display:none;'></input>";
+            $row.="<input type='hidden' name='crop_info_$order'></input>";
+            $row.="<input type='hidden' name='picture_url_$order' value='$pic'></input>";
 
             $row.="</td>";
             //PICTURE
@@ -168,7 +185,7 @@
         $result = mysqli_query($conn,$sql);
         $final_result= mysqli_fetch_assoc($result);
 
-        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime MOD 2017
+        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); //strtotime MOD 2017
 
         return "Last updated ".humanTiming($time)." ago";
     }

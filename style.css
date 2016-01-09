@@ -11,6 +11,9 @@
 @font-face {font-family: "AvenirLTStd-Oblique"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Oblique.otf);}
 @font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}*/
 
+@font-face {font-family: "AvenirLTStd-Roman"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);}
+@font-face {font-family: "AvenirLTStd-Light"; src:url(http://eatapp.ca/Fonts/AvenirLTStd-Light.otf);}
+
 /*Index*/
 html
 {
@@ -41,7 +44,7 @@ body
 
 #search_box
 {
-    font-size:20px;
+    font-size:15px;
     font-family:"AvenirLTStd-Light";
     border:solid 1px #4d85f2;
     padding-left:15px;
@@ -69,7 +72,6 @@ input[type='password'], input[type='text']
 {
     font-size: 15px;
     font-family:"AvenirLTStd-Light";
-    font-weight:lighter;
     border:solid 1px #ced1d7;
     padding-left:15px;
 }
@@ -85,21 +87,73 @@ textarea:focus
     outline:none;
 }
 
+/*If not logged*/
+
+#top_sign_in
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
 /*Profile picture circle*/
+.user_pic
+{
+    width:120px;
+    height:120px;
+    background:#f1f1f1;
+}
+#userpic
+{
+    width:120px;
+    height:120px;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if don't care about IE8 */
+}
+
+#menu_section
+{
+    width:100%;
+    height:100%;
+    border-collapse: collapse;
+}
+
+#user_top_panel
+{
+    position:absolute;
+    text-align: right;
+    right:0px;
+    top:0px;
+    height:50px;
+    width:200px;
+}
+
+.drop_down_items
+{
+    width:100%;
+    height:33.3%;
+    line-height:2em;
+}
+
 #profile_picture
 {
     display:inline-block;
     border-radius:50%;
-    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    behavior:url(PIE.htc); /* remove if you don't care about IE8 */
 
     width:35px;
     height:35px;
     background:black;
-    opacity:0.3;
-    filter:alpha(opacity=30); /* For IE8 and earlier */
 
     border:0px;
     margin:5px;
+}
+
+#image_circle
+{
+    width:35px;
+    height:35px;
+    border-radius:50%;
 }
 
 #drop_down_panel
@@ -284,4 +338,56 @@ text-decoration:none;
 #validated
 {
     display:none;
+}
+
+
+/*SEARCH PHP*/
+
+#bottom_pannel
+{
+    font-family:"AvenirLTStd-Light";
+    width:515px;
+    text-align:right;
+    padding:5px;
+}
+
+#query_results
+{
+    border:0px solid black;
+    width:515px;
+    text-align:left;
+}
+
+#filters
+{
+    color:#999;
+}
+
+#filter_settings
+{
+    font-family:"AvenirLTStd-Light";
+    display: none;
+    width:515px;
+    text-align:left;
+    background-color: white;
+    box-shadow:0px 0px 3px #ccc;
+    border-collapse: collapse;
+}
+#filter_settings td
+{
+    padding: 5px;
+}
+
+.page_block
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 14px;
+    display:inline-block;
+    background-color:white;
+    width:23px;
+    height:18px;
+    margin-right:5px;
+    margin-left:5px;
+    padding-top:3px;
+    box-shadow:0px 0px 3px #ccc;
 }

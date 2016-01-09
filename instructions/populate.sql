@@ -1,4 +1,6 @@
 /*
+  v1.9
+
   email: michelbalamou@gmail.com
   pass: lmaolmao
 
@@ -8,8 +10,8 @@
 */
 USE TheFoodApp;
 
-INSERT INTO  FA_RESTORANTS (FA_Email,FA_Pass,FA_Username,FA_Restaurant_Name,FA_Country,FA_State_Province,FA_City,FA_Address,FA_Postal_Code)
-VALUES ('michelbalamou@gmail.com','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW','Balamou','McDonalds','Canada','Ontario','Ottawa','318 Berrigan Dr','K2J5B5');
+INSERT INTO  FA_RESTORANTS (FA_Email,FA_Pass,FA_Username,FA_Restaurant_Name,FA_Country,FA_State_Province,FA_City,FA_Address,FA_Postal_Code, FA_Pic)
+VALUES ('michelbalamou@gmail.com','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW','Balamou','McDonalds','Canada','Ontario','Ottawa','318 Berrigan Dr','K2J5B5','5689e28439460.png');
 
 INSERT INTO  FA_ADMIN_PANEL (FA_Username, FA_Pass)
 VALUES ('michael','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW');

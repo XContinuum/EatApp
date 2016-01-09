@@ -28,7 +28,7 @@
         {
             //Save images
             $pic_name="none";
-            $pic_name=saveImage($_FILES['food_images_'.($i+1)]);
+            $pic_name=saveImage($_FILES['food_images_'.($i+1)],$_POST['crop_info_'.($i+1)]);
 
             if ($pic_name=="none")
             {
@@ -72,18 +72,22 @@
 
             $str="";
 
-            foreach ($_POST["Food_Contents_" . ($i+1)] as $selectedOption)
+
+            if (isset($_POST["Food_Contents_" . ($i+1)]) && is_array($_POST["Food_Contents_" . ($i+1)]) || is_object($_POST["Food_Contents_" . ($i+1)]))
             {
-                $str.=$selectedOption.".";
+                foreach ($_POST["Food_Contents_" . ($i+1)] as $selectedOption)
+                {
+                    $str.=$selectedOption.".";
+                }
             }
 
 
-            $final_query.="('".$restaurant_id."','".($i+1)."','".$product[$i]."','".$price[$i]."','".$desc[$i]."','".$str."','".$section."','".$pic_name."')";
+            $final_query.="('".$restaurant_id."','".($i+1)."','".$product[$i]."','".$price[$i]."','".$desc[$i]."','".$str."','".$section."','".$pic_name."','".$currency."')";
         }
 
         mysqli_query($conn,"DELETE FROM FA_MENUS WHERE RESTAURANT_ID=$restaurant_id"); //DELETE PREVIOUS MENU
 
-        $sql="INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic) VALUES ".$final_query;
+        $sql="INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic,FA_Currency) VALUES ".$final_query;
 
         //echo $final_query;
         mysqli_query($conn,$sql);
@@ -94,62 +98,77 @@
 
 
 
-    function saveImage($upload_image)
+    function saveImage($upload_image,$crop_info)
     {
+        require_once('ImageManipulator.php');
+
+        $img_name="none";
+
         if(!empty($upload_image['tmp_name']))
          {
-            $imagename = $upload_image['name']; //Stores the filename as it was on the client computer.
-            $imagetype = $upload_image['type']; //Stores the filetype e.g image/jpeg
-            $imageerror = $upload_image['error']; //Stores any error codes from the upload
-            $imagetemp = $upload_image['tmp_name']; //Stores the tempname as it is given by the host when uploaded
+            $maxSize=1024*10; //10Mb
+            $file_size=$upload_image['size']/1024; //in Kb
 
-            $ext = pathinfo($imagename, PATHINFO_EXTENSION);
+            $validExtensions = array('.jpg', '.jpeg', '.gif', '.png'); //array of valid extensions
+            $fileExtension = strrchr($upload_image['name'], "."); //get extension of the uploaded file
 
-
-            //Make directory+++
-            $username=get_restaurant_username();
-            $path="../restaurant_data/Pictures/".$username;
-
-            if (!is_dir($path))
+            //check if file Extension is on the list of allowed ones
+            if ($file_size<$maxSize)
             {
-                mkdir($path);
-            }
-
-            $path="../restaurant_data/Pictures/".$username."/";
-            //Make directiry---
-
-
-            //To avoid collisions+++
-            do
-            {
-            $random_image_name=uniqid();
-            }
-            while(file_exists($path.$random_image_name.".".$ext));
-            //To avoid collisions---
-
-            if(is_uploaded_file($imagetemp))
-            {
-                if(move_uploaded_file($imagetemp, $path.$random_image_name.".".$ext))
+                if (in_array($fileExtension, $validExtensions))
                 {
-                    //echo "Sussecfully uploaded your image. ";
-                    //echo $random_image_name.".".$ext."<br>";
-                }
-                else
-                {
-                    //echo "Failed to move your image.<br>";
+                    $imagename=$upload_image['name']; //Stores the filename as it was on the client computer.
+                    $imagetype=$upload_image['type']; //Stores the filetype e.g image/jpeg
+                    $imageerror=$upload_image['error']; //Stores any error codes from the upload
+                    $imagetemp=$upload_image['tmp_name']; //Stores the tempname as it is given by the host when uploaded
+
+                    $ext=pathinfo($imagename, PATHINFO_EXTENSION);
+
+                    //Make directory+++
+                    $username=get_restaurant_username();
+                    $path="../restaurant_data/Pictures/".$username;
+
+                    if (!is_dir($path))
+                    {
+                        mkdir($path);
+                    }
+
+                    $path="../restaurant_data/Pictures/".$username."/";
+                    //Make directiry---
+
+
+                    //To avoid collisions+++
+                    do
+                    {
+                        $random_image_name=uniqid();
+                    }
+                    while(file_exists($path.$random_image_name.".".$ext));
+                    //To avoid collisions---
+
+                    if(is_uploaded_file($imagetemp))
+                    {
+                        //Crop image+++
+                        $info=explode(":", $crop_info);
+
+                        $manipulator=new ImageManipulator($upload_image['tmp_name']);
+                        $x1=$info[0];
+                        $y1=$info[1];
+
+                        $x2=$info[0]+$info[2];
+                        $y2=$info[1]+$info[3];
+
+                        $img=$manipulator->resample($info[4],$info[5],true);
+                        $newImage=$manipulator->crop($x1, $y1, $x2, $y2);
+
+                        //saving file to profile folder
+                        $manipulator->save($path.$random_image_name.".".$ext);
+                        $img_name=$random_image_name.".".$ext;
+                    }
+
                 }
             }
-            else
-            {
-                //echo "Failed to upload your image.<br>";
-            }
-
-            return $random_image_name.".".$ext;
-        }
-        else
-        {
-            return "none";
         }
 
+        return $img_name;
     }
 ?>

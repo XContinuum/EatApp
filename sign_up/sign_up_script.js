@@ -51,7 +51,7 @@ function initiate()
 //Load country list for location menu---
 $(document).ready(
     function(){
-     $("input[type=time_picker]").helloWorld();
+     $("input[type=time_picker]").setTimePicker();
 
 
 

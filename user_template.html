@@ -7,56 +7,32 @@
             <?php echo $head_param;?>
     </head>
 
-    <style>
-    /*panel font color*/
-    #panel a
-    {
-        color:white;
-    }
-    </style>
 <body onLoad="initiate()">
+<? echo $panel; ?>
+<div id="drop_down_panel">
+    <a href=<?php echo setLink("/".$username_logged); ?>>
+        <div class="drop_down_items">profile</div>
+    </a>
+    <a href=<?php echo setLink("/settings/index.php"); ?> >
+        <div class="drop_down_items">settings</div>
+    </a>
+    <a href=<?php echo setLink("/requests/log_out_request.php"); ?>>
+        <div class="drop_down_items">log out</div>
+    </a>
+</div>
 
 <table id="overall_table" border='0'>
-<!-- Top panel -->
-<tr style='height:40px;background-color:#3d3d3e;'>
-    <td valign='top' id='panel'>
-    <div style="float:left;"><a href=<?php setLink("");?>><img style="height:40px;" align="left" src=<?php setLink("/images/x_small_logo.png");?>></a></div>
-
-    <? echo $panel; ?>
-   </td>
-</tr>
-<!-- Content -->
 <tr>
 <td valign="top">
-    <div>
     <?php echo $content;?>
-    </div>
 </td>
 </tr>
-<!-- Decorative border -->
-<tr>
-    <td height="10px">
-        <table id="decor_table">
-        <tr>
-            <td>
-                <img src= <?php setLink("/images/Left.png"); ?> style="padding:0px;margin:0px;vertical-align:bottom;">
-            </td>
 
-            <td width="100%" valign="bottom">
-                <div style="width:100%;height:7px;background-color:#ffb47d;"></div>
-            </td>
-            <td>
-                <img src= <?php setLink("/images/Right.png"); ?> style="padding:0px;margin:0px;vertical-align:bottom;">
-            </td>
-        </tr>
-    </table>
-</td>
-</tr>
 <!-- Social media -->
 <tr>
-    <td align="center" valign="center" style="background-color:#ffa25e;" height="50px">
-        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?> style="padding-right:20px;height:40px;width:40px;"></a>
-        <a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?> style="height:40px;width:40px;"></a>
+    <td align="center" valign="center" height="50px">
+        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?>></a
+        ><a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?>></a>
     </td>
 </tr>
 </table>

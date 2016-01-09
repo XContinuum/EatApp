@@ -26,21 +26,21 @@
     		$content.="<a href='/$username'>Go to profile</a></div>";
     	else
     		$content.="<a href='login/index.php'>Log in</a></div>";
-  	}
-  	else
-  	{
-  		//IF HASHES ARE NOT EQUAL
-  		$content="<br><br><div align='center'>Activation code has expired.";
+	}
+	else
+	{
+		//IF HASHES ARE NOT EQUAL
+		$content="<br><br><div align='center'>Activation code has expired.";
 
-  		if ($logged==1)
-  			$content.=" <a href='requests/resend_email.php'>Resend email verification.</a></div>";
-  		else
-  			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
-  	}
+		if ($logged==1)
+			$content.=" <a href='requests/resend_email.php'>Resend email verification.</a></div>";
+		else
+			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
+	}
 
- 	  mysqli_close($conn);
+ 	 mysqli_close($conn);
 
-    include("template.html");
+   include("template.html");
   }
   else
   {

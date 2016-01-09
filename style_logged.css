@@ -3,10 +3,18 @@
 */
 #user_table
 {
+    font-family:"AvenirLTStd-Light";
     width:50%;
     border-collapse:collapse;
     background-color:white;
     height:100%;
+    padding: 0px;
+}
+
+#user_table a,a:hover,a:visited
+{
+    color:#4d85f2;
+    text-decoration: none;
 }
 
 #menu_list
@@ -24,27 +32,23 @@
     border-radius: 50%;
     behavior: url(PIE.htc); /* remove if don't care about IE8 */
 }
-.user_pic
-{
-    width:120px;
-    height:120px;
-    background:#f1f1f1;
-}
+
 /*Menu section*/
 .menu_elem
 {
-    height:100%;
+    height:20px;
     width:24.7%;
     display:inline-block;
     vertical-align:middle;
-    line-height:34px;
     text-align:center;
 }
 #menu_row
 {
-    border-top:solid 1px #d2d7dc;
-    border-bottom:solid 1px #d2d7dc;
-    height:30px;
+    height:35px;
+    border-top:solid 1px black;
+    border-bottom:solid 1px black;
+    background: #f9f8f8;
+    padding: 0px;
 }
 
 .under td
@@ -280,4 +284,77 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 .empty_select select:focus
 {
     outline:none;
+}
+
+/*SETTINGS*/
+#settings_table
+{
+    width:80%;
+    border-collapse: collapse;
+}
+
+#settings_table td
+{
+    padding: 5px;
+    border:1px solid black;
+}
+
+/*UPLOAD IMAGE*/
+#modify_image
+{
+    display:none;
+    position:fixed;
+    background-color: white;
+    top: 40%;
+    left: 50%;
+    height:340px;
+    width:400px;
+    margin-top:-136px; /*set to a negative number 1/2 of your height*/
+    margin-left:-200px; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    padding:15px;
+}
+#modify_image table
+{
+    border-collapse:collapse;
+}
+#modify_image td
+{
+    padding: 0px;
+}
+
+#opaque_background
+{
+    position:fixed;
+    display: none;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+
+    background-color: #303437;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
+    filter: alpha(opacity=70);  /* IE 5-7 */
+    -moz-opacity:0.7;          /* Netscape */
+    -khtml-opacity:0.7;        /* Safari 1.x */
+    opacity:0.7;               /* Good browsers */
+}
+
+.set_picture_btn
+{
+    display:inline-block;
+    border:solid 0px black;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    width:100px;
+    height:35px;
+    background-color:#4d85f2;
+    color:white;
+    font-weight: bold;
+    padding:0px;
+
+    font-size: 15px;
+    font-family:"AvenirLTStd-Roman";
 }

@@ -8,16 +8,13 @@ $(document).ready(
     {
         addMoveRowsEvent();
 
-        jQuery('#success').animate({ top: '0px'}, 400, 'swing',function(){
-
-        //wait 2 seconds
-        setTimeout(function(){
-        jQuery('#success').animate({ top: '-23px'}, 400, 'swing');
-        }, 2000);
-
-        }
-        );
-
+        jQuery('#success').animate({ top: '0px'}, 400, 'swing',function()
+        {
+            //wait 2 seconds
+            setTimeout(function(){
+            jQuery('#success').animate({ top: '-23px'}, 400, 'swing');
+            }, 2000);
+        });
     }
 );
 
@@ -97,7 +94,7 @@ function initiate()
 }
 
 /*
-    Adding even of moving rows up/down and deleting them
+    Adding event of moving rows up/down and deleting them
 */
 function addMoveRowsEvent()
 {
@@ -148,9 +145,9 @@ function reiterateIDs()
         {
             if ($(el).find('td').eq(0).attr('colspan')!=columns_count)
             {
-            /*
-            ADJUST NAMES TO SEND CORRECT ORDER TO PHP FILE
-            */
+                /*
+                ADJUST NAMES TO SEND CORRECT ORDER TO PHP FILE
+                */
                 $(el).find("input[name^='Product_name_']").attr('name','Product_name_'+(i-section_count));
                 $(el).find("input[name^='Price_']").attr('name','Price_'+(i-section_count));
                 $(el).find("input[name^='Description_']").attr('name','Description_'+(i-section_count));
@@ -159,6 +156,8 @@ function reiterateIDs()
                 $(el).find("input[name^='food_images_']").attr('name','food_images_'+(i-section_count));
                 $(el).find("input[name^='picture_url_']").attr('name','picture_url_'+(i-section_count));
 
+                $(el).find("img[id^='display_image_']").attr('id','display_image_'+(i-section_count));
+                $(el).find("input[name^='crop_info_']").attr('name','crop_info_'+(i-section_count));
 
                 $(el).find('td').eq(0).html(i-section_count); //rename the first cell
                 count++;
@@ -193,8 +192,10 @@ function addRow()
     cells[0].innerHTML=rows_count;
 
     //Picture
-    var pic="<label><input name='food_images_"+rows_count+"' style='width:110px;display:none;' type='file' value='Select picture'></input><img src='images/upload_picture.png'></img></label>";
-    pic+="<input type='text' name='picture_url_"+rows_count+"' value='none' style='display:none;'></input>";
+    var pic="<label><input name='food_images_"+rows_count+"' style='width:110px;display:none;' type='file' value='Select picture'></input>";
+    pic+="<img src='images/upload_picture.png' id='display_image_"+rows_count+"'></img></label>";
+    pic+="<input type='hidden' name='crop_info_"+rows_count+"' ></input>";
+    pic+="<input type='hidden' name='picture_url_"+rows_count+"' value='none'></input>";
     cells[1].innerHTML=pic;
     //Picture
 
@@ -208,6 +209,7 @@ function addRow()
     cells[6].innerHTML+="<a class='delete_row'><img src='images/delete.png'></a>";
 
     $(".js-example-basic-multiple").select2();
+    updateFileChange();
 
     $("input[name=Row_Count]").val(rows_count);
     addMoveRowsEvent();
@@ -275,3 +277,61 @@ function ReviewSectionIndexing()
 
     section=section_count;
 }
+
+
+
+
+
+
+
+
+//Upload image+++
+var current_row=0;
+
+function updateFileChange()
+{
+    $(":file").change(function()
+    {
+        if (this.files && this.files[0])
+        {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+
+
+            current_row=$(this).attr('name');
+            current_row=current_row.replace("food_images_", "");
+        }
+    });
+}
+
+$(function ()
+{
+    updateFileChange();
+});
+
+var $superParent;
+
+function imageIsLoaded(e)
+{
+    $("#opaque_background").show();
+    $("#modify_image").show();
+
+    $("body").cleanAll("#uploaded_image");
+
+    $("#uploaded_image").attr("src", e.target.result);
+    $("#uploaded_image").imageCrop("200","200");
+
+    $("#apply_cropping").applyCrop("input[name='crop_info_"+current_row+"']","#display_image_"+current_row,"50","50");
+
+    $("#cancel_image").click(function(e)
+        {
+            $("#opaque_background").hide();
+            $("#modify_image").hide();
+
+            var control=$("#food_images_"+current_row);
+            control.replaceWith(control=control.clone(true));
+
+        });
+};
+ //Upload image---

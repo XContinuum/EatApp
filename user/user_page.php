@@ -1,19 +1,17 @@
 <?php
-    $head_param ="<script src='/user/show_partitions.js'></script>";
-
     $restaurant_id=get_restaurant_id();
     $menu=LoadMenu($restaurant_id);
     $last_modified=getLastModified($restaurant_id);
 
     $address=getInfo($username,'FA_Address');
     $restaurant_name=getInfo($username,'FA_Restaurant_Name');
-    //$phone_number=getInfo($username,'FA_Phone');
-    //$opening_time=getInfo($username,'FA_Opening_time');
+    $phone_number=getInfo($username,'FA_Phone_Number');
+    $website=getInfo($username,'FA_Website');
 
     if ($menu!="0")
     {
         //if menu is set
-        $first_row="<table id='menu_list' style='background-color:white;border:solid 1px #ced1d7;'>";
+        $first_row="<table id='menu_list' style='width:100%;background-color:white;border:solid 1px #ced1d7;'>";
 
         $a=$menu;
         $menu="<table id='menu_list'>".$first_row.$a."</table>";
