@@ -1,9 +1,8 @@
 <div align="center">
     <a href="../index.php"><img src="../images/secondary_logo.png"/></a>
+    <br />
+    <input type="text" id="search_box" autocomplete="off" maxlength="124" value=<?php echo "'$search_query'";?> />
 
-    <br/>
-    <input type="text" style="" id="search_box" autocomplete="off" maxlength="124" value=<?php echo "'$search_query'";?> />
-    <br/>
     <div id="bottom_pannel"><span id="filters">manage filters</span></div>
 
     <div id="query_results">
@@ -11,7 +10,7 @@
     </div>
 
     <!-- Pages-->
-    <div id="pages">lol</div>
+    <div id="pages"></div>
 
 
     <!-- Filter settings -->
@@ -22,7 +21,7 @@
             </tr>
 
             <tr>
-                <td>Find distance from postal code:</td><td><input type="text" value="K2J5B5" /></td>
+                <td>Find distance from postal code:</td><td><input type="text" id="user_address"/></td>
             </tr>
 
             <tr>

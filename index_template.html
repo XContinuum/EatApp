@@ -1,86 +1,130 @@
 <!DOCTYPE html>
+<!--
+    EatApp was made by Michel Balamou
+    contact at: michelbalamou@gmail.com
+
+    Founders/co-founders included: Mohan Abeeluck, Fitch Jean Kerlin, Andrew Nzomo, Shang Wu
+
+    All rights reserved (c) 2016.
+-->
 <html>
     <head>
         <title>EatApp</title>
             <link rel="stylesheet" type="text/css" href="style.css">
-            <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>
-            <script src='/user/show_partitions.js'></script>
-            <script src='/search/search.js'></script>
+            <script src='jquery.js'></script>
+            <script src=<?php setLink("/requests/set_panel.js");?> ></script>
+
+            <script src='/search/hintBox.js'></script>
     </head>
     <script>
-    function increase(item)
-    {
-        decreaseAll();
-        item.style.fontSize="45px";
-    }
-    function decreaseAll()
-    {
-        var standard="30px";
-        document.getElementById("chicken").style.fontSize=standard;
-        document.getElementById("spaghetti").style.fontSize=standard;
-        document.getElementById("ice_cream").style.fontSize=standard;
-        document.getElementById("pizza").style.fontSize=standard;
-        document.getElementById("hamburger").style.fontSize=standard;
-        document.getElementById("fries").style.fontSize=standard;
-        document.getElementById("shrimp").style.fontSize=standard;
-    }
 
-    function addTag(query)
+    $(document).ready(function()
     {
-       var search_box=document.getElementById("search_box");
-       search_box.value=search_box.value+" "+query;
-    }
+        $("#search_box").setHintBox(function(obj){
+                 if($(obj).val().length>0)
+                  {
+                      window.location.href = "/search/index.php?q="+$(obj).val();
+                  }
+            });
+
+        $(".in_row").mouseover(function()
+            {
+                $(".in_row").css("font-size","30px");
+                $(this).css("font-size","45px");
+            });
+
+         $(".in_row").mouseout(function()
+            {
+                $(".in_row").css("font-size","30px");
+            });
+
+         $(".in_row").click(
+            function()
+            {
+                //var char_code=$(this).html().charCodeAt(1);
+                var code=70656+$(this).text().charCodeAt(1);
+                var codeHex=code.toString(16).toUpperCase();
+                var tag="";
+
+                switch(codeHex)
+                {
+                    case "1F357":
+                        tag="chicken";
+                    break;
+
+                    case "1F35D":
+                        tag="spaghetti";
+                    break;
+
+                    case "1F367":
+                        tag="ice cream";
+                    break;
+
+                    case "1F355":
+                        tag="pizza";
+                    break;
+
+                    case "1F354":
+                        tag="hamburger";
+                    break;
+
+                    case "1F35F":
+                        tag="fries";
+                    break;
+
+                    case "1F364":
+                        tag="sea food";
+                    break;
+
+                }
+
+                $("#search_box").val($("#search_box").val()+" "+tag);
+            }
+            );
+    });
     </script>
 <body>
 
 <!-- DROP DOWN PANEL -->
     <?php echo $panel; ?>
-<div id="drop_down_panel">
-    <a href=<?php echo "'".$username."'"; ?>>
-        <div class="drop_down_items">profile</div>
-    </a>
-    <a href="/settings/index.php">
-        <div class="drop_down_items">settings</div>
-    </a>
-    <a href="requests/log_out_request.php">
-        <div class="drop_down_items">log out</div>
-    </a>
-</div>
 <!-- DROP DOWN PANEL -->
 
+<table id="overall_table">
+    <tr>
+    <td align='center'>
+        <img src='images/logo.png' />
+        <br />
+        <img style='margin-left:120px;margin-top:-30px;' src='images/logo_text.png' />
+        <br />
+        <br />
+        <input type='text' id='search_box' autocomplete="off" maxlength="124" />
+        <br />
+        <br />
+        <br />
+        <!-- Chicken Soup Ice-Cream Pizza Hamburger Fries Sea Food-->
+        <div id="emoji_content">
+            <div class="in_row" style="height:90%;"></div
+            ><div class="in_row">&#x1F357;</div
+            ><div class="in_row">&#x1F35D;</div
+            ><div class="in_row">&#x1F367;</div
+            ><div class="in_row">&#x1F355;</div
+            ><div class="in_row">&#x1F354;</div
+            ><div class="in_row">&#x1F35F;</div
+            ><div class="in_row">&#x1F364;</div
+            ><div class="in_row" style="height:90%;"></div>
+        </div>
+        <!--EMOJIS-->
+        </td>
+    </tr>
 
-    <table id="overall_table">
-        <tr>
-            <td align='center'>
-                <img src='images/logo.png' />
-                <br />
-                <img style='margin-left:120px;margin-top:-30px;' src='images/logo_text.png' />
-                <br />
-                <br />
-                <input type='text' id='search_box' autocomplete="off" maxlength="124" />
-                <br />
-                <br />
-                <br />
-<!-- Meat Soup Ice-Cream Pizza Hamburger Fries Tomato-->
-<div style="font-size:30px;height:50px;vertical-align:bottom;width:250px;" onMouseOut="decreaseAll();">
-    <div class="in_row" style="height:90%;"></div>
-    <div class="in_row" id="chicken" onMouseOver="increase(this);" onClick="addTag('chicken');">&#x1F357;</div
-    ><div class="in_row" id="spaghetti" onMouseOver="increase(this);" onClick="addTag('spaghetti');">&#x1F35D;</div
-    ><div class="in_row" id="ice_cream" onMouseOver="increase(this);" onClick="addTag('ice cream');">&#x1F367;</div
-    ><div class="in_row" id="pizza" onMouseOver="increase(this);" onClick="addTag('pizza');">&#x1F355;</div
-    ><div class="in_row" id="hamburger" onMouseOver="increase(this);" onClick="addTag('hamburger');">&#x1F354;</div
-    ><div class="in_row" id="fries" onMouseOver="increase(this);" onClick="addTag('fries');">&#x1F35F;</div
-    ><div class="in_row" id="shrimp" onMouseOver="increase(this);" onClick="addTag('sea food');">&#x1F364;</div>
-</div>
-<!--EMOJIS-->
+    <!--Bottom contacts-->
+    <tr>
+    <td align='center' style='height:100px;'>
+        <a href="https://twitter.com/eatappca" target="_blank"><img src='images/twitter.png'></a
+        ><a href='https://www.facebook.com/eatappca/' target="_blank"><img src='images/facebook.png'></a>
+    </td>
+    </tr>
+</table>
 
-            </td>
-        </tr>
-        <tr>
-            <td align='center' style='height:100px;'>
-<a href="https://twitter.com/eatappca" target="_blank"><img src='images/twitter.png'></a><a href='https://www.facebook.com/eatappca/' target="_blank"><img src='images/facebook.png'></a>
-            </td>
-        </tr>
-    </table>
 </body>
 </html>

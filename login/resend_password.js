@@ -9,10 +9,7 @@ $(document).ready(
         x_timer = setTimeout(function(){check_email_ajax(email);}, 1000);
     });
 
-
-
 });
-
 
 
 //check email

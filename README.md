@@ -3,7 +3,10 @@
 
 ## Features
 
-  - Hint box for searches partially works
+  - Search works
+  - Geolocation works (need a google API key)
+  - Distance SQL function implemented
+  - Rewriting database structure (TheFoodApp -> EatApp)
 
 ## Screenshots
 

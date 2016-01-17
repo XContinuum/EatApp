@@ -449,4 +449,4 @@ function imageIsLoaded(e)
 
         });
 };
- //Upload image---
+//Upload image---

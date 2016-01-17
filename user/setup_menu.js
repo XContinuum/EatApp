@@ -15,6 +15,8 @@ $(document).ready(
             jQuery('#success').animate({ top: '-23px'}, 400, 'swing');
             }, 2000);
         });
+
+        initiate();
     }
 );
 

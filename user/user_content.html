@@ -1,29 +1,46 @@
+<div style="position:absolute;top:0px;left:190px;">
+   <a href=<?php setLink("");?> ><img src=<?php setLink("/images/x_small_logo.png");?> /></a>
+</div>
+
 <div style="height:100%;">
     <table align="center" id="user_table">
+
         <!-- Top info-->
         <tr height="150px">
             <td width="200px" align="center">
-            <div class="circleBase user_pic"><img src=<?php echo "'".$image_src."'"; ?> id="userpic" /></div>
+                <img src=<?php echo $image_src; ?> id="userpic" />
             </td>
 
-            <td style="text-align:left;padding-top:20px;font-size:15px;font-weight:lighter;" valign="top">
-                <div style="font-size:20px;"><b><?php echo $restaurant_name;?></b></div>
-                <div><?php echo $username;?></div>
-                <br>
-                <div>Address: <?php echo $address;?></div>
-                <div>Phone number: <?php echo $phone_number;?></div>
-                <div>Website: <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?></div>
+            <td valign="top">
+                <div id="brief_restaurant_info">
+                    <div style="font-size:20px;"><b><?php echo $restaurant_name;?></b></div>
+                    <span style="color:#4d85f2;font-size:15px;"><?php echo $username;?></span>
+                <br />
+                <br />
+                    <?php echo $address;?>
+                <br />
+                    <?php echo $phone_number;?>
+                <br />
+                    <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?>
+                </div>
             </td>
 
-            <td valign="top" width="20px">
-                <img src=<? echo setLink("/user/images/settings.png");?> style="margin-top:5px;margin-right:5px;"/>
+            <td width="20px" valign="top">
+                <a href=<?php setLink("/settings/index.php");?> >
+                    <img src=<? setLink("/user/images/settings.png");?> style="margin-top:5px;margin-right:5px;"/>
+                </a>
             </td>
 
         </tr>
-        <!-- Top info-->
+
+
+        <!-- Sections-->
         <tr>
             <td colspan="3" id="menu_row">
-                <div class="menu_elem" onClick="show_partition('Menu')">Menu</div><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
+                <div class="menu_elem" onClick="show_partition('Menu')">Menu</div
+                    ><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div
+                    ><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div
+                    ><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
             </td>
         </tr>
 
@@ -32,44 +49,48 @@
           <tr>
             <td colspan="3" valign="top" align="center">
                 <br>
+
             <!--MENU-->
             <div id="partition_menu">
-                <table id="menu_section">
+
+            <table id="menu_section">
                 <tr>
-                    <td>
-                        <?php echo $last_modified; ?>
-                    </td>
+                    <td align="left" height="30px" style="font-size:12px;"><?php echo $last_modified;?></td>
+                    <td align="right"><?php echo $pre_menu;?></td>
                 </tr>
 
                 <tr>
-                    <td align="center" height="50px">
-                <?php
-                    if($menu!="")
-                    {
-                        echo "<a href='user/setup_menu.php' style='color:#848b98;'>Edit menu</a>";
-                    }
-                    else
-                    {
-                        echo "It seems that you haven't uploaded a menu yet.<br>";
-                        echo "<a href='user/setup_menu.php' style='color:#848b98;'>Add menu</a>";
-                    }
-                ?>
+                    <td colspan="2">
+                    <div style="overflow:auto;height:450px;">
+                        <?php echo $menu;?>
+                    </div>
                     </td>
                 </tr>
+            </table>
 
-                <tr>
-                    <td>
-                <?php echo $menu; ?>
-                  </td>
-                </tr>
-                </table>
             </div>
             <!--MENU-->
+
+            <!--Pictures-->
             <div id="partition_pictures" style="display:none;">
-            Upload pictures
+                <input type="file" value="uplad pictures" />
             </div>
-            <div id="partition_reviews" style="display:none;">You don't have any reviews yet.</div>
-            <div id="partition_contact" style="display:none;">Contacts</div>
+
+            <!--Reviews-->
+            <div id="partition_reviews" style="display:none;">
+                <div style="color:#999;">You don't have any reviews yet.</div>
+            </div>
+
+            <!--Contacts-->
+            <div id="partition_contact" style="display:none;">
+                Contacts
+                <br />
+                <br />
+                <?php echo $phone_number;?>
+                <br />
+                <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?>
+
+            </div>
 
             </td>
         </tr>

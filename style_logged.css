@@ -4,51 +4,61 @@
 #user_table
 {
     font-family:"AvenirLTStd-Light";
-    width:50%;
+
     border-collapse:collapse;
     background-color:white;
+
+    width:55%;
     height:100%;
     padding: 0px;
+    box-shadow:0px 0px 4px #ccc;
 }
 
 #user_table a,a:hover,a:visited
 {
+    text-decoration:none;
     color:#4d85f2;
-    text-decoration: none;
 }
 
 #menu_list
 {
-    border:solid 1px black;
     border-collapse:collapse;
+    background-color:white;
+    width:100%;
 }
 #menu_list td
 {
     padding:5px;
 }
 
-.circleBase
+.menu_section_title
 {
-    border-radius: 50%;
-    behavior: url(PIE.htc); /* remove if don't care about IE8 */
+    background-color:#eee;
+}
+
+#brief_restaurant_info
+{
+    font-family:"AvenirLTStd-Light";
+    padding-top:15px;
 }
 
 /*Menu section*/
 .menu_elem
 {
-    height:20px;
-    width:24.7%;
     display:inline-block;
     vertical-align:middle;
     text-align:center;
+
+    height:20px;
+    width:24.7%;
 }
 #menu_row
 {
     height:35px;
+    padding:0px;
+    background:#f9f8f8;
     border-top:solid 1px black;
     border-bottom:solid 1px black;
-    background: #f9f8f8;
-    padding: 0px;
 }
 
 .under td
@@ -66,8 +76,8 @@
 .m_table
 {
     background-color:white;
-    padding:0px;
     border-collapse:collapse;
+    padding:0px;
 }
 
 .m_table td
@@ -100,49 +110,54 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 
 .m_table textarea
 {
-    font-size: 15px;
     font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+
     border:solid 0px #ced1d7;
-    resize: none;
+    resize:none;
 }
 
 #operations
 {
-    width:100%;
     border-collapse:collapse;
+
+    width:100%;
 }
 
 #operations td
 {
-    padding: 5px;
+    text-align:center;
+
+    padding:5px;
     width:33%;
     border:solid 0px black;
-    text-align:center;
 }
 
 #success
 {
     position:fixed;
+    color:white;
+    text-align:center;
+    background-color:#58e489;
+
     top:-23px;
     left:0px;
-    background-color:#58e489;
-    color:white;
     width:100%;
     height:20px;
-    text-align:center;
     padding-top:3px;
 }
 
 #confirm_email
 {
     position:fixed;
+    color:white;
+    text-align:center;
+    background-color:#5d9be8;
+
     top:0px;
     left:0px;
-    background-color:#5d9be8;
-    color:white;
     width:100%;
     height:25px;
-    text-align:center;
     padding-top:6px;
 }
 
@@ -153,45 +168,48 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 
 .delete_button
 {
+    font-size:15px;
+    font-family:"AvenirLTStd-Roman";
+
+    color:white;
+    font-weight:bold;
+    background-color:#fc5d5d;
+
     border:solid 0px black;
+    border-radius:10px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
-    border-radius:10px;
 
     width:60px;
     height:30px;
-    background-color:#fc5d5d;
-    color:white;
-    font-weight: bold;
     padding:0px;
     margin-top:5px;
     margin-bottom:5px;
-
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
 }
 
 .tags
 {
     color:white;
     display:inline-block;
+
     background-color:#31dc78;
     -moz-border-radius:20px;
     -webkit-border-radius:20px;
     border-radius:20px;
-    padding: 5px;
-    margin:2px;
     padding-right:10px;
     padding-left:10px;
+    padding: 5px;
+    margin:2px;
 }
 
 .wrap
 {
-    width:150px;
     white-space:nowrap;
     overflow-y:hidden;
     overflow-x:scroll;
     -webkit-overflow-scrolling:touch;
+
+    width:150px;
 }
 
 /*INPUT TYPE=FILE*/
@@ -201,18 +219,21 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 }
 .custom-file-input::before
 {
-  content: 'Select picture';
+  content:'Select picture';
+
   color:white;
-  background-color:#4d85f2;
-  display: inline-block;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
+  display:inline-block;
+
+  outline:none;
+  white-space:nowrap;
+  -webkit-user-select:none;
   cursor: pointer;
-  font-weight: 700;
-  font-size: 10pt;
+
+  font-size:10pt;
+  background-color:#4d85f2;
+  border-radius:3px;
+  padding:5px 8px;
+  font-weight:700;
 }
 .custom-file-input:hover::before
 {
@@ -242,42 +263,43 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 }
 .select-style select
 {
-    font-size: 15px;
     font-family:"AvenirLTStd-Roman";
+    font-size: 15px;
 
     padding: 1px 5px;
     width: 50px;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    border:none;
+    box-shadow:none;
+    background-color:transparent;
+
+    background-image:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
 }
 
 .empty_select
 {
     display:inline-block;
-    border:solid 0px black;
     overflow: hidden;
 }
 
 .empty_select select
 {
-    font-size: 15px;
     font-family:"AvenirLTStd-Roman";
+    font-size:15px;
 
-    width: 36px;
+    width:36px;
     padding-right:2px;
     padding-left:2px;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    border:none;
+    box-shadow:none;
+    background-color:transparent;
+
+    background-image:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
 
 }
 
@@ -289,13 +311,13 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 /*SETTINGS*/
 #settings_table
 {
+    border-collapse:collapse;
     width:80%;
-    border-collapse: collapse;
 }
 
 #settings_table td
 {
-    padding: 5px;
+    padding:5px;
     border:1px solid black;
 }
 
@@ -305,8 +327,9 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
     display:none;
     position:fixed;
     background-color: white;
-    top: 40%;
-    left: 50%;
+
+    top:40%;
+    left:50%;
     height:340px;
     width:400px;
     margin-top:-136px; /*set to a negative number 1/2 of your height*/
@@ -342,19 +365,20 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 
 .set_picture_btn
 {
+    font-family:"AvenirLTStd-Roman";
+    font-size:15px;
+    font-weight:bold;
+    color:white;
+
     display:inline-block;
+
+    background-color:#4d85f2;
+    width:100px;
+    height:35px;
+    padding:0px;
+
     border:solid 0px black;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-
-    width:100px;
-    height:35px;
-    background-color:#4d85f2;
-    color:white;
-    font-weight: bold;
-    padding:0px;
-
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
 }

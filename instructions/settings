@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp settings.ini ../requests/settings.ini
+cp settings.ini ../panel/admin/settings.ini

@@ -19,7 +19,7 @@
     {
     	$content="<br><br><div align='center'>Your account has been activated!<br>";
 
-		  $sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
+		$sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
     	$result=mysqli_query($conn,$sql);
 
     	if ($logged==1)
@@ -38,9 +38,9 @@
 			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
 	}
 
- 	 mysqli_close($conn);
+  mysqli_close($conn);
 
-   include("template.html");
+  include("template.html");
   }
   else
   {

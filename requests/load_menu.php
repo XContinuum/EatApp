@@ -23,7 +23,7 @@
             if ($old_section_name!=$row['FA_Section'])
             {
                 $section_name=$row['FA_Section'];
-                $menu.="<tr><td colspan='4' align='center' style='border:solid 1px black;'><b>$section_name</b></td></tr>";
+                $menu.="<tr><td colspan='4' align='center' class='menu_section_title'>$section_name</td></tr>";
                 $old_section_name=$row['FA_Section'];
             }
 

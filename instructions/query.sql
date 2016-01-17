@@ -1,5 +1,5 @@
 /*
-  Version 1.8
+  Version 2.0
 */
 CREATE DATABASE TheFoodApp;
 USE TheFoodApp;
@@ -38,7 +38,11 @@ CREATE TABLE FA_RESTORANTS (
   Schedule_Thursday varchar(50) DEFAULT '',
   Schedule_Friday varchar(50) DEFAULT '',
   Schedule_Saturday varchar(50) DEFAULT '',
-  Schedule_Sunday varchar(50) DEFAULT ''
+  Schedule_Sunday varchar(50) DEFAULT '',
+
+  /* NEW v2.0 */
+  Longitude varchar(100) DEFAULT '0',
+  Latitude varchar(100) DEFAULT '0'
 );
 
 
@@ -58,7 +62,10 @@ CREATE TABLE FA_MENUS (
 
   FA_Last_Modified date,
 
-  FOREIGN KEY (RESTAURANT_ID) REFERENCES FA_RESTORANTS(ID)
+  FOREIGN KEY (RESTAURANT_ID) REFERENCES FA_RESTORANTS(ID),
+
+  /* NEW v2.0 */
+  FA_Currency varchar(200)
 );
 
 

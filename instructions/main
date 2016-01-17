@@ -4,3 +4,4 @@
 ./exec populate.sql
 ./htaccess
 ./copy_pics
+./settings

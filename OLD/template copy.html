@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EatApp</title>
+        <title><? echo $title; ?></title>
             <link rel="stylesheet" type="text/css" href= <?php setLink("/style.css");?> >
-            <link rel="stylesheet" type="text/css" href= <?php setLink("/style_logged.css");?> >
-            <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>
-            <script src=<?php setLink("/requests/set_panel.js");?> ></script>
-
-             <!-- Added parameters -->
-            <?php echo $head_param;?>
+            <?php echo $head_param; ?>
     </head>
-
-<body>
-<!-- DROP DOWN PANEL -->
-    <?php echo $panel; ?>
-<!-- DROP DOWN PANEL -->
-
-
+<body onLoad="initiate()">
 <table id="overall_table" border='0'>
+<!-- Top bar -->
+<tr>
+    <td height="10px" align="center" style="padding:0px;" valign="top">
+    <a href=<?php setLink("");?>><img src=<?php setLink("/images/secondary_logo.png");?>></a>
+    </td>
+</tr>
+<!-- Content -->
 <tr>
 <td valign="top">
+    <div>
     <?php echo $content;?>
+    </div>
 </td>
 </tr>
 
