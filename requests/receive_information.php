@@ -1,18 +1,18 @@
 <?php
     //get restautrant username if logged
-    function get_restaurant_username()
+    function getChainLink() //get_restaurant_username
     {
         require("server_connection.php");
 
         session_start();
 
-        $sql = "SELECT FA_Username FROM FA_RESTORANTS WHERE FA_Token='".$_SESSION['token']."'";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-
-        if (isset($_SESSION['token']))
+        if (isset($_SESSION['chain_owner_token']))
         {
-            return strtolower($row['FA_Username']);
+            $sql="SELECT Link FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
+            $result=mysqli_query($conn,$sql);
+            $row=mysqli_fetch_assoc($result);
+
+            return strtolower($row['Link']);
         }
         else
         {
@@ -20,18 +20,18 @@
         }
     }
 
-    //get restaurant's ID if logged
-    function get_restaurant_id()
+    //get Chain ID if logged
+    function getChainId() //get_restaurant_id
     {
         require('server_connection.php');
-
         session_start();
-        $sql = "SELECT ID FROM FA_RESTORANTS WHERE FA_Token='".$_SESSION['token']."'";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
 
-        if (isset($_SESSION['token']))
+        if (isset($_SESSION['chain_owner_token']))
         {
+            $sql = "SELECT ID FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
+            $result = mysqli_query($conn,$sql);
+            $row = mysqli_fetch_assoc($result);
+
             return $row['ID'];
         }
         else
@@ -40,12 +40,31 @@
         }
     }
 
+    function getMenuOwnerID($menu_name)
+    {
+        require('server_connection.php');
+
+        $sql="SELECT OWNER_ID FROM MENUS WHERE Name='$menu_name'";
+        $result=mysqli_query($conn,$sql);
+        $row=mysqli_fetch_assoc($result);
+        $row_num=mysql_num_rows($result);
+
+        if ($row_num==0)
+        {
+            return -1;
+        }
+        else
+        {
+            return $row['OWNER_ID'];
+        }
+    }
+
     //fetch different infos about the restaurant based on the username
-    function getInfo($username_,$info)
+    function getInfo($link_,$info)
     {
         require("server_connection.php");
 
-        $sql = "SELECT ID,FA_Restaurant_Name,FA_Postal_Code,FA_Address,FA_Email,FA_Hash,FA_Pic,FA_Phone_Number,FA_Website FROM FA_RESTORANTS WHERE FA_Username='$username_'";
+        $sql = "SELECT ID,Email,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link_'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
         mysqli_close($conn);
@@ -53,12 +72,12 @@
         return $row[$info];
     }
 
-     //fetch different infos about the restaurant based on the id
-    function getInfoFromID($restaurant_id,$info)
+     //fetch different infos about the chain based on the id
+    function getInfoFromID($chain_id,$info)
     {
         require("server_connection.php");
 
-        $sql = "SELECT FA_Username,FA_Restaurant_Name,FA_Postal_Code,FA_Address FROM FA_RESTORANTS WHERE ID='$restaurant_id'";
+        $sql = "SELECT ID,Email,Hash,Picture,Website,Link FROM CHAIN_OWNER WHERE ID='$chain_id'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
         mysqli_close($conn);
@@ -68,16 +87,16 @@
 
 
     //check if username is in the database
-    function checkUsernameStatus($username_)
+    function checkChainStatus($username_)
     {
         require("server_connection.php");
 
-        $sql="SELECT FA_Username FROM FA_RESTORANTS WHERE FA_Username='$username_'";
+        $sql="SELECT Link FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
 
         if (mysqli_num_rows($result)>0)
         {
-            return 1; //user found
+            return 1; //chain found
         }
         else
         {
@@ -104,18 +123,18 @@
         return "'".$path.$string."'";
     }
 
-    //Check if user validated
+    //Check if Chain validated
     function checkIfValidated($username_)
     {
         require("server_connection.php");
 
-        $sql="SELECT FA_Validated FROM FA_RESTORANTS WHERE FA_Username='$username_'";
+        $sql="SELECT Validated FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
 
         mysqli_close($conn);
 
-        return $row['FA_Validated'];
+        return $row['Validated'];
     }
 
     //Check if email validated
@@ -123,21 +142,21 @@
     {
         require("server_connection.php");
 
-        $sql="SELECT FA_Active FROM FA_RESTORANTS WHERE FA_Username='$username_'";
+        $sql="SELECT Active FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
 
         mysqli_close($conn);
 
-        return $row['FA_Active'];
+        return $row['Active'];
     }
 
     //Check if user logged
-    function isUserLogged()
+    function isOwnerLogged()//isUserLogged
     {
         session_start();
 
-        if (isset($_SESSION['token']))
+        if (isset($_SESSION['chain_owner_token']))
         {
             return 1; //restaurant user logged
         }
@@ -198,11 +217,11 @@
         {
             require("server_connection.php");
 
-            $sql = "SELECT FA_Username FROM FA_ADMIN_PANEL WHERE FA_Token='".$_SESSION['admin_token']."'";
+            $sql = "SELECT Username FROM ADMIN_PANEL WHERE Token='".$_SESSION['admin_token']."'";
             $result = mysqli_query($conn,$sql);
             $row = mysqli_fetch_assoc($result);
 
-            return $row['FA_Username']; //logged
+            return $row['Username']; //logged
         }
         else
         {
@@ -213,33 +232,34 @@
     //LogOut
     function LogOut()
     {
-      require ("server_connection.php");
+    require ("server_connection.php");
 
-      session_start();
+    session_start();
 
-      if (isset($_SESSION['token']))
-      {
-          $sql = "UPDATE FA_RESTORANTS SET FA_Token='0' WHERE FA_Token='" . $_SESSION['token'] . "'";
-          mysqli_query($conn,$sql);
+    if (isset($_SESSION['chain_owner_token']))
+    {
+        $sql = "UPDATE CHAIN_OWNER SET Token='0' WHERE Token='" . $_SESSION['chain_owner_token'] . "'";
+        mysqli_query($conn,$sql);
 
-          session_unset(); //remove all session variables
-          session_destroy(); //destroy the session
-      }
-      else if (isset($_SESSION['admin_token']))
-      {
-          $sql = "UPDATE FA_ADMIN_PANEL SET FA_Token='0' WHERE FA_Token='" . $_SESSION['admin_token'] . "'";
-          mysqli_query($conn,$sql);
+        session_unset(); //remove all session variables
+        session_destroy(); //destroy the session
+    }
+    else
+        if (isset($_SESSION['admin_token']))
+        {
+            $sql = "UPDATE ADMIN_PANEL SET Token='0' WHERE Token='" . $_SESSION['admin_token'] . "'";
+            mysqli_query($conn,$sql);
 
-          session_unset(); //remove all session variables
-          session_destroy(); //destroy the session
-      }
+            session_unset(); //remove all session variables
+            session_destroy(); //destroy the session
+        }
     }
 
 
     //Get full global link to profile picture
     function getPicLink($username_)
     {
-        $src=getInfo($username_,"FA_Pic");
+        $src=getInfo($username_,"Picture");
         $image_link=setLinkMute("/restaurant_data/Profile/".$src);
 
         if ($src=="none" || $src==0)
@@ -253,15 +273,15 @@
     //Panel
     function setPanel()
     {
-        if (isUserLogged()==1)
+        if (isOwnerLogged()==1)
         {
             //Restaurant logged
-            $username=get_restaurant_username();
+            $LinkName=getChainLink();
 
-            $image_src=getPicLink($username);
+            $image_src=getPicLink($LinkName);
 
             $panel="<div id='user_top_panel'>";
-            $panel.="<div id='username_bar'><a href=".setLinkMute("/".$username).">".$username."</a></div>";
+            $panel.="<div id='username_bar'><a href=".setLinkMute("/".$LinkName).">".$LinkName."</a></div>";
             $panel.="<div id='profile_picture'><img src=$image_src id='image_circle'/></div>";
             $panel.="</div>";
 
@@ -269,7 +289,7 @@
             $panel.="<div style='margin-left:136px;width:8px;' align='right'><img style='display:block;' src=".setLinkMute("/images/triangle.png")." /></div>";
 
             $panel.="<div style='background-color:white;'>";
-            $panel.="<a href=".setLinkMute("/".$username).">";
+            $panel.="<a href=".setLinkMute("/".$LinkName).">";
             $panel.="<div class='drop_down_items'>profile</div></a>";
             $panel.="<a href=".setLinkMute("/settings/index.php").">";
             $panel.="<div class='drop_down_items'>settings</div></a>";

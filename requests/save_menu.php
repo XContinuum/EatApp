@@ -87,7 +87,7 @@
 
         mysqli_query($conn,"DELETE FROM FA_MENUS WHERE RESTAURANT_ID=$restaurant_id"); //DELETE PREVIOUS MENU
 
-        $sql="INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic,FA_Currency) VALUES ".$final_query;
+        $sql="INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic,FA_Currency) VALUES $final_query";
 
         //echo $final_query;
         mysqli_query($conn,$sql);

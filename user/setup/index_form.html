@@ -1,0 +1,101 @@
+<div id="option_template" style="display:none;">
+    %options%
+</div>
+
+<div id="menu_panel" style="display:none;background-color:rgba(0,0,0,0.6);position:fixed;top:0px;left:0px;width:100%;height:100%;">
+
+    <div style="background-color:white;position:relative;top:50%;left:50%;margin-top:-70px;margin-left:-150px;width:300px;height:140px;">
+    <table>
+        <tr>
+            <td>Menu name</td><td><input type="text" value="" id="current_menu_name"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="button" value="add menu" id="move_to_edit"/></td>
+        </tr>
+    </table>
+    </div>
+
+</div>
+<!--
+
+    Create menu ++++++
+
+-->
+<table align="center" id="restaurants_table">
+<tr>
+    <td height="10px" align="center" style="opacity:0;" id="server_result">
+        Saved!
+    </td>
+</tr>
+<tr>
+<td valign="top">
+
+    <table id="restaurant_add">
+        <tr height="100px">
+            <td></td>
+        </tr>
+
+        <tr>
+            <td align="center" style="font-size:23px;">Restaurants</td>
+        </tr>
+
+        <tr>
+            <td align="center" style="font-size:12px;">If you are a chain you can add a list of restaurants with diffent locations</td>
+        </tr>
+
+        <!--List-->
+        <tr>
+            <td>
+                <form id="restaurants_form">
+                 %list%
+                </form>
+            </td>
+        </tr>
+        <!--List-->
+
+        <tr>
+            <td align="center">
+                <input id="add_restaurant" type="button" value="add restaurant"/>
+                <input type="button" id="save_restaurant" value="save"/>
+            </td>
+        </tr>
+        </table>
+<!--
+
+    Separation ++++++++
+
+ -->
+    <table id="restaurant_add">
+        <tr>
+            <td height="20px"></td>
+        </tr>
+
+        <tr>
+            <td align="center" style="font-size:23px;">Menus</td>
+        </tr>
+
+        <tr>
+            <td align="center" style="font-size:12px;">Create food menus to add to restaurants</td>
+        </tr>
+
+        <!--Menu List-->
+        <tr>
+            <td>
+                <form id="menus_form">
+                 %menu%
+                </form>
+            </td>
+        </tr>
+        <!--Menu List-->
+
+        <tr>
+            <td align="center">
+                <input id="create_menu" type="button" value="create menu"/>
+                <input type="button" id="save_menus" value="save"/>
+            </td>
+        </tr>
+    </table>
+
+</td>
+</tr>
+</table>

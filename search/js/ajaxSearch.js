@@ -144,7 +144,7 @@ function sendRequest(query)
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
-      //console.log(xmlhttp.responseText);
+      //console.log(xmlhttp.responseText)
       styleOutput(xmlhttp.responseText, query);
     }
   }
@@ -158,7 +158,6 @@ function sendRequest(query)
 function styleOutput(response,query)
 {
    var obj=$.parseJSON(response);
-
 
    if (obj[0]["results"]==0)
    {

@@ -1,0 +1,65 @@
+<!--Edit section-->
+<tr style="background-color:#f9f8f8;">
+    <td colspan='7' align='center'>
+        <input type='text' placeholder='Section %section%' value='%section_name%' name='Sections[]' style="background-color:#f9f8f8;"/>
+        <input type='button' value='Delete' class='remove_section delete_button'/>
+    </td>
+</tr>
+
+##
+
+<!-- Edit Menu Row -->
+<!-- Food_Images[] Crop_info[] Picture_URL[] Product_name[] Price[] Description[] Food_Contents[]-->
+<tr class='additional_row'>
+
+    <td align="center">%order%</td>
+
+    <td align="center">
+        <label align="center"><input type='file' value='Select picture' name='Food_Images[]' style='width:110px;display:none;'/>
+        <img src='%SRC%' align='center' class='Display_IMG'/></label>
+
+        <input type='hidden' name='Crop_info[]'></input>
+        <input type='hidden' name='Picture_URL[]' value='%picture_url%'></input>
+    </td>
+
+    <td><input type='text' name='Product_name[]' value='%product_name%' placeholder='Meal' autocomplete="off" autocorrect="off"/></td>
+    <td><input type='text' name='Price[]' value='%price%' placeholder='Price' style='width:40px;'/></td>
+    <td><input type='text' name='Description[]' value='%description%' placeholder='Description'/></td>
+
+    <td>
+        <select name='Food_Contents[%i%][]' class='js-example-basic-multiple' style='width:200px;border:0px;' multiple>%food_content%</select>
+    </td>
+
+    <td>
+        <a class='up'><img src='../images/up_arrow.png' /></a>
+        <a class='down'><img src='../images/down_arrow.png' /></a>
+        <a class='delete_row'><img src='../images/delete.png' /></a>
+    </td>
+
+</tr>
+
+##
+
+<!-- Menu Row -->
+<tr>
+    <td width='100px'>
+        <img src="%pic%" style='width:50px;border-radius:50%;box-shadow:0px 0px 2px #999999;'/>
+    </td>
+
+    <td width='50%'>%Product_Name%</td>
+    <td width='50%' align='right'>%Price%</td>
+
+    <div class='tags'>%Result%</div>
+    <div class='wrap'>%Result%</div>
+    <td width='%Tag_Width%' align='right'>%Result%</td>
+</tr>
+
+##
+
+<!--Edit section-->
+<tr style="background-color:#f9f8f8;">
+    <td colspan='7' align='center'>
+        <input type='text' placeholder='Section %section%' name='Sections[]' style="background-color:#f9f8f8;"/>
+        <input type='button' value='Delete' class='remove_section delete_button'/>
+    </td>
+</tr>

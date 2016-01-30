@@ -7,9 +7,9 @@
         header("Location: ../panel/admin/index.php");
     }
     else
-        if (isUserLogged()==1)
+        if (isOwnerLogged()==1)
         {
-            //if the user is logged
+            //if the chain owner is logged
             header("Location: ../index.php");
         }
         else

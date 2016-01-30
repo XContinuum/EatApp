@@ -3,7 +3,7 @@
     require("../requests/load_menu.php");
 
     $username=htmlspecialchars($_GET["username"]); //get the username from the url
-    $username_logged=get_restaurant_username(); //get the username from the session
+    $username_logged=getChainLink(); //get the username from the session: MOD 2017 changed from get_restaurant_username()
 
     $panel=setPanel();
 

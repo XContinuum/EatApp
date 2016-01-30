@@ -1,0 +1,42 @@
+<table class='restaurant_list'>
+<tr>
+    <td colspan='2'>
+        <span style='color:#5684ef;font-size:14px;'>eatapp.ca/%chain_link%/</span>
+        <input type='text' name='link_name[]' value='%value_2%' />
+    </td>
+
+    <td>Phone number:</td>
+    <td><input type='text' name='phone_number[]' value='%value_3%'/></td>
+
+    <td rowspan='3' valign='center' style='background-color:#eeeeee;width:70px;'>
+        <input type='button' value='view restaurant' class='button_list'/><br/>
+        <input type='button' value='delete restaurant' class='button_list delete_btn' style='background-color:#ff5050;'/>
+    </td>
+</tr>
+
+<tr>
+    <td width='100px'>Address:</td>
+
+    <td><input type='text' name='address[]' value='%value_4%'/></td>
+
+    <td>Select menu</td>
+    <td><select name='menu_name[]'>%options%</select></td>
+</tr>
+
+<tr>
+    <td>Postal code:</td>
+    <td><input type='text' name='postal_code[]' value='%value_5%'/></td>
+    <td>Select schedule</td>
+    <td><select><option value='none' selected>none</option></select></td>
+</tr>
+</table>
+
+##
+
+<table width="100%" style="background-color:#f9f8f8;" class="menu_items">
+    <tr>
+        <td>%menu_name%</td>
+        <td width="50px"><a href='%edit_menu%' target="_blank">edit</a></td>
+        <td width="50px"><input type="button" value="delete menu"/></td>
+    </tr>
+</table>

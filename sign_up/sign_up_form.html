@@ -37,43 +37,43 @@
 
      <tr>
         <td align="center" colspan="2" style="padding-bottom:15px;">
-        As a restaurant (Step 1/4)
+        As a restaurant (Step 1/2)
         </td>
    </tr>
 
 
    <tr>
         <td>Email</td>
-        <td><input type="text" value="" name="FA_Email" id="check_email" maxlength="100"></input>
+        <td><input type="text" name="DB_Email" maxlength="100" />
         </td>
    </tr>
 
    <tr>
-        <td>Username</td>
+        <td>Link</td>
         <td>
-            <input type="text" value="" name="FA_Username" id="check_username" maxlength="32"></input>
+            eatapp.ca/<input style="width:119px;margin-left:5px;" type="text" name="DB_Link_Name" maxlength="32"/>
         </td>
    </tr>
 
    <tr>
         <td>Password</td>
-        <td><input type="password" name="FA_Password" onkeyup="checkPasswords()" maxlength="30"></input></td>
+        <td><input type="password" name="DB_Password" maxlength="30"/></td>
     </tr>
 
    <tr>
         <td>Confirm password</td>
-        <td><input type="password" name="FA_Confirm_Password" onkeyup="checkPasswords()" maxlength="30"></input></td>
+        <td><input type="password" name="DB_Confirm_Password" maxlength="30" /></td>
     </tr>
 
 
     <tr>
         <td>Restaurant name</td>
-        <td><input type="text" value="" name="FA_Restaurant_Name" id="restaurant_name" onkeyup="checkRestaurantName(this)" maxlength="60"></input></td>
+        <td><input type="text" value="" name="DB_Restaurant_Name" maxlength="60"></input></td>
     </tr>
 
 
     <tr>
-        <td colspan=2 style="font-size:14px;padding-top:25px;">
+        <td colspan="2" style="font-size:14px;padding-top:25px;">
         <label><input type="checkbox" name="agreement" id="Agreement_checkbox" value="ch" onclick="OnChangeCheckbox(this)">
        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
         </td>
@@ -83,168 +83,10 @@
    <tr>
        <td align="center" colspan=2>
        <a href=<?php setLink("/login/index.php"); ?>><input type="button" value="Login" id="login" class="button_sign_up"></input></a>
-       <input type="button" value="Next" id="next_location" class="button_sign_up" style="background-color:#babdc6;" onclick="showTable('sign_up_location_table');" disabled="true"></input>
+       <input type="button" value="Next" id="next_location" class="button_sign_up" style="background-color:#babdc6;" onclick="showTable('sign_up_picture_table');" disabled="true"></input>
        </td>
    </tr>
 </table>
-
-<!--Location-->
-<table align="center" id="sign_up_location_table">
-
-    <tr>
-        <td colspan="2" align="center" style="font-size:25px;">
-            <b>Location</b>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2" align="center" style="padding-bottom:15px;">
-            Of your restaurant (Step 2/4)
-        </td>
-    </tr>
-
-    <tr>
-        <td>Country</td>
-        <td><div id="country_list"></div></td>
-    </tr>
-
-    <tr>
-        <td>State/Province</td>
-        <td><input type="text" value="Ontario" name="FA_State_Province" maxlength="30"></input></td>
-    </tr>
-
-    <tr>
-        <td>City</td>
-        <td><input type="text" onkeyup="Check_city(this)" value="Ottawa" name="FA_City" maxlength="30"></input></td>
-    </tr>
-
-    <tr>
-        <td>Address</td>
-        <td><input type="text" onkeyup="Check_Address(this)" value="" name="FA_Address" maxlength="50"></input></td>
-    </tr>
-
-    <tr>
-        <td>Postal code</td>
-        <td><input type="text" onkeyup="Check_postal_code(this)" value="" name="FA_Postal_Code" maxlength="20"></input></td>
-    </tr>
-
-    <tr>
-        <td align="center" colspan=2 style="padding-top:15px;">
-         <input type="button" value="Back" class="button_sign_up" onclick="showTable('sign_up_table');"></input>
-
-          <input type="button" value="Next" id="next_more" class="button_sign_up" style="background-color:#babdc6;" onclick="showTable('sign_up_more_table');" disabled="true"></input>
-        </td>
-    </tr>
-</table>
-<!--Location-->
-
-
-
-<!--More info-->
-<table align="center" id="sign_up_more_table">
-
-    <tr>
-        <td colspan="2" align="center" style="font-size:25px;">
-            <b>Additional information</b>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2" align="center" style="padding-bottom:15px;">
-            (Step 3/4)
-        </td>
-    </tr>
-
-    <tr>
-      <td colspan="2">
-         <label><input type="checkbox" name="always_open" id="always_open" onclick="showSchedule()" checked>
-          Always open (24/7)</label>
-        </td>
-      </td>
-    </tr>
-
-     <tr id="schedule_show" style="display:none;">
-
-        <td colspan="2" align="center">
-           <table>
-            <tr>
-              <td></td>
-              <td width="10px"></td>
-              <td width="70px">Opening</td>
-              <td width="70px">Closing</td>
-            </tr>
-
-            <tr height="35px">
-              <td>Mon</td>
-              <td><input type="checkbox" name="monday_open" id="monday_open" onclick="hideSchedulePart('monday')" checked></td>
-              <td><input type="time_picker" class="monday" name="monday_start" READONLY></input></td>
-              <td><input type="time_picker" class="monday" name="monday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Tue</td>
-              <td><input type="checkbox" name="tuesday_open" id="tuesday_open" onclick="hideSchedulePart('tuesday')" checked></td>
-              <td><input type="time_picker" class="tuesday" name="tuesday_start" READONLY></input></td>
-              <td><input type="time_picker" class="tuesday" name="tuesday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Wed</ts>
-              <td><input type="checkbox" name="wednesday_open" id="wednesday_open" onclick="hideSchedulePart('wednesday')" checked></td>
-              <td><input type="time_picker" class="wednesday" name="wednesday_start" READONLY></input></td>
-              <td><input type="time_picker" class="wednesday" name="wednesday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Thu</td>
-              <td><input type="checkbox" name="thursday_open" id="thursday_open" onclick="hideSchedulePart('thursday')" checked></td>
-              <td><input type="time_picker" class="thursday" name="thursday_start" READONLY></input></td>
-              <td><input type="time_picker" class="thursday" name="thursday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Fri</td>
-              <td><input type="checkbox" name="friday_open" id="friday_open" onclick="hideSchedulePart('friday')" checked></td>
-              <td><input type="time_picker" class="friday" name="friday_start" READONLY></input></td>
-              <td><input type="time_picker" class="friday" name="friday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Sat</td>
-              <td><input type="checkbox" name="saturday_open" id="saturday_open" onclick="hideSchedulePart('saturday')" checked></td>
-              <td><input type="time_picker" class="saturday" name="saturday_start" READONLY></input></td>
-              <td><input type="time_picker" class="saturday" name="saturday_end" READONLY></input></td>
-            </tr>
-
-            <tr height="35px">
-              <td>Sun</td>
-              <td><input type="checkbox" name="sunday_open" id="sunday_open" onclick="hideSchedulePart('sunday')" checked></td>
-              <td><input type="time_picker" class="sunday" name="sunday_start" READONLY></input></td>
-              <td><input type="time_picker" class="sunday" name="sunday_end" READONLY></input></td>
-            </tr>
-           </table>
-        </td>
-    </tr>
-
-    <tr>
-        <td>Phone number</td>
-        <td><input type="text" name="FA_Phone_number" maxlength="30"></input></td>
-    </tr>
-
-    <tr>
-        <td>Website</td>
-        <td><input type="text" name="FA_Website" maxlength="100"></input></td>
-    </tr>
-
-    <tr>
-        <td align="center" colspan=2 style="padding-top:15px;">
-         <input type="button" value="Back" class="button_sign_up" onclick="showTable('sign_up_location_table');"></input>
-            <input type="button" value="Next" class="button_sign_up" onclick="showTable('sign_up_picture_table');"></input>
-        </td>
-    </tr>
-</table>
-<!--More info-->
-
 
 <!--Load pictures-->
 <table align="center" id="sign_up_picture_table">
@@ -257,7 +99,7 @@
 
     <tr>
         <td colspan="2" align="center" style="padding-bottom:15px;">
-            Of your restaurant page (Step 4/4)
+            Of your restaurant page (Step 2/2)
         </td>
     </tr>
 
@@ -274,9 +116,15 @@
 
 
     <tr>
-        <td align="center" colspan=2 style="padding-top:15px;">
+        <td>Website</td>
+        <td><input type="text" name="DB_Website" maxlength="100" value="http://" /></td>
+    </tr>
+
+
+    <tr>
+        <td align="center" colspan="2" style="padding-top:15px;">
         <input type="hidden" name="crop_info" id="crop_info"/>
-         <input type="button" value="Back" class="button_sign_up" onclick="showTable('sign_up_more_table');"></input>
+         <input type="button" value="Back" class="button_sign_up" ></input>
 
           <input type="submit" value="Sign up" class="button_sign_up" name="sign_up_button"></input>
         </td>

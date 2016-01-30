@@ -4,200 +4,176 @@ var user_name_available=2;
 var agreement=0;
 var restaurant_name_valid=2;
 var login=false;
-//Load country list for location menu+++
 
-function readTextFile(file)
-{
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", file, false);
-    xhttp.send();
-
-    return xhttp.responseText;
-}
-function initiate()
-{
-    //Load list of countries
-    var text=readTextFile("country_list.txt");
-    var obj=JSON.parse(text);
-    var string="<div class='select-style'><select name='FA_Country'>";
-    var sel="";
-
-    for (i=0;i<obj.List.length;i++)
-    {
-        var country=obj.List[i].Country;
-
-        if (country=="Canada")
-        {
-            sel=" selected";
-        }
-        else
-        {
-            sel="";
-        }
-
-        string+="<option value="+country+sel+">";
-        string+=country;
-        string+="</option>";
-    }
-    string+="</select></div>";
-
-    document.getElementById("country_list").innerHTML=string;
-
-    //disable button
-    //document.getElementById("finalize_sign_up").style.backgroundColor="#babdc6";
-}
-
+var enable_color="#ffa25e";
+var disable_color="#babdc6";
 
 //Load country list for location menu---
 $(document).ready(
     function(){
-     $("input[type=time_picker]").setTimePicker();
-
-
-
-    var x_timer;
-    $("#check_email").keyup(function (e)
-    {
-        clearTimeout(x_timer);
-        var email = $(this).val();
-        x_timer = setTimeout(function(){check_email_ajax(email);}, 1000);
-    });
-
-
-    var x_timer2;
-    $("#check_username").keyup(function (e)
-    {
-        clearTimeout(x_timer2);
-        var username = $(this).val();
-        x_timer2 = setTimeout(function(){check_username_ajax(username);}, 1000);
-    });
-
-
-
-
-    //check email
-    function check_email_ajax(email)
-    {
-    $.post('../requests/email_checker.php', {'email':email}, function(data)
-    {
-       var result=$.trim(data);
-
-    if (result == "0") //not available
-    {
-       //Email taken
-       $("#check_email").removeClass();
-       $("#check_email").addClass('wrong_field');
-
-       setError("Email is not available");
-
-       email_available=0;
-       setLogin();
-    }
-    else
-      if (result == "1")
-       {
-        //Email format is invalid
-        if (!isValidEmailAddress(email))
+        var timer;
+        $("input[name='DB_Email']").keyup(function (e)
         {
-            $("#check_email").removeClass();
-            $("#check_email").addClass('wrong_field');
+            disableLogin();
+            clearTimeout(timer);
+            var email = $(this).val();
+            timer = setTimeout(function(){sendRequest(email,"Email");}, 1000);
+        });
 
-            setError("Email has an improper format");
-            email_available=0;
-            setLogin();
-        }
-        else
-            {
-            //Everything is fine
-            $("#check_email").removeClass();
-            $("#check_email").addClass('approved_field');
+        $("input[name='DB_Link_Name']").keyup(function (e)
+        {
+            disableLogin();
+            clearTimeout(timer);
+            var link_name = $(this).val();
+            timer = setTimeout(function(){sendRequest(link_name,"Link");}, 1000);
+        });
 
-            setError("");
-            email_available=1;
-            setLogin();
-            }
-       }
- });
+        $("input[type='password']").keyup(function (e)
+        {
+            checkPasswords();
+        });
 
-}
+        $("input[name='DB_Restaurant_Name']").keyup(function (e)
+        {
+            checkRestaurantName();
+        });
 
-//check username
-function check_username_ajax(username)
+});
+
+//checks email and link name **need to create the php file
+function sendRequest(string,type)
 {
-    $.post('../requests/username_checker.php', {'username':username},
+    $.post('../requests/check_availability.php', {"input":string,"type":type},
     function(data)
     {
-    var result=$.trim(data);
+        var result=$.trim(data);
 
-    if (result == "0") //Username is not available
+        if (type=="Link")
+            analyze_link("input[name='DB_Link_Name']",result,string);
+        else
+            if (type=="Email")
+                analyze_email("input[name='DB_Email']",result,string);
+    });
+}
+
+function analyze_link(input,result,initial)
+{
+    var $link_input=$(input);
+
+    switch (result)
     {
-        //Username taken
-        $("#check_username").removeClass();
-        $("#check_username").addClass('wrong_field');
+        case "0": //Linkname is not available
+            $link_input.removeClass();
+            $link_input.addClass('wrong_field');
 
-        setError("Username is not available");
-        user_name_available=0;
-        setLogin();
-    }
-    else
-        if (result == "1") //Username is available
-        {
-            //Username format is invalid
-            if (username.length<=0 || /[\W]/.test(username)==true)
+            setError("Link is not available");
+            user_name_available=0;
+            setLogin();
+        break;
+
+        case "1": //Linkname is available
+
+            if (initial.length<=0 || /[\W]/.test(initial)==true) //Linkname format is invalid
             {
-                $("#check_username").removeClass();
-                $("#check_username").addClass('wrong_field');
+                $link_input.removeClass();
+                $link_input.addClass('wrong_field');
 
-                setError("Username has an improper format");
+                setError("Link has an improper format");
                 user_name_available=0;
                 setLogin();
             }
             else
                 {
                     //Everything is fine
-                    $("#check_username").removeClass();
-                    $("#check_username").addClass('approved_field');
+                    $link_input.removeClass();
+                    $link_input.addClass('approved_field');
+
                     setError("");
                     user_name_available=1;
                     setLogin();
                 }
-         }
-    });
+        break;
+    }
 }
-//+++
 
-});
-
-    function isValidEmailAddress(emailAddress)
-    {
-      var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-      return pattern.test(emailAddress);
-    };
-
-
-//Show error in div
-function setError(err)
+function analyze_email(input,result,initial)
 {
-     if (err=="")
-     {
-        jQuery('#error_box').animate({ top: '-23px'}, 200, 'swing');
-     }
-     else
-     {
-        document.getElementById("error_box").innerHTML=err;
-        jQuery('#error_box').animate({ top: '0px'}, 200, 'swing');
-     }
+    $email_input=$(input);
+
+    switch (result)
+    {
+        case "0": //Email not available
+            $email_input.removeClass(); //remove all classes
+            $email_input.addClass('wrong_field'); //add "wrong_field" layout
+
+            setError("Email is not available"); //Show bar with  corresponding error
+
+            email_available=0;
+            setLogin(); //Disable button
+        break;
+
+        case "1":
+
+            if (!isValidEmailAddress(initial)) //Email format is invalid
+            {
+                $email_input.removeClass();
+                $email_input.addClass('wrong_field');
+
+                setError("Email has an improper format");
+                email_available=0;
+                setLogin();
+            }
+            else
+            {
+                //Everything is fine
+                $email_input.removeClass();
+                $email_input.addClass('approved_field');
+
+                setError("");
+                email_available=1;
+                setLogin();
+            }
+        break;
+    }
+}
+
+/*
+    Check email pattern
+*/
+function isValidEmailAddress(emailAddress)
+{
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+};
+
+function isURLValid(str)
+{
+  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
+    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
+    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
+    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
+    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
+    '(\#[-a-z\d_]*)?$','i'); // fragment locater
+
+  if(!pattern.test(str))
+  {
+    return false; //invalid URL
+  }
+  else
+    {
+        return true;
+    }
 }
 
 function checkPasswords()
 {
-    var pass1=document.getElementsByName("FA_Password")[0];
-    var pass2=document.getElementsByName("FA_Confirm_Password")[0];
+    var pass1=$("input[name='DB_Password']").val();
+    var pass2=$("input[name='DB_Confirm_Password']").val();
 
-    if (pass1.value!="" && pass2.value!="")
+    if (pass1!="" && pass2!="")
     {
         //Check if passwords are equal
-        if (pass1.value!=pass2.value)
+        if (pass1!=pass2)
         {
             passwords_valid=0;
             setError("Passwords are different!");
@@ -205,7 +181,7 @@ function checkPasswords()
         }
         else
         //Check password length
-        if (pass1.value.length<6)
+        if (pass1.length<6)
         {
             passwords_valid=0;
             setError("Password is too short");
@@ -213,7 +189,7 @@ function checkPasswords()
         }
         else
         //check if there are letters
-        if (/[\W_]/.test(pass1.value) == true)
+        if (/[\W_]/.test(pass1) == true)
         {
             passwords_valid=0;
             setError("Password must contain only letters and numbers");
@@ -230,13 +206,14 @@ function checkPasswords()
 
     }
 }
+
 function checkRestaurantName(field)
 {
-    var name=field.value;
+    var name=$("input[name='DB_Restaurant_Name']").val();
 
     if (name.length<1)
     {
-        //Name is notlong enough
+        //Name is not long enough
         restaurant_name_valid=0;
         setLogin();
     }
@@ -252,37 +229,62 @@ function checkRestaurantName(field)
 //Set login value
 function setLogin()
 {
-    var field_pass1=document.getElementsByName("FA_Password")[0];
-    var field_pass2=document.getElementsByName("FA_Confirm_Password")[0];
-    var restaurant_name=document.getElementById("restaurant_name").value;
+    var $password=$("input[name='DB_Password']");
+    var $confirm_password=$("input[name='DB_Confirm_Password']");
 
     if (passwords_valid==0)
     {
-        field_pass1.className = "wrong_field";
-        field_pass2.className = "wrong_field";
+        $password.removeClass();
+        $confirm_password.removeClass();
+
+        $password.addClass("wrong_field");
+        $confirm_password.addClass("wrong_field");
     }
     else
         if (passwords_valid==1)
         {
-        field_pass1.className = "approved_field";
-        field_pass2.className = "approved_field";
+            $password.removeClass();
+            $confirm_password.removeClass();
+
+            $password.addClass("approved_field");
+            $confirm_password.addClass("approved_field");
         }
 
 
     if (email_available==1 && passwords_valid==1 && user_name_available==1 && agreement==1 && restaurant_name_valid==1)
     {
         login=true;
-        document.getElementById('next_location').style.backgroundColor="#ffa25e";
+        $('#next_location').css("background-color",enable_color);
         document.getElementById('next_location').disabled=false;
     }
     else
     {
         login=false;
+        $('#next_location').css("background-color",disable_color);
         document.getElementById('next_location').disabled=true;
-        document.getElementById('next_location').style.backgroundColor="#babdc6";
     }
-
 }
+
+function disableLogin()
+{
+    $('#next_location').css("background-color",disable_color);
+    document.getElementById('next_location').disabled=true;
+}
+
+//Show error in div
+function setError(err)
+{
+     if (err=="")
+     {
+        jQuery('#error_box').animate({ top: '-23px'}, 200, 'swing');
+     }
+     else
+     {
+        document.getElementById("error_box").innerHTML=err;
+        jQuery('#error_box').animate({ top: '0px'}, 200, 'swing');
+     }
+}
+
 //Agreement
 function OnChangeCheckbox(checkbox)
 {
@@ -297,113 +299,16 @@ function OnChangeCheckbox(checkbox)
         setLogin();
     }
 }
-//LOCATION FUNCTIONS
-//
-var city_length=1;
-var address_length=2;
-var postal_code_length=2;
-function Check_city(field)
-{
-    if (field.value.length>0)
-    {
-        city_length=1;
-    }
-    else
-    {
-        city_length=0;
-    }
-
-    final_result();
-}
-function Check_Address(field)
-{
-    if (field.value.length>0)
-    {
-        address_length=1;
-    }
-    else
-    {
-        address_length=0;
-    }
-
-    final_result();
-}
-function Check_postal_code(field)
-{
-    if (field.value.length>0)
-    {
-        postal_code_length=1;
-    }
-    else
-    {
-        postal_code_length=0;
-    }
-    final_result();
-}
-
-function final_result()
-{
-    if (city_length==1 && address_length==1 && postal_code_length==1)
-    {
-        //Enable button
-        document.getElementById("next_more").disabled=false;
-        document.getElementById("next_more").style.backgroundColor="#ffa25e";
-    }
-    else
-        {
-        //Disable button
-        document.getElementById("next_more").disabled=true;
-        document.getElementById("next_more").style.backgroundColor="#babdc6";
-        }
-}
-
-
-
-
-
-function showSchedule()
-{
-  if (document.getElementById('always_open').checked)
-    {
-        $("#schedule_show").hide();
-    }
-  else
-    {
-       $("#schedule_show").show();
-    }
-}
-
-function hideSchedulePart(week)
-{
-    var elements=document.getElementsByClassName(week);
-
-    for (var i=0; i<elements.length; i++)
-    {
-        if (document.getElementById(week+"_open").checked)
-        {
-            elements[i].style.display="block";
-        }
-        else
-        {
-            elements[i].style.display="none";
-        }
-    }
-
-
-}
 
 
 function showTable(tableId)
 {
-document.getElementById("sign_up_table").style.display="none";
-document.getElementById("sign_up_location_table").style.display="none";
-document.getElementById("sign_up_more_table").style.display="none";
-document.getElementById("sign_up_picture_table").style.display="none";
+    $("#sign_up_table").hide();
+    $("#sign_up_picture_table").hide();
 
-document.getElementById(tableId).style.display="table";
+
+    $("#"+tableId).show();
 }
-
-
 
 
 

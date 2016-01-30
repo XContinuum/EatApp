@@ -1,0 +1,23 @@
+{ "List" :
+[{"Type":"meat","Emoji":"&#x1F356;"},
+{"Type":"sea food","Emoji":"&#x1F364;"},
+{"Type":"hamburger","Emoji":"&#x1F354;"},
+{"Type":"chicken","Emoji":"&#x1F357;"},
+{"Type":"bread","Emoji":"&#x1F35E;"},
+{"Type":"mushrooms","Emoji":"&#x1F344;"},
+{"Type":"pizza","Emoji":"&#x1F355;"},
+{"Type":"sushi","Emoji":"&#x1F363;"},
+{"Type":"spaghetti","Emoji":"&#x1F35D;"},
+{"Type":"soup","Emoji":"&#x1F35C;"},
+{"Type":"fries","Emoji":"&#x1F35F;"},
+{"Type":"ice cream","Emoji":"&#x1F367;"},
+{"Type":"contains peanut","Emoji":""},
+{"Type":"vegan","Emoji":""},
+{"Type":"cheese","Emoji":""},
+{"Type":"nachos","Emoji":""},
+{"Type":"bacon","Emoji":""},
+{"Type":"cheeseburger","Emoji":""},
+{"Type":"peanut free","Emoji":""},
+{"Type":"halal product","Emoji":""},
+{"Type":"poutine","Emoji":""}
+]}

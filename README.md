@@ -3,16 +3,13 @@
 
 ## Features
 
-  - Search works
-  - Geolocation works (need a google API key)
-  - Distance SQL function implemented
-  - Rewriting database structure (TheFoodApp -> EatApp)
+  - New database in implementation (a lot of bugs)
 
 ## Screenshots
 
   <img src="instructions/screenshots/index/index.png" width="30%"/> <img src="instructions/screenshots/login.png" width="30%"/> <img src="instructions/screenshots/sign_up/sign_up_1.png" width="30%"/>
 
-##  Database
+## Database
 
   <img src="instructions/screenshots/FA_RESTORANTS.png" width="30%"/> <img src="instructions/screenshots/FA_MENUS.png" width="30%"/> <img src="instructions/screenshots/FA_ADMIN_PANEL.png" width="30%"/>
 
