@@ -3,9 +3,10 @@
     function getChainLink() //get_restaurant_username
     {
         require("server_connection.php");
-
+          
+        if(!isset($_SESSION))
         session_start();
-
+        
         if (isset($_SESSION['chain_owner_token']))
         {
             $sql="SELECT Link FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
@@ -24,14 +25,16 @@
     function getChainId() //get_restaurant_id
     {
         require('server_connection.php');
+        
+        if(!isset($_SESSION))
         session_start();
-
+        
         if (isset($_SESSION['chain_owner_token']))
         {
             $sql = "SELECT ID FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
             $result = mysqli_query($conn,$sql);
             $row = mysqli_fetch_assoc($result);
-
+        
             return $row['ID'];
         }
         else
@@ -41,14 +44,14 @@
     }
 
     function getMenuOwnerID($menu_name)
-    {
+    { 
         require('server_connection.php');
-
+        
         $sql="SELECT OWNER_ID FROM MENUS WHERE Name='$menu_name'";
         $result=mysqli_query($conn,$sql);
         $row=mysqli_fetch_assoc($result);
         $row_num=mysql_num_rows($result);
-
+        
         if ($row_num==0)
         {
             return -1;
@@ -63,8 +66,8 @@
     function getInfo($link_,$info)
     {
         require("server_connection.php");
-
-        $sql = "SELECT ID,Email,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link_'";
+  
+        $sql = "SELECT ID,Email,Restaurant_Name,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link_'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
         mysqli_close($conn);
@@ -76,7 +79,7 @@
     function getInfoFromID($chain_id,$info)
     {
         require("server_connection.php");
-
+  
         $sql = "SELECT ID,Email,Hash,Picture,Website,Link FROM CHAIN_OWNER WHERE ID='$chain_id'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
@@ -90,10 +93,10 @@
     function checkChainStatus($username_)
     {
         require("server_connection.php");
-
+       
         $sql="SELECT Link FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
-
+        
         if (mysqli_num_rows($result)>0)
         {
             return 1; //chain found
@@ -102,15 +105,15 @@
         {
             return 0; //no user
         }
-
+       
         mysqli_close($conn);
     }
-
+    
     //set a global path for files that are in different directories
     function setLink($string)
     {
         $ini_array=parse_ini_file("settings.ini", true);
-
+    
         $path=$ini_array['server']['path'];
         echo "'".$path.$string."'";
     }
@@ -118,7 +121,7 @@
     function setLinkMute($string)
     {
         $ini_array=parse_ini_file("settings.ini", true);
-
+    
         $path=$ini_array['server']['path'];
         return "'".$path.$string."'";
     }
@@ -127,13 +130,13 @@
     function checkIfValidated($username_)
     {
         require("server_connection.php");
-
+       
         $sql="SELECT Validated FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
-
+      
         mysqli_close($conn);
-
+        
         return $row['Validated'];
     }
 
@@ -141,21 +144,22 @@
     function checkIfEmailValidated($username_)
     {
         require("server_connection.php");
-
+       
         $sql="SELECT Active FROM CHAIN_OWNER WHERE Link='$username_'";
         $result=mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
-
+      
         mysqli_close($conn);
-
+        
         return $row['Active'];
     }
 
     //Check if user logged
     function isOwnerLogged()//isUserLogged
     {
+        if(!isset($_SESSION))
         session_start();
-
+        
         if (isset($_SESSION['chain_owner_token']))
         {
             return 1; //restaurant user logged
@@ -169,35 +173,25 @@
     //Send an email
     function sendEmail($email_address,$username,$hash)
     {
-        $ini_array=parse_ini_file("settings.ini", true);
+        $subject='Signup | Verification'; 
+        $path="http://".$_SERVER['HTTP_HOST'];
 
-        $to=$email_address; // Send email to our user
-        $subject='Signup | Verification'; // Give the email a subject
-        $path=$ini_array['server']['path'];
+        $content=file_get_contents("email_template.html");
+        
+        $search=array('%link_name%','%path%','%email_address%','%$hash%');
+        $data=array($username,$path,$email_address,$hash);
+        $message=str_replace($search,$data,$content);
 
-        $message = '
-
-        Thanks for signing up!
-        Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
-
-        ------------------------
-        Username: '.$username.'
-        ------------------------
-
-        Please click this link to activate your account:
-        '.$path.'verify.php?email='.$email_address.'&hash='.$hash.'
-
-        ';
-
-        $headers='From:noreply@eatapp.ca'."\r\n"; // Set from headers
-        mail($to, $subject, $message, $headers); // Send our email
+        $headers='From:noreply@eatapp.ca'."\r\n";
+        mail($email_address, $subject, $message, $headers);
     }
 
     //Check if admin logged
      function isAdminLogged()
      {
+        if(!isset($_SESSION))
         session_start();
-
+        
         if (isset($_SESSION['admin_token']))
         {
             return 1; //logged
@@ -211,12 +205,13 @@
     //Get admin username
     function getAdminUsername()
     {
+        if(!isset($_SESSION))
         session_start();
-
+        
         if (isset($_SESSION['admin_token']))
         {
             require("server_connection.php");
-
+        
             $sql = "SELECT Username FROM ADMIN_PANEL WHERE Token='".$_SESSION['admin_token']."'";
             $result = mysqli_query($conn,$sql);
             $row = mysqli_fetch_assoc($result);
@@ -231,16 +226,17 @@
 
     //LogOut
     function LogOut()
-    {
+    {  
     require ("server_connection.php");
-
+    
+    if(!isset($_SESSION))
     session_start();
 
     if (isset($_SESSION['chain_owner_token']))
     {
         $sql = "UPDATE CHAIN_OWNER SET Token='0' WHERE Token='" . $_SESSION['chain_owner_token'] . "'";
         mysqli_query($conn,$sql);
-
+    
         session_unset(); //remove all session variables
         session_destroy(); //destroy the session
     }
@@ -249,7 +245,7 @@
         {
             $sql = "UPDATE ADMIN_PANEL SET Token='0' WHERE Token='" . $_SESSION['admin_token'] . "'";
             mysqli_query($conn,$sql);
-
+    
             session_unset(); //remove all session variables
             session_destroy(); //destroy the session
         }
@@ -261,7 +257,7 @@
     {
         $src=getInfo($username_,"Picture");
         $image_link=setLinkMute("/restaurant_data/Profile/".$src);
-
+       
         if ($src=="none" || $src==0)
         {
             $image_link=setLinkMute("/images/default.png");
@@ -277,9 +273,9 @@
         {
             //Restaurant logged
             $LinkName=getChainLink();
-
+            
             $image_src=getPicLink($LinkName);
-
+    
             $panel="<div id='user_top_panel'>";
             $panel.="<div id='username_bar'><a href=".setLinkMute("/".$LinkName).">".$LinkName."</a></div>";
             $panel.="<div id='profile_picture'><img src=$image_src id='image_circle'/></div>";
@@ -322,7 +318,8 @@
 
 
     // Function to get the client IP address
-    function get_client_ip() {
+    function get_client_ip() 
+    {
     $ipaddress = '';
     if ($_SERVER['HTTP_CLIENT_IP'])
         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
@@ -339,5 +336,20 @@
     else
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
+    }
+
+
+    function createQuery($data)
+    {
+        $query="";
+
+        for ($i=0;$i<count($data);$i++)
+        {
+            $data[$i]="'".$data[$i]."'";
+        }
+        $query=implode(",",$data);
+        $query="($query)";
+
+        return $query;
     }
 ?>

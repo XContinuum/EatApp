@@ -143,7 +143,7 @@ if (isset($_POST['search_query']))
         [item] from [min] to [max]
         [item] between [min] and [max]
     */
-    //case 1
+        //case 1
     if (in_array("from",$input) && isInArray("to",$input))
     {
 
@@ -274,18 +274,18 @@ function saveSearch($query_,$results_count)
 }
 
 function getCoordinates($address) //[0]=> Longitude, [1]=> Latitude
-{
-  $prepAddr = str_replace(' ','+',$address);
-  $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-  $output= json_decode($geocode);
-  $latitude = $output->results[0]->geometry->location->lat;
-  $longitude = $output->results[0]->geometry->location->lng;
+      {
+        $prepAddr = str_replace(' ','+',$address);
+        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+        $output= json_decode($geocode);
+        $latitude = $output->results[0]->geometry->location->lat;
+        $longitude = $output->results[0]->geometry->location->lng;
 
-  $coordinates=array();
-  $coordinates[]=$longitude;
-  $coordinates[]=$latitude;
+        $coordinates=array();
+        $coordinates[]=$longitude;
+        $coordinates[]=$latitude;
 
-  return $coordinates;
-}
+        return $coordinates;
+      }
 
 ?>

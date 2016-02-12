@@ -1,5 +1,5 @@
 <?php
-  if (isset($_POST["login_submit"]))
+if (isset($_POST["login_submit"]))
     {
         require ("hash_algorithm.php");
         require ("server_connection.php");
@@ -12,8 +12,7 @@
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
 
-
-        if (PassHash::check_password($row["Password"], $DB_Password)) // MOD 2017 changed $FA_Password to $DB_Password
+        if (PassHash::check_password($row["Password"], $DB_Password)) // MOD 2017 $FA_Password
         {
             //Logged in!
             $salt=rand(403,600) . "P20x" . rand(760,930);
@@ -45,7 +44,7 @@
             $row = mysqli_fetch_assoc($result);
             //---
 
-            if (PassHash::check_password($row["Password"], $DB_Password)) // MOD 2017 changed $FA_Password to $DB_Password
+            if (PassHash::check_password($row["Password"], $DB_Password)) // MOD 2017 $FA_Password
             {
                  //Logged in!
                 $salt=rand(403,600) . "P20x" . rand(760,930);

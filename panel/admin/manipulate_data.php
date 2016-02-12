@@ -5,7 +5,7 @@
         $id=$_GET['id'];
 
         require("server_connection.php");
-
+        
         if ($type=='validate')
         {
             //validation
@@ -24,5 +24,6 @@
             {
                //ban
             }
+
     }
 ?>

@@ -13,7 +13,7 @@
         $dbname=$ini_array['server']['dbname'];
 
 
-        $mysqli = new mysqli($servername, $username, $password, $dbname);
+        $mysqli=new mysqli($servername, $username, $password, $dbname);
 
         if ($mysqli->connect_error)
         {

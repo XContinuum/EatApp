@@ -13,29 +13,23 @@
     $owner_id=getChainId();
     $bAdd=true;
 
+    $intermediate_q=array(); //intermediate array
+
+    //Compiles data into a string
     for ($i=0;$i<count($DB_Restaurant_Link);$i++)
     {
-        if ($i!=0 && $i!=(count($DB_Restaurant_Link)))
-        {
-            $query.=", ";
-        }
-
-        $order=$i+1;
         $link=strtolower($DB_Restaurant_Link[$i]);
-        $address=$DB_Address[$i];
-        $postal_code=$DB_Postal_Code[$i];
-        $phone_number=$DB_Phone_Number[$i];
-        $m_name=$DB_Menu_Name[$i];
+        $coord=getCoordinates($DB_Address[$i]);
+        $data=array($i+1,$owner_id,$link,$DB_Address[$i],$DB_Postal_Code[$i],$DB_Phone_Number[$i],$DB_Menu_Name[$i],$coord[0],$coord[1]);
 
-        $coord=getCoordinates($address);
-
-        $query.="('$order','$owner_id','$link','$address','$postal_code','$phone_number','$m_name','$coord[0]','$coord[1]')";
+        array_push($intermediate_q, createQuery($data));
 
         if ($link=="" || !isset($link))
         {
              $bAdd=false;
         }
     }
+    $query=implode(",", $intermediate_q);
 
     $sql="INSERT INTO RESTAURANTS (R_Order,OWNER_ID,Link,Address,Postal_Code,Phone_Number,Menu_Name,Longitude,Latitude) ";
     $sql.="VALUES $query ON DUPLICATE KEY UPDATE ";
@@ -54,23 +48,25 @@
     }
     //DELETE---
 
-    if ($bAdd)
+    if ($bAdd) //do not add if link is not set
     {
         if (mysqli_query($conn, $sql))
+        {
             echo "success";
+        }
     }
     mysqli_close($conn);
 
 
     function getCoordinates($address)
     {
-        $prepAddr = str_replace(' ','+',$address);
+        $prepAddr=str_replace(' ','+',$address);
         $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output= json_decode($geocode);
+        $output=json_decode($geocode);
 
         $coordinates=array();
-        $coordinates[]= $output->results[0]->geometry->location->lng;
-        $coordinates[]= $output->results[0]->geometry->location->lat;
+        $coordinates[]=$output->results[0]->geometry->location->lng;
+        $coordinates[]=$output->results[0]->geometry->location->lat;
 
         return $coordinates;
     }

@@ -1,10 +1,10 @@
-var obj=JSON.parse(readTextFile("content_list.txt")); //list with all the possible food contents
+var obj=JSON.parse(readTextFile("filters.txt")); //list with all the possible food contents
 
 var reading=readTextFile("menu_row_structure.html");
 var split_info=reading.split("##");
 
 var row_template=split_info[1];
-var edit_section=split_info[3];
+var edit_section=split_info[0];
 var section=0;
 
 $(document).ready(function()
@@ -23,29 +23,34 @@ $(document).ready(function()
 
     $("#save_menu_btn").click(function()
     {
-      var datastring=$("#save_menu_form").serialize();
-
-      //check_fields();
+      //var datastring=$("#save_menu_form").serialize();
+      var datastring=new FormData($("#save_menu_form")[0]);
 
         $.ajax({
         type: "POST",
         url: "save_menu.php",
         data: datastring,
         dataType: "text",
+        async: false,
         success: function(data)
         {
             $("#server_result").html(data);
-            $("#server_result").css({"color":"white","background-color":"#58ec74"});
-
             $("#server_result").stop().animate({opacity:1}, 500).delay(1000).animate({opacity:0}, 500);
+            console.log(data);
         },
         error: function()
         {
             alert('An error has occured saving your data. Please try again.');
-        }});
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+
+    });
     });
 
-        initiate();
+    initiate();
+    disableCharacters();
 });
 
 function readTextFile(file)
@@ -94,7 +99,9 @@ function initiate()
          //loadFilters(list)
          $("select[name^='Food_Contents']").eq(i).html(loadFilters(list));
      }
-     $(".js-example-basic-multiple").select2();
+    //$(".js-example-basic-multiple").select2();
+
+    $(".multi_select").setMultiSelect();
 
      moveRowsEvent();
 
@@ -156,6 +163,7 @@ $('.up,.down,.delete_row').unbind('click').bind('click', function(e)
     }
 
     updateSectionIndex();
+     $(".multi_select").setMultiSelect();
 });
 }
 
@@ -167,15 +175,17 @@ function addRow()
     var current_index=$("#menu_table tr").length-1-section;
 
     var search=['%order%','%i%','%SRC%','%picture_url%','%product_name%','%price%','%description%','%food_content%'];
-    var replace=[current_index,current_index-1,'../images/upload_picture.png','','','','',loadFilters(0)];
+    var replace=[current_index,current_index-1,'images/upload_picture.png','none','','','',loadFilters(0)];
 
     var new_row=multipleReplace(search,replace,row_template);
     $('#menu_table tr:last').before(new_row);
 
     //Other settings----
-    $(".js-example-basic-multiple").select2();
+    $(".multi_select").setMultiSelect();
+
     updateFileChange();
     moveRowsEvent();
+    disableCharacters();
 }
 
 function multipleReplace(search, replace, string)
@@ -194,7 +204,7 @@ function multipleReplace(search, replace, string)
 function addSection()
 {
     section++;
-    var search=['%section%',"%lmna%"];
+    var search=['%section%',"%section_name%"];
     var replace=[section,""];
     var new_row=multipleReplace(search,replace,edit_section);
 
@@ -238,6 +248,19 @@ function updateSectionIndex()
 
 
 
+/*
+    Characters
+*/
+function disableCharacters()
+{
+    $("input[name^='Price']").keypress(function(e)
+    {
+        return "1234567890.".indexOf(String.fromCharCode(e.which))>=0;
+    });
+}
+
+
+
 //Upload image+++
 var current_row=0;
 
@@ -251,9 +274,7 @@ function updateFileChange()
             reader.onload = imageIsLoaded;
             reader.readAsDataURL(this.files[0]);
 
-
-            current_row=$(this).attr('name');
-            current_row=current_row.replace("food_images_", "");
+            current_row=$(this).index("input[name^='Food_Images']");
         }
     });
 }
@@ -275,14 +296,14 @@ function imageIsLoaded(e)
     $("#uploaded_image").attr("src", e.target.result);
     $("#uploaded_image").imageCrop("200","200");
 
-    $("#apply_cropping").applyCrop("input[name='crop_info_"+current_row+"']","#display_image_"+current_row,"50","50");
+    $("#apply_cropping").applyCrop("input[name^='Crop_Info']:eq("+current_row+")",".Display_IMG:eq("+current_row+")","50","50");
 
     $("#cancel_image").click(function(e)
         {
             $("#opaque_background").hide();
             $("#modify_image").hide();
 
-            var control=$("#food_images_"+current_row);
+            var control=$("input[name^='Food_Images']:eq("+current_row+")");
             control.replaceWith(control=control.clone(true));
 
         });

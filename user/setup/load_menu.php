@@ -1,5 +1,5 @@
 <?php
-
+   
 $structure=file_get_contents("menu_row_structure.html");
 $pieces=explode("##", $structure);
 
@@ -9,21 +9,20 @@ $pieces=explode("##", $structure);
 function LoadMenu($menu_name)
 {
     require ("../../requests/server_connection.php");
-
-    $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture ";
+        
+    $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture,Currency ";
     $sql.="FROM MENUS WHERE Name='$menu_name'";
     $result=mysqli_query($conn,$sql);
-
+        
     $menu="";
     $count=0;
-
+       
     $old_section_name="none";
 
     while($row=mysqli_fetch_array($result))
     {
         $count++;
-        $colspan_img="";
-
+        $colspan_img=""
         //Section+++
         if ($old_section_name!=$row['Section'])
         {
@@ -39,13 +38,13 @@ function LoadMenu($menu_name)
         $pic_url="#";
         if ($row['Picture']!="none")
         {
-            $pic_url="/restaurant_data/Pictures/$res_username/".$row['Picture'];
+            $pic_url="/restaurant_data/Pictures/$res_username/$menu_name/".$row['Picture'];
         }
         //PICTURE---
 
-
+        
         //CONTENTS+++
-
+        
         if ($contents!="none" && $contents!="")
         {
             $contents=explode(".",$row['Contents']);
@@ -65,38 +64,37 @@ function LoadMenu($menu_name)
             $tag_width="0%";
         }
 
-
+       
         $data=array($pic_url,$row['Product_Name'],$row['Price'],$tag_width,$reslt);
         $search=array('%pic%','%Product_Name%','%Price%','%Tag_Width%','%Result%');
         $menu=str_replace($search,$data,$pieces[2]);
     }
-
+        
     mysqli_close($conn);
-
+        
     if ($count==0)
     {
         $menu="0";
     }
-
+        
     return $menu;
 }
 
 /*
-    Load menu from the menu_name and fill in an edit field
+    Load menu from the menu_name and fill in an edit field 
     via %structure% for editing
 */
 function load_editMenu($menu_name)
 {
     require("../../requests/server_connection.php");
-
+      
     $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture FROM MENUS WHERE Name='$menu_name'";
     $result=mysqli_query($conn,$sql);
-
+            
 
     $count=0;
-
     $data=array('1','0','none','','','','','');
-
+        
     //Sections
     $menu="";
     $previous_section="";
@@ -115,11 +113,11 @@ function load_editMenu($menu_name)
         }
 
         $data=array($count,$count-1,$row['Picture'],$row['Picture'],$row['Product_Name'],$row['Price'],$row['Description'],$row['Contents']);
-        $menu.=fillRow($data);
+        $menu.=fillRow($data,$menu_name);
     }
-
+        
     mysqli_close($conn);
-
+    
     if ($count==0)
         $menu=fillRow($data);
 
@@ -135,13 +133,13 @@ function fillRow($data_,$menu_name)
 
     //PICTURE
     $chain_link=getChainLink();
-    $pic="../images/upload_picture.png";
+    $pic="images/upload_picture.png";
 
     if ($data_[2]!="none")
     {
-        $pic="../../restaurant_data/Pictures/".$chain_link."/".$menu_name."/".$pic_url;
+        $pic="../../restaurant_data/Pictures/$chain_link/$menu_name/".$data_[2];
     }
-
+    
     $data_[2]=$pic;
     //PICTURE
 
@@ -168,19 +166,19 @@ function insertSection($order,$section_name)
 function getLastModified($menu_name)
 {
     require("../../request/server_connection.php");
-
+        
     $sql="SELECT Last_Modified FROM MENUS WHERE Name='$menu_name'";
     $result=mysqli_query($conn,$sql);
     $final_result=mysqli_fetch_assoc($result);
-
+        
     $time=strtotime($final_result["Last_Modified"]);
-
-    return "Last updated ".humanTiming($time)." ago";
+        
+    return "Last updated ".readableTime($time)." ago";
 }
-
-function humanTiming($time)
+    
+function readableTime($time)
 {
-    $time = time() - $time;//to get the time since that moment
+    $time = time() - $time; //to get the time since that moment
     $time = ($time<1)? 1 : $time;
     $tokens = array (
         31536000 => 'year',
@@ -195,7 +193,7 @@ function humanTiming($time)
     foreach ($tokens as $unit => $text)
     {
         if ($time < $unit) continue;
-
+            
         $numberOfUnits= floor($time / $unit);
         return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
     }

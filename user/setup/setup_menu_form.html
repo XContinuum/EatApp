@@ -1,6 +1,6 @@
 <!-- Crop image -->
-<div id="opaque_background"></div>
-<div id="modify_image">
+<div id="opaque_background" style="z-index:149;"></div>
+<div id="modify_image" style="z-index:150;">
 <table style="width:100%;height:100%;padding:0px;">
     <tr height="30px"><td colspan="2" align="center" style="font-size:25px;font-family:'AvenirLTStd-Light';">Position and size photo</td></tr>
   	<tr><td colspan="2" align="center" valign="top">
@@ -24,8 +24,8 @@
 
 <table align="center" id="restaurants_table" style="width:67%;">
 <tr>
-	<td id="server_result" height="10px" align="center" style="opacity:0;">
-		menu saved!
+	<td id="server_result" height="25px" align="center" style="opacity:0;background-color:#57e68e;color:white;" valign="center">
+		Saved!
 	</td>
 </tr>
 
@@ -37,26 +37,26 @@
 
 <tr>
 	<td align="center" height="20px" style="font-size:13px;color:#4d85f2;">
-		%name%.menu
+		%name%
 	</td>
 </tr>
 
 
 <tr>
 	<td valign="top" height="50px">
-		<form id="save_menu_form" action="../../requests/save_menu.php" method="POST" enctype="multipart/form-data">
+		<form id="save_menu_form" method="POST" enctype="multipart/form-data">
 			<input type="hidden" value="%name%" name="menu_name"/>
 			<table align="center" id="menu_table" class="m_table">
 			<!-- Header -->
 			<tr class="under" id="menu_header" style="background-color:#f9f8f8;">
     			<td width='20px'></td>
     			<td align='center' width="50px">Picture</td>
-    			<td align='center'>Meal/drink name</td>
-    			<td align='center'>Price
+    			<td align='center'>Meal/drink name*</td>
+    			<td align='center'>Price*
     				<div class='empty_select'>(<select name="currency"><option value='CAD' select>CAD</option><option value='USD'>USD</option></select>)
     			</td>
-    		<td align='center'>General description</td>
-    		<td align='center'>Content</td>
+    		<td align='center'>Description</td>
+    		<td align='center'>Tags</td>
     		<td></td>
 			</tr>
 

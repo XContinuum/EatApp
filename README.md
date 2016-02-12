@@ -3,7 +3,8 @@
 
 ## Features
 
-  - New database in implementation (a lot of bugs)
+  - Admin panel has a line counter (counts the number of lines coded)
+  - Still bugs from v2.1 due to database changes
 
 ## Screenshots
 

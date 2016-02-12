@@ -13,4 +13,4 @@
 				// $path="http://localhost:8888/"; //MOD 2017
         echo "'".$path.$string."'";
     }
-    ?>
+?>

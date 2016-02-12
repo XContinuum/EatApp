@@ -3,7 +3,7 @@
     {
         require ("server_connection.php");
 
-        $res_username=getInfoFromID($restaurant_id,"Link"); // MOD 2017 changed from FA_Username
+        $res_username=getInfoFromID($restaurant_id,"FA_Username");
 
         $sql = "SELECT FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section,FA_Pic ";
         $sql.= "FROM FA_MENUS WHERE RESTAURANT_ID='$restaurant_id' ORDER BY FA_Order ASC";
@@ -130,7 +130,7 @@
             $row.="<td>$order</td>";
 
             //PICTURE
-            $res_username=getChainLink(); //MOD 2017 changed from get_restaurant_username()
+            $res_username=get_restaurant_username();
 
             $row.="<td>";
 
@@ -185,7 +185,7 @@
         $result = mysqli_query($conn,$sql);
         $final_result= mysqli_fetch_assoc($result);
 
-        $time = date_default_timezone_set($final_result["FA_Last_Modified"]); // strtotime MOD 2017
+        $time = strtotime($final_result["FA_Last_Modified"]);
 
         return "Last updated ".humanTiming($time)." ago";
     }

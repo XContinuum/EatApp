@@ -8,6 +8,8 @@
         {
             $(this).val("9:00 AM");
 
+
+
              $(this).click(function(e)
              {
                 $(".ticker").remove();

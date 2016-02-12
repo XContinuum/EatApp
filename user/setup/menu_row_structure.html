@@ -1,39 +1,39 @@
 <!--Edit section-->
 <tr style="background-color:#f9f8f8;">
     <td colspan='7' align='center'>
-        <input type='text' placeholder='Section %section%' value='%section_name%' name='Sections[]' style="background-color:#f9f8f8;"/>
-        <input type='button' value='Delete' class='remove_section delete_button'/>
+        <input type='text' placeholder='Section %section%' value='%section_name%' name='Sections[]' style="background-color:#f9f8f8;" maxlength="100"/>
+        <input type='image' alt='Delete' class='remove_section' src='images/delete.png' align="center"/>
     </td>
 </tr>
 
 ##
 
 <!-- Edit Menu Row -->
-<!-- Food_Images[] Crop_info[] Picture_URL[] Product_name[] Price[] Description[] Food_Contents[]-->
+<!-- Food_Images[] Crop_Info[] Picture_URL[] Product_name[] Price[] Description[] Food_Contents[]-->
 <tr class='additional_row'>
 
     <td align="center">%order%</td>
 
     <td align="center">
         <label align="center"><input type='file' value='Select picture' name='Food_Images[]' style='width:110px;display:none;'/>
-        <img src='%SRC%' align='center' class='Display_IMG'/></label>
-
-        <input type='hidden' name='Crop_info[]'></input>
-        <input type='hidden' name='Picture_URL[]' value='%picture_url%'></input>
+        <img src='%SRC%' align='center' class='Display_IMG' style="border-radius:50px;width:50px;height:50px;"/></label>
+    
+        <input type='hidden' name='Crop_Info[]'/>
+        <input type='hidden' name='Picture_URL[]' value='%picture_url%'/>
     </td>
 
-    <td><input type='text' name='Product_name[]' value='%product_name%' placeholder='Meal' autocomplete="off" autocorrect="off"/></td>
+    <td><input type='text' name='Product_name[]' value='%product_name%' placeholder='Meal' autocomplete="off" autocorrect="off"maxlength="200"/></td>
     <td><input type='text' name='Price[]' value='%price%' placeholder='Price' style='width:40px;'/></td>
-    <td><input type='text' name='Description[]' value='%description%' placeholder='Description'/></td>
+    <td><input type='text' name='Description[]' value='%description%' placeholder='Description' maxlength="200"/></td>
 
     <td>
-        <select name='Food_Contents[%i%][]' class='js-example-basic-multiple' style='width:200px;border:0px;' multiple>%food_content%</select>
+        <select name='Food_Contents[%i%][]' class='multi_select' style='width:200px;border:0px;' multiple>%food_content%</select>
     </td>
 
     <td>
-        <a class='up'><img src='../images/up_arrow.png' /></a>
-        <a class='down'><img src='../images/down_arrow.png' /></a>
-        <a class='delete_row'><img src='../images/delete.png' /></a>
+        <a class='up'><img src='images/up_arrow.png' /></a>
+        <a class='down'><img src='images/down_arrow.png' /></a>
+        <a class='delete_row'><img src='images/delete.png' /></a>
     </td>
 
 </tr>
@@ -48,7 +48,7 @@
 
     <td width='50%'>%Product_Name%</td>
     <td width='50%' align='right'>%Price%</td>
-
+        
     <div class='tags'>%Result%</div>
     <div class='wrap'>%Result%</div>
     <td width='%Tag_Width%' align='right'>%Result%</td>
@@ -63,3 +63,4 @@
         <input type='button' value='Delete' class='remove_section delete_button'/>
     </td>
 </tr>
+    

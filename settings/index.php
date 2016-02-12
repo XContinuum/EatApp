@@ -1,9 +1,9 @@
 <?php
     require("../requests/receive_information.php");
 
-    if (isOwnerLogged()==1) // MOD 2017 changed isUserLogged()
+    if (isUserLogged()==1)
     {
-        $username_logged= getChainLink(); //get the username from the session: MOD 2017 changed from get_restaurant_username()
+        $username_logged=get_restaurant_username(); //get the username from the session
         $panel=setPanel();
 
 

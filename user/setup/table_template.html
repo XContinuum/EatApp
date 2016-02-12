@@ -1,23 +1,25 @@
+<!--
+    /chain_link/ /link_name/ /phone_number/ /address/ /postal_code/ /options/
+-->
+
 <table class='restaurant_list'>
 <tr>
-    <td colspan='2'>
-        <span style='color:#5684ef;font-size:14px;'>eatapp.ca/%chain_link%/</span>
-        <input type='text' name='link_name[]' value='%value_2%' />
+    <td colspan='4' align="center">
+        <span style='color:#5684ef;font-size:14px;'>eatapp.ca/%chain_link%/</span
+            ><input type='text' name='link_name[]' value='%link_name%' placeholder="menu_name" maxlength="30" style="border-width:0px;background-color:#f9f8f8;"/>
     </td>
 
-    <td>Phone number:</td>
-    <td><input type='text' name='phone_number[]' value='%value_3%'/></td>
 
-    <td rowspan='3' valign='center' style='background-color:#eeeeee;width:70px;'>
-        <input type='button' value='view restaurant' class='button_list'/><br/>
-        <input type='button' value='delete restaurant' class='button_list delete_btn' style='background-color:#ff5050;'/>
+    <td rowspan='4' valign='center' style='background-color:#eeeeee;width:30px;'>
+        <input type='image' alt='view restaurant' class='button_list' src='images/view.png' align="center"/><br/><br/>
+        <input type='image' alt='delete restaurant' class='delete_btn' src='images/delete.png' align="center"/>
     </td>
 </tr>
 
 <tr>
-    <td width='100px'>Address:</td>
+    <td width='120px'>Address:</td>
 
-    <td><input type='text' name='address[]' value='%value_4%'/></td>
+    <td><input type='text' name='address[]' value='%address%' maxlength="100"/></td>
 
     <td>Select menu</td>
     <td><select name='menu_name[]'>%options%</select></td>
@@ -25,18 +27,29 @@
 
 <tr>
     <td>Postal code:</td>
-    <td><input type='text' name='postal_code[]' value='%value_5%'/></td>
+    <td><input type='text' name='postal_code[]' value='%postal_code%' maxlength="10"/></td>
     <td>Select schedule</td>
     <td><select><option value='none' selected>none</option></select></td>
 </tr>
+
+<tr>
+    <td>Phone number:</td>
+    <td colspan="3"><input type='text' name='postal_code[]' value='%phone_number%' maxlength="10"/></td>
+<tr/>
 </table>
 
 ##
 
+<!--
+    Menu list
+    Edit/Delete/Import/Export
+-->
+
 <table width="100%" style="background-color:#f9f8f8;" class="menu_items">
     <tr>
         <td>%menu_name%</td>
-        <td width="50px"><a href='%edit_menu%' target="_blank">edit</a></td>
+        <td width="50px"><a href="export_menu.php?menu_name=%menu_name%" target="_blank">export</a></td>
+        <td width="50px"><a href="setup_menu.php?name=%menu_name%" target="_blank">edit</a></td>
         <td width="50px"><input type="button" value="delete menu"/></td>
     </tr>
 </table>

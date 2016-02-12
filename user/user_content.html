@@ -1,98 +1,38 @@
 <div style="position:absolute;top:0px;left:190px;">
-   <a href=<?php setLink("");?> ><img src=<?php setLink("images/x_small_logo.png");?> /></a>
+   <a href="/"><img src="/images/x_small_logo.png"/></a>
 </div>
 
-<div style="height:100%;">
-    <table align="center" id="user_table">
+<!--
+    %image_src% %restaurant_name% %website% %restaurant_list%
+-->
 
-        <!-- Top info-->
-        <tr height="150px">
-            <td width="200px" align="center">
-                <img src=<?php echo $image_src; ?> id="userpic" />
-            </td>
+<table align="center" id="user_table" style="height:100%;">
+    <tr>
+    <td valign="top" height="150px" align="center">
+        <br/>
+        <img src='%image_src%' id="userpic"/>
+        <div id="brief_restaurant_info">
+        <div style="font-size:20px;"><b>%restaurant_name%</b></div>
+        <br/>
+    </td>
 
-            <td valign="top">
-                <div id="brief_restaurant_info">
-                    <div style="font-size:20px;"><b><?php echo $restaurant_name;?></b></div>
-                    <span style="color:#4d85f2;font-size:15px;"><?php echo $username;?></span>
-                <br />
-                <br />
-                    <?php echo $address;?>
-                <br />
-                    <?php echo $phone_number;?>
-                <br />
-                    <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?>
-                </div>
-            </td>
-
-            <td width="20px" valign="top">
-                <a href=<?php setLink("settings/index.php");?> >
-                    <img src=<? setLink("user/images/settings.png");?> style="margin-top:5px;margin-right:5px;"/>
-                </a>
-            </td>
-
-        </tr>
+    <td width="20px" valign="top">
+        <a href="/settings/index.php" >
+        <img src="/user/setup/images/settings.png" style="margin-top:5px;margin-right:5px;"/>
+        </a>
+    </td>
+    </tr>
 
 
-        <!-- Sections-->
-        <tr>
-            <td colspan="3" id="menu_row">
-                <div class="menu_elem" onClick="show_partition('Menu')">Menu</div
-                    ><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div
-                    ><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div
-                    ><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
-            </td>
-        </tr>
+    <tr height="10px">
+        <td colspan="2" align="right">
+            <a href="user/setup/index.php">Edit</a>
+        </td>
+    </tr>
 
-
-
-          <tr>
-            <td colspan="3" valign="top" align="center">
-                <br>
-
-            <!--MENU-->
-            <div id="partition_menu">
-
-            <table id="menu_section">
-                <tr>
-                    <td align="left" height="30px" style="font-size:12px;"><?php echo $last_modified;?></td>
-                    <td align="right"><?php echo $pre_menu;?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="2">
-                    <div style="overflow:auto;height:450px;">
-                        <?php echo $menu;?>
-                    </div>
-                    </td>
-                </tr>
-            </table>
-
-            </div>
-            <!--MENU-->
-
-            <!--Pictures-->
-            <div id="partition_pictures" style="display:none;">
-                <input type="file" value="uplad pictures" />
-            </div>
-
-            <!--Reviews-->
-            <div id="partition_reviews" style="display:none;">
-                <div style="color:#999;">You don't have any reviews yet.</div>
-            </div>
-
-            <!--Contacts-->
-            <div id="partition_contact" style="display:none;">
-                Contacts
-                <br />
-                <br />
-                <?php echo $phone_number;?>
-                <br />
-                <?php echo "<a href='".$website."' target='_blank'>".$website."</a>";?>
-
-            </div>
-
-            </td>
-        </tr>
-    </table>
-</div>
+    <tr>
+    <td colspan="2" valign="top" align="center">
+         %restaurant_list%
+    </td>
+    </tr>
+</table>

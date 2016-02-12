@@ -1,7 +1,7 @@
 <?php
 	if (isset($_GET['email']) && isset($_GET['hash']))
 	{
- 	  $FA_Email=mysql_escape_string($_GET['email']);
+ 	$FA_Email=mysql_escape_string($_GET['email']);
     $FA_Hash=mysql_escape_string($_GET['hash']);
 
     require("requests/server_connection.php");
@@ -19,7 +19,7 @@
     {
     	$content="<br><br><div align='center'>Your account has been activated!<br>";
 
-		  $sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
+		$sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
     	$result=mysqli_query($conn,$sql);
 
     	if ($logged==1)
@@ -38,12 +38,12 @@
 			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
 	}
 
-	mysqli_close($conn);
+ 	mysqli_close($conn);
 
-  include("template.html");
-  }
-  else
-  {
+    include("template.html");
+    }
+   	else
+   	{
 		header("Location: ../index.php");
-  }
+   	}
 ?>

@@ -18,24 +18,16 @@
     {
         require("load_menu.php");
 
-        ob_start();
-        require_once("setup_menu_form.html");
-        $content=ob_get_clean();
+        $content=file_get_contents("setup_menu_form.html");
         $content=str_replace("%Menu%",load_editMenu($menu_name),$content);
         $content=str_replace("%name%",$menu_name,$content);
 
         $panel=setPanel();
 
-
-        //For filter select+++
-        $head_param="<link href='//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css' rel='stylesheet'/>";
-        $head_param.="<script src='//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>";
-        //For filter select---
-
-        $head_param.="<script src='js/imagecrop.js'></script>";
+        $head_param="<script src='js/imagecrop.js'></script>";
+        $head_param.="<script src='js/multi_select.js'></script>";
         $head_param.="<script src='js/setup_menu.js'></script>";
 
         include("../../user_template.html");
     }
-
 ?>

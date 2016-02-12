@@ -1,11 +1,14 @@
 <?php
+//require_once("../../requests/receive_information.php");
+
+
 /*
     Loads all restaurants owned by a food chain
+    <edit/>
 */
-function loadRestaurantList(&$number_of_rows)
+function loadRestaurantList(&$number_of_rows,$template)
 {
     require("../../requests/server_connection.php");
-    //require_once("../../requests/receive_information.php");
 
     $owner_id=getChainId();
     $chainLink=getChainLink();
@@ -16,20 +19,17 @@ function loadRestaurantList(&$number_of_rows)
 
     $count=0;
 
-    $template=file_get_contents("table_template.html");
-    $template=explode("##",$template);
-
     $final_result="";
-    $search=array('%chain_link%', '%value_1%', '%value_2%', '%value_3%', '%value_4%','%value_5%','%options%');
+    $search=array('%chain_link%', '%link_name%', '%phone_number%', '%address%','%postal_code%','%options%');
     $opt="";
 
     while($row=mysqli_fetch_array($result))
     {
         $count++;
         $opt=loadMenuOptions($row["Menu_Name"]);
-        $replace=array($chainLink,$row["R_Order"],$row["Link"],$row["Phone_Number"],$row["Address"],$row["Postal_Code"],$opt);
+        $replace=array($chainLink,$row["Link"],$row["Phone_Number"],$row["Address"],$row["Postal_Code"],$opt);
 
-        $sequence=str_replace($search,$replace,$template[0]);
+        $sequence=str_replace($search,$replace,$template);
 
         $final_result.=$sequence;
     }
@@ -57,11 +57,11 @@ function loadMenuList()
 
     $template=file_get_contents("table_template.html");
     $template=explode("##",$template);
-    $search=array('%menu_name%', '%edit_menu%');
+    $search=array('%menu_name%');
 
     while($row=mysqli_fetch_array($result))
     {
-        $replace=array($row["menu_name"],"setup_menu.php?name=".$row["menu_name"]);
+        $replace=array($row["menu_name"]);
         $sequence=str_replace($search,$replace,$template[1]);
 
         $final_result.=$sequence;
@@ -103,6 +103,9 @@ function loadMenuOptions($selected_menu)
 
 
 
+/*
+    Get name of menu selected by restaurant
+*/
 function getMenuOwnerName($restaurant_link)
 {
     require("../../requests/server_connection.php");
@@ -120,4 +123,5 @@ function getMenuOwnerName($restaurant_link)
         return $row['Menu_Name'];
     }
 }
+
 ?>

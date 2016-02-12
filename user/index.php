@@ -1,22 +1,21 @@
 <?php
     require("../requests/receive_information.php");
-    require("../requests/load_menu.php");
+    require("../requests/load_restaurant_list.php");
 
-    $username=htmlspecialchars($_GET["username"]); //get the username from the url
-    $username_logged=getChainLink(); //get the username from the session: MOD 2017 changed from get_restaurant_username()
+    $CHAIN_Link=htmlspecialchars($_GET["username"]); //get the link from the url
+    $CHAIN_Logged=getChainLink(); //get Chain Link from the session
 
     $panel=setPanel();
+    $head_param="";
 
-    $head_param.="<script src='/user/js/show_partitions.js'></script>";
-
-    if (strtolower($username_logged)==strtolower($username))
+    if (strtolower($CHAIN_Logged)==strtolower($CHAIN_Link))
     {
-         //If the user is logged a new page appears where he/she can edit his/her content as well as settings
-        include("user_page.php");
+         //If the CHAIN is logged a new page appears where OWNER can edit his/her content as well as settings
+        include("chain_page.php");
     }
     else
     {
-        //if the username in the url is not the same as the useranme of the logged user is
+        //if the LINK in the url is not the same as the LINK of the logged CHAIN OWNER
         include("show_restaurant.php");
     }
 

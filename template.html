@@ -2,8 +2,8 @@
 <html>
     <head>
         <title><? echo $title; ?></title>
-            <link rel="stylesheet" type="text/css" href= <?php setLink("style.css");?> >
-            <script src=<?php setLink("jquery.js");?> ></script>
+            <link rel="stylesheet" type="text/css" href= <?php setLink("/style.css");?> >
+            <script src=<?php setLink("/jquery.js");?> ></script>
 
             <?php echo $head_param; ?>
     </head>
@@ -12,7 +12,7 @@
 <!-- Top bar -->
 <tr>
     <td height="10px" align="center" style="padding:0px;" valign="top">
-    <a href=<?php setLink("");?>><img src=<?php setLink("images/secondary_logo.png");?>></a>
+    <a href=<?php setLink("");?>><img src=<?php setLink("/images/secondary_logo.png");?>></a>
     </td>
 </tr>
 <!-- Content -->
@@ -27,8 +27,8 @@
 <!-- Social media -->
 <tr>
     <td align="center" valign="center" height="50px">
-        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("images/twitter.png");?>></a
-        ><a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("images/facebook.png");?>></a>
+        <a href="https://twitter.com/eatappca" target="_blank"><img src= <?php setLink("/images/twitter.png");?>></a
+        ><a href="https://www.facebook.com/eatappca/" target="_blank"><img src=<?php setLink("/images/facebook.png");?>></a>
     </td>
 </tr>
 </table>

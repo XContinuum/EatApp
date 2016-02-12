@@ -1,9 +1,9 @@
 <?php
     require("receive_information.php");
 
-    $res_username=get_restaurant_username();
-    $res_email=getInfo($res_username,'FA_Email');
-    $res_hash=getInfo($res_username,'FA_Hash');
+    $CHAIN_link=getChainLink();
+    $CHAIN_email=getInfo($CHAIN_link,'Email');
+    $CHAIN_hash=getInfo($CHAIN_link,'Hash');
 
-    sendEmail($res_email,$res_username,$res_hash);
+    sendEmail($CHAIN_hash,$CHAIN_link,$CHAIN_hash);
 ?>
