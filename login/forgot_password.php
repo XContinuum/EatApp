@@ -1,28 +1,30 @@
 <?php
-    require("../requests/receive_information.php");
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', true);
 
-    if (isAdminLogged()==1)
+require("../requests/receive_information.php");
+
+if (isAdminLogged()==1)
+{
+    //if admin is logged
+    header("Location: ../panel/admin/index.php");
+}
+else
+    if (isOwnerLogged()==1)
     {
-        //if admin is logged
-        header("Location: ../panel/admin/index.php");
+        //if the user is logged
+        header("Location: ../index.php");
     }
     else
-        if (isChainLogged()==1)
-        {
-            //if the user is logged
-            header("Location: ../index.php");
-        }
-        else
-        {
-            //Neither are logged
-            $page='forgot_pass.html';
+    {
+        //Neither are logged
+        $title="EatApp - Forgot Password";
 
-            ob_start();
-            require_once($page);
-            $content=ob_get_clean();
+        $content=file_get_contents("forgot_pass.html");
+        $content=str_replace("%error%", "", $content);
 
-            $head_param="<script src='resend_password.js'></script>";
+        $head_param="<script src='resend_password.js'></script>";
 
-            include("../template.html");
-        }
+        include("../template.html");
+    }
 ?>

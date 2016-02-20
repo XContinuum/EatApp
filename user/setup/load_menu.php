@@ -1,5 +1,6 @@
 <?php
-   
+require_once("../../requests/receive_information.php");
+
 $structure=file_get_contents("menu_row_structure.html");
 $pieces=explode("##", $structure);
 
@@ -8,21 +9,21 @@ $pieces=explode("##", $structure);
 */
 function LoadMenu($menu_name)
 {
-    require ("../../requests/server_connection.php");
-        
+    $db=new Db();
+            
     $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture,Currency ";
     $sql.="FROM MENUS WHERE Name='$menu_name'";
-    $result=mysqli_query($conn,$sql);
+    $result=$db->query($sql);
         
     $menu="";
     $count=0;
        
     $old_section_name="none";
 
-    while($row=mysqli_fetch_array($result))
+    while ($row = $result -> fetch_assoc()) 
     {
         $count++;
-        $colspan_img=""
+        $colspan_img="";
         //Section+++
         if ($old_section_name!=$row['Section'])
         {
@@ -70,8 +71,6 @@ function LoadMenu($menu_name)
         $menu=str_replace($search,$data,$pieces[2]);
     }
         
-    mysqli_close($conn);
-        
     if ($count==0)
     {
         $menu="0";
@@ -86,21 +85,20 @@ function LoadMenu($menu_name)
 */
 function load_editMenu($menu_name)
 {
-    require("../../requests/server_connection.php");
-      
-    $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture FROM MENUS WHERE Name='$menu_name'";
-    $result=mysqli_query($conn,$sql);
-            
+    $db=new Db();
 
+    $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture FROM MENUS WHERE Name='$menu_name'";
+    $result=$db->query($sql);
+            
     $count=0;
-    $data=array('1','0','none','','','','','');
+    $data=array('1','0','none','none','','','','');
         
     //Sections
     $menu="";
     $previous_section="";
     $section_count=0;
 
-    while($row=mysqli_fetch_array($result))
+    while ($row = $result -> fetch_assoc()) 
     {
         $count++;
         $section_name=$row['Section'];
@@ -116,8 +114,6 @@ function load_editMenu($menu_name)
         $menu.=fillRow($data,$menu_name);
     }
         
-    mysqli_close($conn);
-    
     if ($count==0)
         $menu=fillRow($data);
 
@@ -165,38 +161,13 @@ function insertSection($order,$section_name)
 
 function getLastModified($menu_name)
 {
-    require("../../request/server_connection.php");
-        
+    $db=new Db();
+
     $sql="SELECT Last_Modified FROM MENUS WHERE Name='$menu_name'";
-    $result=mysqli_query($conn,$sql);
-    $final_result=mysqli_fetch_assoc($result);
-        
-    $time=strtotime($final_result["Last_Modified"]);
+    $time=strtotime($db->fetch($sql,"Last_Modified"));
         
     return "Last updated ".readableTime($time)." ago";
 }
     
-function readableTime($time)
-{
-    $time = time() - $time; //to get the time since that moment
-    $time = ($time<1)? 1 : $time;
-    $tokens = array (
-        31536000 => 'year',
-        2592000 => 'month',
-        604800 => 'week',
-        86400 => 'day',
-        3600 => 'hour',
-        60 => 'minute',
-        1 => 'second'
-    );
-
-    foreach ($tokens as $unit => $text)
-    {
-        if ($time < $unit) continue;
-            
-        $numberOfUnits= floor($time / $unit);
-        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
-    }
-}
 
 ?>

@@ -1,4 +1,4 @@
-/*@font-face {
+@font-face {
     font-family: "AvenirLTStd-Roman";
     src: url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);
     font-weight: normal;
@@ -9,7 +9,7 @@
     font-family: "AvenirLTStd-Light";
     src: url(http://eatapp.ca/Fonts/AvenirLTStd-Light.otf);
 }
-*/
+
 
 /*Index*/
 html
@@ -56,7 +56,7 @@ body
     padding-top:10px;
 }
 
-.abc a
+.abc a,.abc a:hover,.abc a:visited,.abc a:active,.abc a:link
 {
     text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
     font-family:"AvenirLTStd-Light";
@@ -290,7 +290,7 @@ textarea:focus
     box-shadow: 0px 0px 2px #dad9d9;
 }
 
-#login_box input[type='text'], input[type='password']
+#login_box input[type='text'],#login_box input[type='password']
 {
     width:200px;
     padding:5px;
@@ -326,23 +326,53 @@ textarea:focus
 /*ADMIN*/
 #admin_table
 {
-    width:700px;
-    border:solid 1px black;
+    width:100%;
     background-color:white;
     border-collapse:collapse;
 }
 
+#admin_table a,#admin_table a:hover,#admin_table a:visited
+{
+    text-decoration:none;
+    color:#4d85f2;
+}
+
 #admin_table td
 {
-    border-right:solid 1px black;
-    padding:2px;
+    padding:5px;
     padding-right:5px;
     padding-left:5px;
 }
 
+#styled_table
+{
+    width:100%;
+    background-color:white;
+    border-collapse:collapse;
+}
+
+#styled_table td
+{
+    padding:5px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+
 #validated
 {
     display:none;
+}
+
+#lines_table
+{
+    border-collapse:collapse;
+    width:100%;
+}
+
+#lines_table td
+{
+    padding:5px;
 }
 
 
@@ -375,8 +405,7 @@ textarea:focus
     display: none;
     width:515px;
     text-align:left;
-    background-color: white;
-    box-shadow:0px 0px 3px #ccc;
+    background-color: #f9f8f8;
     border-collapse: collapse;
 }
 #filter_settings td
@@ -397,15 +426,471 @@ textarea:focus
     font-size: 15px;
 
     display:inline-block;
-    background-color:white;
+    background-color:#f9f8f8;
     width:23px;
     height:22px;
     margin-right:5px;
     margin-left:5px;
     padding-top:6px;
-    box-shadow:0px 0px 3px #ccc;
 }
 #pages
 {
     padding:0px;
+}
+
+/*Basic*/
+
+.reset_links a,.reset_links a:hover,.reset_links a:visited,.reset_links a:active,.reset_links a:link
+{
+    text-decoration:none;
+    color:white;
+}
+
+
+@font-face {
+    font-family: "AvenirLTStd-Roman";
+    src: url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AvenirLTStd-Light";
+    src: url(http://eatapp.ca/Fonts/AvenirLTStd-Light.otf);
+}
+
+
+/*Index*/
+html
+{
+    width:100%;
+    height:100%;
+}
+
+body
+{
+    font-family:"AvenirLTStd-Roman";
+
+    background: #e5e5e5; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #f2f2f2 20%, #929394 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  #f2f2f2 20%,#929394 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  #f2f2f2 20%,#929394 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /*filter:progid: DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#a1a2a3',GradientType=1 );*/ /* IE6-9 fallback on horizontal gradient */
+
+    /*a1a2a3*/
+    background-repeat:no-repeat;
+    background-size:150% 150%;
+    background-position:center;
+
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+}
+
+
+#search_box
+{
+    display:block;
+    font-size:18px;
+    width:500px;
+    height:40px;
+    border:solid 1px #4d85f2;
+}
+
+.abc
+{
+    display:inline-block;
+    padding-right:10px;
+    padding-top:10px;
+}
+
+.abc a,.abc a:hover,.abc a:visited,.abc a:active,.abc a:link
+{
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
+    font-family:"AvenirLTStd-Light";
+    font-size: 18;
+    color:black;
+    text-decoration: none;
+}
+
+input[type='password'], input[type='text']
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+    border:solid 1px #ced1d7;
+    padding-left:15px;
+}
+input[type='password']:focus, input[type='text']:focus
+{
+    outline:none;
+}
+
+textarea:focus
+{
+    outline:none;
+}
+
+/*If not logged*/
+
+#top_sign_in
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+/*Profile picture circle*/
+.user_pic
+{
+    width:120px;
+    height:120px;
+    background:#f1f1f1;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if don't care about IE8 */
+}
+#userpic
+{
+    width:120px;
+    height:120px;
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if don't care about IE8 */
+}
+
+#menu_section
+{
+    width:100%;
+    height:100%;
+    border-collapse: collapse;
+}
+
+#user_top_panel
+{
+    position:absolute;
+    text-align: right;
+    right:0px;
+    top:0px;
+    height:50px;
+    width:200px;
+}
+
+#profile_picture
+{
+    display:inline-block;
+    border-radius:50%;
+    behavior:url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width:35px;
+    height:35px;
+
+    border:0px;
+    margin:5px;
+
+    box-shadow:0px 0px 4px #ccc;
+}
+
+#image_circle
+{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+}
+
+#drop_down_panel
+{
+    font-family:"AvenirLTStd-Light";
+    font-size:18px;
+
+    display:none;
+    position:absolute;
+    text-align:right;
+
+    top:46px;
+    right:10px;
+    width:153px;
+    height:112px;
+    padding:0px;
+    margin:0px;
+}
+#drop_down_panel a
+{
+    font-family:"AvenirLTStd-Light";
+    font-size:18px;
+
+    color:black;
+    text-decoration:none;
+}
+
+.drop_down_items
+{
+    text-align:center;
+    width:100%;
+    height:33.3%;
+    line-height:2em;
+}
+
+#username_bar
+{
+    display:inline-block;
+    vertical-align:top;
+    padding-top:17px;
+    margin-right:5px;
+}
+
+#username_bar a
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 18;
+
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
+    color:black;
+    text-decoration:none;
+}
+
+/*Emoji inline class*/
+#emoji_content
+{
+    font-size:30px;
+    height:55px;
+    width:250px;
+}
+
+.in_row
+{
+    display:inline-block;
+    padding-top:5px;
+}
+/*---TEMPLATE----*/
+#overall_table
+{
+    border:solid 0px black;
+    height:100%;
+    width:100%;
+    margin:0px;
+    padding:0px;
+    border-collapse:collapse;
+}
+
+#overall_table td
+{
+    padding:0;
+    margin:0;
+    border:solid 0px black;
+}
+
+
+#name
+{
+    font-family:"AvenirLTStd-Heavy";
+    font-size:35px;
+}
+.light_style
+{
+    font-family:"AvenirLTStd-Light";
+    font-size:20px;
+
+    padding-bottom:8px;
+}
+#decor_table
+{
+    border:solid 0px black;
+    padding:0px;
+    margin:0px;
+    width:100%;
+    border-collapse:collapse;
+}
+
+/*Bottom agreement*/
+.box
+{
+  display:inline-block;
+  width:80px;
+}
+/*
+----------LOGIN
+*/
+#error_box
+{
+    position:fixed;
+    top:-23px;
+    left:0;
+    background-color:#fa6d65;
+    color:white;
+    width:100%;
+    height:20px;
+    text-align:center;
+    padding-top:3px;
+}
+
+#login_box
+{
+    font-family:"AvenirLTStd-Light";
+
+    text-align:left;
+    padding:45px;
+    padding-top:30px;
+    padding-bottom:30px;
+    background-color:white;
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    box-shadow: 0px 0px 2px #dad9d9;
+}
+
+#login_box input[type='text'],#login_box input[type='password']
+{
+    width:200px;
+    padding:5px;
+}
+
+#login_submit
+{
+    font-family:"AvenirLTStd-Roman";
+    font-size: 15px;
+
+    border:solid 0px black;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+
+    width:100%;
+    height:35px;
+    background-color:#ffa25e;
+    color:white;
+    font-weight: bold;
+    padding:0px;
+}
+#more_table a
+{
+    font-family:"AvenirLTStd-Light";
+    font-size:14px;
+
+    color:black;
+    text-decoration:none;
+}
+
+
+/*ADMIN*/
+#admin_table
+{
+    width:100%;
+    background-color:white;
+    border-collapse:collapse;
+}
+
+#admin_table a,#admin_table a:hover,#admin_table a:visited
+{
+    text-decoration:none;
+    color:#4d85f2;
+}
+
+#admin_table td
+{
+    padding:5px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+#styled_table
+{
+    width:100%;
+    background-color:white;
+    border-collapse:collapse;
+}
+
+#styled_table td
+{
+    padding:5px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+
+#validated
+{
+    display:none;
+}
+
+#lines_table
+{
+    border-collapse:collapse;
+    width:100%;
+}
+
+#lines_table td
+{
+    padding:5px;
+}
+
+
+/*SEARCH PHP*/
+
+#bottom_pannel
+{
+    font-family:"AvenirLTStd-Light";
+    text-align:right;
+    width:515px;
+    padding:5px;
+}
+
+#query_results
+{
+    border:0px solid black;
+    width:515px;
+    text-align:left;
+}
+
+#filters
+{
+    color:#999;
+}
+
+#filter_settings
+{
+    font-family:"AvenirLTStd-Light";
+
+    display: none;
+    width:515px;
+    text-align:left;
+    background-color: #f9f8f8;
+    border-collapse: collapse;
+}
+#filter_settings td
+{
+    padding: 5px;
+}
+#filter_settings input[type='text']
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+    padding: 5px;
+}
+
+
+.page_block
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+
+    display:inline-block;
+    background-color:#f9f8f8;
+    width:23px;
+    height:22px;
+    margin-right:5px;
+    margin-left:5px;
+    padding-top:6px;
+}
+#pages
+{
+    padding:0px;
+}
+
+/*Basic*/
+
+.reset_links a,.reset_links a:hover,.reset_links a:visited,.reset_links a:active,.reset_links a:link
+{
+    text-decoration:none;
+    color:white;
 }

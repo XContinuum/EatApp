@@ -1,40 +1,48 @@
 <!--
-    /chain_link/ /link_name/ /phone_number/ /address/ /postal_code/ /options/
+    /chain_link/ /link_name/ /phone_number/ /address/ /postal_code/
+    /options/ /city/ /country/ /state_province/ /schedule/
 -->
 
 <table class='restaurant_list'>
 <tr>
     <td colspan='4' align="center">
         <span style='color:#5684ef;font-size:14px;'>eatapp.ca/%chain_link%/</span
-            ><input type='text' name='link_name[]' value='%link_name%' placeholder="menu_name" maxlength="30" style="border-width:0px;background-color:#f9f8f8;"/>
+            ><input type='text' name='link_name[]' value='%link_name%' placeholder="restaurant_name" maxlength="30" style="border-width:0px;background-color:#f9f8f8;color:#5684ef;"/>
     </td>
 
 
-    <td rowspan='4' valign='center' style='background-color:#eeeeee;width:30px;'>
-        <input type='image' alt='view restaurant' class='button_list' src='images/view.png' align="center"/><br/><br/>
+    <td rowspan='5' valign='center' style='background-color:#fc5d5d;width:50px;' align="center">
         <input type='image' alt='delete restaurant' class='delete_btn' src='images/delete.png' align="center"/>
     </td>
 </tr>
 
 <tr>
+    <td width='120px'>Country:</td>
+    <td><input type='text' name='country[]' value='%country%' maxlength="100" style="width:80%;"/></td>
     <td width='120px'>Address:</td>
+    <td><input type='text' name='address[]' value='%address%' maxlength="100" style="width:80%;"/></td>
+</tr>
 
-    <td><input type='text' name='address[]' value='%address%' maxlength="100"/></td>
+<tr>
+    <td>State/Province</td>
+    <td><input type='text' name='state_province[]' value='%state_province%' maxlength="100" style="width:80%;"/></td>
+    <td>Phone number:</td>
+    <td><input type='text' name='phone_number[]' value='%phone_number%' maxlength="15" style="width:80%;"/></td>
+</tr>
 
+
+<tr>
+    <td>City</td>
+    <td><input type='text' name='city[]' value='%city%' maxlength="100" style="width:80%;"/></td>
     <td>Select menu</td>
     <td><select name='menu_name[]'>%options%</select></td>
 </tr>
 
 <tr>
     <td>Postal code:</td>
-    <td><input type='text' name='postal_code[]' value='%postal_code%' maxlength="10"/></td>
+    <td><input type='text' name='postal_code[]' value='%postal_code%' maxlength="10" style="width:80%;"/></td>
     <td>Select schedule</td>
-    <td><select><option value='none' selected>none</option></select></td>
-</tr>
-
-<tr>
-    <td>Phone number:</td>
-    <td colspan="3"><input type='text' name='postal_code[]' value='%phone_number%' maxlength="10"/></td>
+    <td><select name='schedule[]'>%schedule%</select></td>
 <tr/>
 </table>
 
@@ -43,13 +51,152 @@
 <!--
     Menu list
     Edit/Delete/Import/Export
+
+    /menu_name/ /pictures/ /items/ /last_modified/
 -->
 
-<table width="100%" style="background-color:#f9f8f8;" class="menu_items">
+<table width="100%" style="background-color:#f9f8f8;margin-bottom:5px;padding:5px;" class="menu_items">
     <tr>
-        <td>%menu_name%</td>
+        <td class="mn_name"><b>%menu_name%</b></td>
         <td width="50px"><a href="export_menu.php?menu_name=%menu_name%" target="_blank">export</a></td>
-        <td width="50px"><a href="setup_menu.php?name=%menu_name%" target="_blank">edit</a></td>
-        <td width="50px"><input type="button" value="delete menu"/></td>
+        <td width="50px" align="center"><a href="setup_menu.php?name=%menu_name%" target="_blank">edit</a></td>
+        <td width="30px" align="center"><input type='image' alt='%menu_name%' class='delete_menu' src='images/delete.png' align="center"/></td>
     </tr>
+
+    <tr style="font-size:12px;" colspan="4">
+        <td>
+            %mean% </br>
+            %pictures% </br>
+            %items% </br>
+            <br/>
+            %last_modified% </br>
+        </td>
+    </tr>
+</table>
+
+##
+<!--
+    Schedule list
+
+    /name/
+    /monday_start/ /monday_end/
+    /tuesday_start/ /tuesday_end/
+    /wednesday_start/ /wednesday_end/
+    /thursday_start/ /thursday_end/
+    /friday_start/ /friday_end/
+    /saturday_start/ /saturday_end/
+    /sunday_start/ /sunday_end/
+-->
+<table class='schedule_list' align="center" style="background-color:#f9f8f8;">
+<tr>
+    <td align="center" colspan="2" class="sch_name">
+        %name%
+    </td>
+
+    <td align="right" width="10px">
+    <input type='image' alt='delete schedule' class='delete_sch' src='images/delete.png' align="center"/>
+    </td>
+</td>
+<tr>
+    <td>
+    Monday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%monday_start%" name="monday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%monday_end%" name="monday_end[]" READONLY/>
+    </td>
+</tr>
+
+<tr>
+    <td>
+    Tuesday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%tuesday_start%" name="tuesday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%tuesday_end%" name="tuesday_end[]" READONLY/>
+    </td>
+</tr>
+
+<tr>
+    <td>
+    Wednesday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%wednesday_start%" name="wednesday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%wednesday_end%" name="wednesday_end[]" READONLY/>
+    </td>
+</tr>
+
+<tr>
+    <td>
+    Thursday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%thursday_start%" name="thursday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%thursday_end%" name="thursday_end[]" READONLY/>
+    </td>
+</tr>
+
+<tr>
+    <td>
+    Friday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%friday_start%" name="friday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%friday_end%" name="friday_end[]" READONLY/>
+    </td>
+</tr>
+
+
+<tr>
+    <td>
+    Saturday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%saturday_start%" name="saturday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%saturday_end%" name="saturday_end[]" READONLY/>
+    </td>
+</tr>
+
+
+<tr>
+    <td>
+    Sunday
+    </td>
+
+    <td>
+        <input type="time_picker" value="%sunday_start%" name="sunday_start[]" READONLY/>
+    </td>
+
+    <td>
+        <input type="time_picker" value="%sunday_end%" name="sunday_end[]" READONLY/>
+    </td>
+</tr>
+
+
+
 </table>

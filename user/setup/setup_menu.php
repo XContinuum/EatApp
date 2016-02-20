@@ -1,13 +1,14 @@
 <?php
-    require("../../requests/receive_information.php");
-    $menu_name=$_GET["name"];
 
-    if (isOwnerLogged()==0 && isAdminLogged()==0)
-    {
-        //user not logged
-        header("Location: ../../index.php");
-    }
-    else
+require_once("../../requests/receive_information.php");
+$menu_name=$_GET["name"];
+
+if (isOwnerLogged()==0 && isAdminLogged()==0)
+{
+    //user not logged
+    header("Location: ../../index.php");
+}
+else
     /*If the current Chain owner does not own a menu*/
     if (getMenuOwnerID($menu_name)!=getChainId() && getMenuOwnerID($menu_name)>-1)
     {
@@ -30,4 +31,5 @@
 
         include("../../user_template.html");
     }
+
 ?>

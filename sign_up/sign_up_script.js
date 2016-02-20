@@ -11,21 +11,22 @@ var disable_color="#babdc6";
 //Load country list for location menu---
 $(document).ready(
     function(){
-        var timer;
+        var timer1;
         $("input[name='DB_Email']").keyup(function (e)
         {
             disableLogin();
-            clearTimeout(timer);
+            clearTimeout(timer1);
             var email = $(this).val();
-            timer = setTimeout(function(){sendRequest(email,"Email");}, 1000);
+            timer1 = setTimeout(function(){sendRequest(email,"Email");}, 1000);
         });
 
+        var timer2;
         $("input[name='DB_Link_Name']").keyup(function (e)
         {
             disableLogin();
-            clearTimeout(timer);
+            clearTimeout(timer2);
             var link_name = $(this).val();
-            timer = setTimeout(function(){sendRequest(link_name,"Link");}, 1000);
+            timer2 = setTimeout(function(){sendRequest(link_name,"Link");}, 1000);
         });
 
         $("input[type='password']").keyup(function (e)
@@ -354,4 +355,4 @@ function imageIsLoaded(e)
 
         });
 };
- //Upload image---
+//Upload image---

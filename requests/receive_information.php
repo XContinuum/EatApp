@@ -1,241 +1,189 @@
 <?php
-    //get restautrant username if logged
-    function getChainLink() //get_restaurant_username
-    {
-        require("server_connection.php");
-          
-        if(!isset($_SESSION))
-        session_start();
-        
-        if (isset($_SESSION['chain_owner_token']))
-        {
-            $sql="SELECT Link FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
-            $result=mysqli_query($conn,$sql);
-            $row=mysqli_fetch_assoc($result);
+require_once("access_db.php");
 
-            return strtolower($row['Link']);
-        }
-        else
-        {
-            return -1; //not logged
-        }
-    }
+//get restautrant username if logged
+function getChainLink() //get_restaurant_username
+{
+    $db=new Db();
 
-    //get Chain ID if logged
-    function getChainId() //get_restaurant_id
-    {
-        require('server_connection.php');
-        
-        if(!isset($_SESSION))
-        session_start();
-        
-        if (isset($_SESSION['chain_owner_token']))
-        {
-            $sql = "SELECT ID FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
-            $result = mysqli_query($conn,$sql);
-            $row = mysqli_fetch_assoc($result);
-        
-            return $row['ID'];
-        }
-        else
-        {
-            return -1; //not logged
-        }
-    }
-
-    function getMenuOwnerID($menu_name)
-    { 
-        require('server_connection.php');
-        
-        $sql="SELECT OWNER_ID FROM MENUS WHERE Name='$menu_name'";
-        $result=mysqli_query($conn,$sql);
-        $row=mysqli_fetch_assoc($result);
-        $row_num=mysql_num_rows($result);
-        
-        if ($row_num==0)
-        {
-            return -1;
-        }
-        else
-        {
-            return $row['OWNER_ID'];
-        }
-    }
-
-    //fetch different infos about the restaurant based on the username
-    function getInfo($link_,$info)
-    {
-        require("server_connection.php");
-  
-        $sql = "SELECT ID,Email,Restaurant_Name,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link_'";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-        mysqli_close($conn);
-
-        return $row[$info];
-    }
-
-     //fetch different infos about the chain based on the id
-    function getInfoFromID($chain_id,$info)
-    {
-        require("server_connection.php");
-  
-        $sql = "SELECT ID,Email,Hash,Picture,Website,Link FROM CHAIN_OWNER WHERE ID='$chain_id'";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-        mysqli_close($conn);
-
-        return $row[$info];
-    }
-
-
-    //check if username is in the database
-    function checkChainStatus($username_)
-    {
-        require("server_connection.php");
-       
-        $sql="SELECT Link FROM CHAIN_OWNER WHERE Link='$username_'";
-        $result=mysqli_query($conn,$sql);
-        
-        if (mysqli_num_rows($result)>0)
-        {
-            return 1; //chain found
-        }
-        else
-        {
-            return 0; //no user
-        }
-       
-        mysqli_close($conn);
-    }
-    
-    //set a global path for files that are in different directories
-    function setLink($string)
-    {
-        $ini_array=parse_ini_file("settings.ini", true);
-    
-        $path=$ini_array['server']['path'];
-        echo "'".$path.$string."'";
-    }
-
-    function setLinkMute($string)
-    {
-        $ini_array=parse_ini_file("settings.ini", true);
-    
-        $path=$ini_array['server']['path'];
-        return "'".$path.$string."'";
-    }
-
-    //Check if Chain validated
-    function checkIfValidated($username_)
-    {
-        require("server_connection.php");
-       
-        $sql="SELECT Validated FROM CHAIN_OWNER WHERE Link='$username_'";
-        $result=mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-      
-        mysqli_close($conn);
-        
-        return $row['Validated'];
-    }
-
-    //Check if email validated
-    function checkIfEmailValidated($username_)
-    {
-        require("server_connection.php");
-       
-        $sql="SELECT Active FROM CHAIN_OWNER WHERE Link='$username_'";
-        $result=mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-      
-        mysqli_close($conn);
-        
-        return $row['Active'];
-    }
-
-    //Check if user logged
-    function isOwnerLogged()//isUserLogged
-    {
-        if(!isset($_SESSION))
-        session_start();
-        
-        if (isset($_SESSION['chain_owner_token']))
-        {
-            return 1; //restaurant user logged
-        }
-        else
-        {
-            return 0; //restaurant not logged
-        }
-    }
-
-    //Send an email
-    function sendEmail($email_address,$username,$hash)
-    {
-        $subject='Signup | Verification'; 
-        $path="http://".$_SERVER['HTTP_HOST'];
-
-        $content=file_get_contents("email_template.html");
-        
-        $search=array('%link_name%','%path%','%email_address%','%$hash%');
-        $data=array($username,$path,$email_address,$hash);
-        $message=str_replace($search,$data,$content);
-
-        $headers='From:noreply@eatapp.ca'."\r\n";
-        mail($email_address, $subject, $message, $headers);
-    }
-
-    //Check if admin logged
-     function isAdminLogged()
-     {
-        if(!isset($_SESSION))
-        session_start();
-        
-        if (isset($_SESSION['admin_token']))
-        {
-            return 1; //logged
-        }
-        else
-        {
-            return 0; //not logged
-        }
-    }
-
-    //Get admin username
-    function getAdminUsername()
-    {
-        if(!isset($_SESSION))
-        session_start();
-        
-        if (isset($_SESSION['admin_token']))
-        {
-            require("server_connection.php");
-        
-            $sql = "SELECT Username FROM ADMIN_PANEL WHERE Token='".$_SESSION['admin_token']."'";
-            $result = mysqli_query($conn,$sql);
-            $row = mysqli_fetch_assoc($result);
-
-            return $row['Username']; //logged
-        }
-        else
-        {
-            return -1; //not logged
-        }
-    }
-
-    //LogOut
-    function LogOut()
-    {  
-    require ("server_connection.php");
-    
     if(!isset($_SESSION))
-    session_start();
+        session_start();
+        
+    if (isset($_SESSION['chain_owner_token']))
+    {
+        $sql="SELECT Link FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
+        
+        return $db->fetch($sql,"Link");
+    }
+    else
+    {
+        return -1; //not logged
+    }
+}
+
+//get Chain ID if logged
+function getChainId() //get_restaurant_id
+{
+     $db=new Db();
+        
+    if(!isset($_SESSION))
+        session_start();
+        
+    if (isset($_SESSION['chain_owner_token']))
+    {
+        $sql="SELECT ID FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
+            
+        return $db->fetch($sql,"ID");
+    }
+    else
+    {
+        return -1; //not logged
+    }
+}
+
+function getMenuOwnerID($menu_name)
+{ 
+    $db=new Db();
+        
+    $sql="SELECT OWNER_ID FROM MENUS WHERE Name='$menu_name'";
+    
+    return $db->fetch($sql,"OWNER_ID");
+}
+
+/*
+    fetch different infos about the chain based on the link
+*/
+function getInfo($link,$info)
+{
+    $db=new Db();
+   
+    $sql="SELECT ID,Email,Restaurant_Name,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link'";
+    
+    return $db->fetch($sql,$info);
+}
+
+//fetch different infos about the chain based on the id
+function getInfoFromID($chain_id,$info)
+{
+    $db=new Db();
+   
+    $sql="SELECT ID,Email,Hash,Picture,Website,Link FROM CHAIN_OWNER WHERE ID='$chain_id'";
+   
+    return $db->fetch($sql,$info);
+}
+
+
+//check if username is in the database
+function checkChainStatus($link_name)
+{
+    $db=new Db();
+       
+    $sql="SELECT Link FROM CHAIN_OWNER WHERE Link='$link_name'";
+  
+    return ($db->countRows($sql)>0) ? 1 : 0;
+}
+    
+//set a global path for files that are in different directories
+function setLink($string)
+{
+    $config=parse_ini_file("settings.ini");
+    
+    echo "'".$config['path'].$string."'";
+}
+
+function setLinkMute($string)
+{
+    $config=parse_ini_file("settings.ini");
+    
+    return "'".$config['path'].$string."'";
+}
+
+//Check if Chain validated
+function checkIfValidated($link_name) //checkIfValidated($username_)
+{
+    $db=new Db();
+
+    $sql="SELECT Validated FROM CHAIN_OWNER WHERE Link='$link_name'";
+   
+    return $db->fetch($sql,"Validated");
+}
+
+//Check if email validated
+function checkIfEmailValidated($link_name)
+{
+    $db=new Db();
+    
+    $sql="SELECT Active FROM CHAIN_OWNER WHERE Link='$link_name'";
+
+    return $db->fetch($sql,"Active");
+}
+
+//Check if user logged
+function isOwnerLogged()//isUserLogged
+{
+    if(!isset($_SESSION))
+        session_start();
+        
+    return isset($_SESSION['chain_owner_token']);
+}
+
+//Send an email
+function sendEmail($email_address,$username,$hash)
+{
+    $subject='Signup | Verification'; 
+    $path="http://".$_SERVER['HTTP_HOST'];
+
+    $content=file_get_contents("email_template.html");
+        
+    $search=array('%link_name%','%path%','%email_address%','%$hash%');
+    $data=array($username,$path,$email_address,$hash);
+    $message=str_replace($search,$data,$content);
+
+    $headers='From:noreply@eatapp.ca'."\r\n";
+    mail($email_address, $subject, $message, $headers);
+}
+
+//Check if admin logged
+function isAdminLogged()
+{
+    if(!isset($_SESSION))
+        session_start();
+        
+    return isset($_SESSION['admin_token']);
+}
+
+//Get admin username
+function getAdminUsername()
+{
+    if(!isset($_SESSION))
+        session_start();
+        
+    if (isset($_SESSION['admin_token']))
+    {
+        $db=new Db();
+        
+        $sql="SELECT Username FROM ADMIN_PANEL WHERE Token='".$_SESSION['admin_token']."'";
+        
+        return $db->fetch($sql,"Username"); //logged
+    }
+    else
+    {
+        return -1; //not logged
+    }
+}
+
+//LogOut
+function LogOut()
+{  
+    $db=new Db();
+
+    if(!isset($_SESSION))
+        session_start();
 
     if (isset($_SESSION['chain_owner_token']))
     {
-        $sql = "UPDATE CHAIN_OWNER SET Token='0' WHERE Token='" . $_SESSION['chain_owner_token'] . "'";
-        mysqli_query($conn,$sql);
+        $sql="UPDATE CHAIN_OWNER SET Token='0' WHERE Token='" . $_SESSION['chain_owner_token'] . "'";
+        $db->query($sql);
     
         session_unset(); //remove all session variables
         session_destroy(); //destroy the session
@@ -243,113 +191,208 @@
     else
         if (isset($_SESSION['admin_token']))
         {
-            $sql = "UPDATE ADMIN_PANEL SET Token='0' WHERE Token='" . $_SESSION['admin_token'] . "'";
-            mysqli_query($conn,$sql);
+            $sql="UPDATE ADMIN_PANEL SET Token='0' WHERE Token='" . $_SESSION['admin_token'] . "'";
+            $db->query($sql);
     
             session_unset(); //remove all session variables
             session_destroy(); //destroy the session
         }
-    }
+}
 
 
-    //Get full global link to profile picture
-    function getPicLink($username_)
-    {
-        $src=getInfo($username_,"Picture");
-        $image_link=setLinkMute("/restaurant_data/Profile/".$src);
-       
-        if ($src=="none" || $src==0)
-        {
-            $image_link=setLinkMute("/images/default.png");
-        }
-
-        return $image_link;
-    }
-
-    //Panel
-    function setPanel()
-    {
-        if (isOwnerLogged()==1)
-        {
-            //Restaurant logged
-            $LinkName=getChainLink();
-            
-            $image_src=getPicLink($LinkName);
+//Get full global link to profile picture
+function getPicLink($link_name)
+{
+    $src=getInfo($link_name,"Picture");
     
-            $panel="<div id='user_top_panel'>";
-            $panel.="<div id='username_bar'><a href=".setLinkMute("/".$LinkName).">".$LinkName."</a></div>";
-            $panel.="<div id='profile_picture'><img src=$image_src id='image_circle'/></div>";
-            $panel.="</div>";
+    return ($src=="default") ? setLinkMute("/images/default.png") : setLinkMute("/restaurant_data/Profile/".$src);
+}
 
-            $panel.="<div id='drop_down_panel'>";
-            $panel.="<div style='margin-left:136px;width:8px;' align='right'><img style='display:block;' src=".setLinkMute("/images/triangle.png")." /></div>";
+/*
+    Panel
+*/
 
-            $panel.="<div style='background-color:white;'>";
-            $panel.="<a href=".setLinkMute("/".$LinkName).">";
-            $panel.="<div class='drop_down_items'>profile</div></a>";
-            $panel.="<a href=".setLinkMute("/settings/index.php").">";
-            $panel.="<div class='drop_down_items'>settings</div></a>";
-            $panel.="<a href=".setLinkMute("/requests/log_out_request.php").">";
-            $panel.="<div class='drop_down_items'>log out</div></a>";
-            $panel.="</div></div>";
+function getRelativePath($from,$to)
+{
+    //some compatibility fixes for Windows paths
+    $from=is_dir($from) ? rtrim($from, '\/') . '/' : $from;
+    $to=is_dir($to)   ? rtrim($to, '\/') . '/'   : $to;
+    $from=str_replace('\\', '/', $from);
+    $to=str_replace('\\', '/', $to);
+
+    $from=explode('/', $from);
+    $to=explode('/', $to);
+    $relPath=$to;
+
+    foreach($from as $depth => $dir) 
+    {
+        // find first non-matching dir
+        if($dir === $to[$depth]) 
+        {
+            //ignore this directory
+            array_shift($relPath);
+        } 
+        else 
+        {
+            // get number of remaining dirs to $from
+            $remaining = count($from) - $depth;
+            if($remaining > 1) {
+                // add traversals up to first matching dir
+                $padLength = (count($relPath) + $remaining - 1) * -1;
+                $relPath = array_pad($relPath, $padLength, '..');
+                break;
+            } 
+            else 
+            {
+                $relPath[0] = './' . $relPath[0];
+            }
+        }
+    }
+    return implode('/', $relPath);
+}
+
+
+function setPanel()
+{
+    $relative=getRelativePath($_SERVER["PHP_SELF"],"/requests/panel_struct.html");
+    $structure=file_get_contents($relative);
+    $structure=explode("##", $structure);
+
+    if (isOwnerLogged())
+    {
+        $LinkName=getChainLink();
+        $image_src=getPicLink($LinkName);
+            
+        $search=array("%link_name%","%image_src%","%triangle%","%profile%","%settings%","%log_out%");
+        $replace=array($LinkName,$image_src,setLinkMute("/images/triangle.png"),setLinkMute("/".$LinkName),setLinkMute("/settings/index.php"),setLinkMute("/requests/log_out_request.php"));
+       
+        $panel=str_replace($search,$replace,$structure[0]);
+    }
+    else
+        if (isAdminLogged())
+        {
+            $search=array("%username%","%path_1%","%path_2%");
+            $replace=array(getAdminUsername(),setLinkMute("/panel/admin/index.php"),setLinkMute("/requests/log_out_request.php"));
+
+            $panel=str_replace($search,$replace,$structure[1]);
         }
         else
-            if (isAdminLogged()==1)
-            {
-                $username=getAdminUsername();
+        {
+            //Restaurant not logged
+            $search=array("%path_1%","%path_2%");
+            $replace=array(setLinkMute("/sign_up/index.php"),setLinkMute("/login/index.php"));
 
-                $panel="<div id='top_sign_in'>";
-                $panel.="<div class='abc'><a href=".setLinkMute("/panel/admin/index.php").">".$username."</a></div>";
-                $panel.="<div class='abc'><a href=".setLinkMute("requests/log_out_request.php").">Logout</a></div>";
-                $panel.="</div>";
-            }
-            else
-            {
-                //Restaurant not logged
-                $panel="<div id='top_sign_in'>";
-                $panel.="<div class='abc'><a href=".setLinkMute("/sign_up/index.php").">Sign up</a></div>";
-                $panel.="<div class='abc'><a href=".setLinkMute("/login/index.php").">Login</a></div>";
-                $panel.="</div>";
-             }
+            $panel=str_replace($search,$replace,$structure[2]);
+        }
+
+    return $panel;
+}
 
 
-        return $panel;
-    }
-
-
-    // Function to get the client IP address
-    function get_client_ip() 
-    {
+//Function to get the client IP address
+function get_client_ip() 
+{
     $ipaddress = '';
     if ($_SERVER['HTTP_CLIENT_IP'])
         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    else if($_SERVER['HTTP_X_FORWARDED_FOR'])
+    else 
+        if($_SERVER['HTTP_X_FORWARDED_FOR'])
         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else if($_SERVER['HTTP_X_FORWARDED'])
+    else 
+        if($_SERVER['HTTP_X_FORWARDED'])
         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    else if($_SERVER['HTTP_FORWARDED_FOR'])
+    else 
+        if($_SERVER['HTTP_FORWARDED_FOR'])
         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    else if($_SERVER['HTTP_FORWARDED'])
+    else 
+        if($_SERVER['HTTP_FORWARDED'])
         $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    else if($_SERVER['REMOTE_ADDR'])
+    else 
+        if($_SERVER['REMOTE_ADDR'])
         $ipaddress = $_SERVER['REMOTE_ADDR'];
     else
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
-    }
+}
 
 
-    function createQuery($data)
+function createQuery($data)
+{
+    return "('".implode("','",$data)."')";;
+}
+
+
+/*
+    Save search in the database
+*/
+function saveSearch($query,$count)
+{
+    $db=new Db();
+
+    $ip_address=get_client_ip();
+    $chain_id=(getChainId()==-1) ? 'null' : getChainId();
+    
+    $sql="INSERT INTO SEARCHES (IP_Address, Input, Chain_id, Results_Found)";
+    $sql.=" VALUES ('$ip_address','$query',$chain_id,'$count')";
+    
+    $db->query($sql);
+}
+
+
+function readableTime($time)
+{
+    $time=time()-$time; //to get the time since that moment
+    $time=($time<1)? 1 : $time;
+    $tokens=array (
+        31536000 => 'year',
+        2592000 => 'month',
+        604800 => 'week',
+        86400 => 'day',
+        3600 => 'hour',
+        60 => 'minute',
+        1 => 'second'
+    );
+
+    foreach ($tokens as $unit => $text)
     {
-        $query="";
-
-        for ($i=0;$i<count($data);$i++)
-        {
-            $data[$i]="'".$data[$i]."'";
-        }
-        $query=implode(",",$data);
-        $query="($query)";
-
-        return $query;
+        if ($time < $unit) continue;
+            
+        $numberOfUnits= floor($time / $unit);
+        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
     }
+}
+
+/*
+    Get today's week day
+*/
+function getWeekDay()
+{
+    $jd=cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
+    return jddayofweek($jd,1);
+}
+
+
+
+function getToken($item)
+{
+    $salt=rand(403,600) . "P20x" . rand(760,930);
+    $string=time() . $salt . $item . $salt;
+            
+    return sha1($string);
+}
+
+
+function getCoordinates($address) //[0]=> Longitude, [1]=> Latitude
+{
+    $prepAddr=str_replace(' ','+',$address);
+    $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+    $output=json_decode($geocode);
+
+    $coordinates=array();
+    $coordinates[]=$output->results[0]->geometry->location->lng;
+    $coordinates[]=$output->results[0]->geometry->location->lat;
+
+    return $coordinates;
+}
+
 ?>

@@ -1,7 +1,9 @@
 <?php
 if (isset($_POST['search_query']))
 {
-    require("../requests/server_connection.php");
+    require("../requests/access_db.php");
+
+    $db=new Db();
 
     $search_query=$_POST['search_query'];
     $search_query=strtolower($search_query);
@@ -10,32 +12,31 @@ if (isset($_POST['search_query']))
     getTagsList($json,$search_query);
 
     //Restaurant item+++
-    $sql="SELECT FA_MENUS.FA_Product_Name from FA_MENUS INNER JOIN FA_RESTORANTS on FA_MENUS.RESTAURANT_ID=FA_RESTORANTS.ID WHERE ";
-    $sql.="(lower(FA_MENUS.FA_Product_Name) LIKE '".$search_query."%') AND FA_RESTORANTS.FA_Validated=1 LIMIT 10";
-    $result=mysqli_query($conn,$sql);
+    $sql="SELECT MENUS.Product_Name from MENUS INNER JOIN CHAIN_OWNER on MENUS.OWNER_ID=CHAIN_OWNER.ID WHERE ";
+    $sql.="(lower(MENUS.Product_Name) LIKE '".$search_query."%') AND CHAIN_OWNER.Validated=1 LIMIT 10";
+    $result=$db->query($sql);
 
-    while ($row=mysqli_fetch_array($result, MYSQLI_ASSOC))
+    while ($row = $result -> fetch_assoc())
     {
           $json[]= array(
             'icon' => "",
-            'item' => $row["FA_Product_Name"]
+            'item' => $row["Product_Name"]
             );
     }
     //Restaurant item---
 
     //Restaurant name+++
-    $sql="SELECT FA_Restaurant_Name from FA_RESTORANTS WHERE (lower(FA_Restaurant_Name) LIKE '".$search_query."%') AND FA_Validated=1 LIMIT 10";
-    $result=mysqli_query($conn,$sql);
+    $sql="SELECT Restaurant_Name from CHAIN_OWNER WHERE (lower(Restaurant_Name) LIKE '".$search_query."%') AND Validated=1 LIMIT 10";
+    $result=$db->query($sql);
 
-    while ($row=mysqli_fetch_array($result, MYSQLI_ASSOC))
+    while ($row = $result -> fetch_assoc())
     {
          $json[]= array(
             'icon' => "",
-            'item' => $row["FA_Restaurant_Name"]
+            'item' => $row["Restaurant_Name"]
             );
     }
 
-    mysqli_close($conn);
     //Restaurant name---
 
     //output the response
@@ -45,7 +46,7 @@ if (isset($_POST['search_query']))
 
 function getTagsList(&$json_,$q_srch)
 {
-    $json_data=json_decode(file_get_contents("../user/content_list.txt"),true);
+    $json_data=json_decode(file_get_contents("../user/setup/filters.txt"),true);
     $tags=array();
     $emoji=array();
 

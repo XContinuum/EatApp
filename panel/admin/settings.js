@@ -22,13 +22,19 @@ function show(var_show)
 {
 	if (var_show==1)
 	{
-		document.getElementById('validated').style.display='block';
-		document.getElementById('not_validated').style.display='none';
+		$('#validated').show();
+		$('#not_validated').hide();
 	}
 	else
 		if (var_show==0)
 		{
-			document.getElementById('validated').style.display='none';
-			document.getElementById('not_validated').style.display='block';
+			$('#validated').hide();
+			$('#not_validated').show();
 		}
 }
+
+
+// $(document).ready(function()
+// {
+
+// });

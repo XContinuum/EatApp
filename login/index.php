@@ -21,9 +21,8 @@
             if ($_GET["error"]=="1")
                 $error="<div id='error_box' style='top:0px;'>Login or password incorrect!</div>";
 
-            ob_start();
-            require_once('login_box.html');
-            $content = ob_get_clean();
+            $content=file_get_contents("login_box.html");
+            $content=str_replace("%error%",$error,$content);
 
             include("../template.html");
         }

@@ -1,5 +1,6 @@
 <?php
-require ("../../requests/server_connection.php");
+require_once("../../requests/access_db.php");
+$db=new Db();
 
 $name=$_GET["menu_name"];
     
@@ -8,14 +9,14 @@ $xml = new SimpleXMLElement('<xml/>');
         
 $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture,Currency ";
 $sql.="FROM MENUS WHERE Name='$name'";
-$result=mysqli_query($conn,$sql);
+$result=$db->query($sql);
         
 $menu="";
 $count=0;
        
 $old_section_name="none";
 
-while($row=mysqli_fetch_array($result))
+while ($row = $result -> fetch_assoc())
 {
    $product=$xml->addChild('product');
    $product->addAttribute('section',$row['Section']);

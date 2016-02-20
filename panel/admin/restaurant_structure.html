@@ -1,0 +1,29 @@
+<!--
+	/list/
+-->
+
+<table id="admin_table">
+	<tr style="background-color:#f9f8f8;">
+		<td>Link</td>
+		<td>Restaurant Name</td>
+		<td>Email</td>
+		<td>Email Activated</td>
+		<td>Validate</td>
+		<td>Ban</td>
+	</tr>
+	%list%
+</table>
+
+ ##
+<!--
+	/path/ /link/ /restaurant_name/ /email/ /active/ /button_value/ /color/
+-->
+
+<tr>
+	<td><a href=%path% target="_blank">%link%</a></td>
+	<td>%restaurant_name%</td>
+    <td>%email%</td>
+    <td style='%color%' align="center">%active%</td>
+    <td><input type="button" value="%button_value%"/></td>
+    <td><input type="button" value="ban"/></td>
+</tr>

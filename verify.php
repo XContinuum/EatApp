@@ -1,30 +1,30 @@
 <?php
-	if (isset($_GET['email']) && isset($_GET['hash']))
-	{
- 	$FA_Email=mysql_escape_string($_GET['email']);
-    $FA_Hash=mysql_escape_string($_GET['hash']);
+if (isset($_GET['email']) && isset($_GET['hash']))
+{
+  require("requests/receive_information.php");
 
-    require("requests/server_connection.php");
-    require("requests/receive_information.php");
+  $Email=mysql_escape_string($_GET['email']);
+  $Hash=mysql_escape_string($_GET['hash']);
 
-    $sql="SELECT FA_Hash FROM FA_RESTORANTS WHERE FA_Email='$FA_Email'";
-    $result=mysqli_query($conn,$sql);
-    $row=mysqli_fetch_assoc($result);
+  $db=new Db();
 
-    $logged=isUserLogged();
-    $username=get_restaurant_username();
+  $sql="SELECT Hash FROM CHAIN_OWNER WHERE Email='$Email'";
+  $db_hash=$db->fetch($sql,"Hash");
 
-    //IF HASHES ARE EQUAL
-    if ($row['FA_Hash']==$FA_Hash)
-    {
-    	$content="<br><br><div align='center'>Your account has been activated!<br>";
+  $logged=isOwnerLogged();
+  $link_name=getChainLink();
 
-		$sql="UPDATE FA_RESTORANTS SET FA_Active='1' WHERE FA_Email='$FA_Email' AND FA_Hash='$FA_Hash'";
-    	$result=mysqli_query($conn,$sql);
+  //IF HASHES ARE EQUAL
+  if ($db_hash==$Hash)
+  {
+    $content="<br><br><div align='center'>Your account has been activated!<br>";
 
-    	if ($logged==1)
-    		$content.="<a href='/$username'>Go to profile</a></div>";
-    	else
+    $sql="UPDATE CHAIN_OWNER SET Active='1' WHERE Email='$Email' AND Hash='$Hash'";
+    $result=$db->query($sql);
+
+    if ($logged==1)
+    		$content.="<a href='/$getChainLink'>Go to profile</a></div>";
+    else
     		$content.="<a href='login/index.php'>Log in</a></div>";
 	}
 	else
@@ -38,11 +38,10 @@
 			$content.=" <a href='login/index.php?resend=true'>Login and resend email verification.</a></div>";
 	}
 
- 	mysqli_close($conn);
 
-    include("template.html");
-    }
-   	else
+    include("user_template.html");
+}
+else
    	{
 		header("Location: ../index.php");
    	}

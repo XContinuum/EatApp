@@ -2,14 +2,12 @@
     require("../requests/receive_information.php");
     $panel=setPanel();
 
-    $search_query=$_GET["q"];
     $head_param="<script src='hintBox.js'></script>";
     $head_param.="<script src='http://maps.google.com/maps/api/js?sensor=true'></script>";
     $head_param.="<script src='js/ajaxSearch.js'></script>";
 
-    ob_start();
-    require_once("search_form.html");
-    $content=ob_get_clean();
+    $content=file_get_contents("search_form.html");
+    $content=str_replace("%search_query%", $_GET["q"], $content);
 
     include("../user_template.html");
-?>
+ ?>

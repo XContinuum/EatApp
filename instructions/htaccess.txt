@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteRule ^([A-Za-z0-9\-_]+)$ user/index.php?username=$1 [NC,L]
+RewriteRule ^([A-Za-z0-9\-_]+)$ user/index.php?link=$1 [NC,L]
 
 #Error files directories
 ErrorDocument 404 /err/404.php

@@ -1,6 +1,5 @@
 <?php
-
-require("../../requests/receive_information.php");
+require_once("../../requests/receive_information.php");
 
 if (isAdminLogged()==1)
 {
@@ -15,17 +14,20 @@ else
 
         $panel=setPanel();
         $chainLink=getChainLink();
-        $rest_num=0; //number of restaurants
 
         $restaurant_edit=explode("##",file_get_contents("table_template.html"))[0];
 
         $content=file_get_contents("index_form.html");
-        $content=str_replace("%list%",loadRestaurantList($rest_num,$restaurant_edit),$content); //Show list of restaurants if such exists
+        $content=str_replace("%list%",loadRestaurantList($restaurant_edit),$content); //Show list of restaurants if such exists
         $content=str_replace("%menu%",loadMenuList(),$content); //Show list of menus if such exists
+        $content=str_replace("%schedule%",loadScheduleList(),$content); //
+
         $content=str_replace("%options%",loadMenuOptions('none'),$content); //global variable for the JavaScript to read
+        $content=str_replace("%schedule_hidden_list%",loadScheduleOptions('none'),$content); //global variable for the JavaScript to read
         $content.="<input type='hidden' value='$chainLink' id='link_name' />";
 
-        $head_param="<script src='js/script.js'></script>";
+        $head_param="<script src='js/time_picker.js'></script>";
+        $head_param.="<script src='js/script.js'></script>";
 
         include_once("../../user_template.html");
     }

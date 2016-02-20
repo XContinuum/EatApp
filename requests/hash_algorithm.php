@@ -24,7 +24,7 @@
         {
             $full_salt = substr($hash, 0, 29);
             $new_hash = crypt($password, $full_salt);
-            
+
             return ($hash == $new_hash);
         }
         

@@ -1,8 +1,12 @@
 <?php
-    require("../requests/receive_information.php");
-    require("../requests/load_restaurant_list.php");
+    ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', true);
 
-    $CHAIN_Link=htmlspecialchars($_GET["username"]); //get the link from the url
+    require_once("../requests/receive_information.php");
+    require_once("../requests/load_restaurant_list.php");
+
+
+    $CHAIN_Link=htmlspecialchars($_GET["link"]); //get the link from the url
     $CHAIN_Logged=getChainLink(); //get Chain Link from the session
 
     $panel=setPanel();

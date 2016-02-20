@@ -1,6 +1,20 @@
 var default_light="AvenirLTStd-Light";
 var offset=0;
 
+var source_file=readTextFile("js/search_struct.html");
+source_file=source_file.split("##");
+var template=source_file[0];
+var page_structure=source_file[1];
+
+function readTextFile(file)
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", file, false);
+    xhttp.send();
+
+    return xhttp.responseText;
+}
+
 function writeAddressName(latLng)
 {
   var geocoder = new google.maps.Geocoder();
@@ -19,7 +33,7 @@ function writeAddressName(latLng)
 
       for (var i = 0, component; component = components[i]; i++)
       {
-          console.log(component);
+          //console.log(component);
 
           switch (component.types[0])
           {
@@ -36,10 +50,10 @@ function writeAddressName(latLng)
             break;
           }
       }
-    console.log('Street: ' + street);
-    console.log('Street number: ' + street_number);
-    console.log('Postal code: ' + postal_code);
-    console.log(results[0].formatted_address);
+    //console.log('Street: ' + street);
+    //console.log('Street number: ' + street_number);
+    //console.log('Postal code: ' + postal_code);
+    //console.log(results[0].formatted_address);
 
     var show_address="";
 
@@ -69,62 +83,60 @@ function geolocationError(positionError)
 }
 
 
-  function geolocationSuccess(position)
-  {
+function geolocationSuccess(position)
+{
     var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     //Write the formatted address
     writeAddressName(userLatLng);
-  }
+}
 
-  function geolocateUser()
-  {
+function geolocateUser()
+{
     //If the browser supports the Geolocation API
     if (navigator.geolocation)
     {
       var positionOptions =
       {
-            enableHighAccuracy: true,
-            timeout: 10 * 1000 // 10 seconds
-          };
-          navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, positionOptions);
-        }
-        //else
-          //document.getElementById("error").innerHTML += "Your browser doesn't support the Geolocation API";
-      }
-
-
-$(document).ready(
-    function()
+        enableHighAccuracy: true,
+        timeout: 10 * 1000 // 10 seconds
+      };
+      navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, positionOptions);
+    }
+    else
     {
-      geolocateUser();
-      sendRequest($("#search_box").val());
+      alert("Your browser doesn't support the Geolocation API");
+    }
+}
 
 
-      $("#search_box").setHintBox(function(obj)
-        {
-            offset=0;
-            sendRequest($("#search_box").val());
-            $("#livesearch").hide();
-        });
+$(document).ready(function()
+{
+  geolocateUser();
+  sendRequest($("#search_box").val());
 
-      //Filters
-      $("#filters").click(function()
-      {
-        $("#pages").hide();
-        $("#query_results").hide();
-        $("#filter_settings").show();
-      });
+  $("#search_box").setHintBox(function(obj)
+  {
+    offset=0;
+    sendRequest($("#search_box").val());
+    $("#livesearch").hide();
+  });
 
-      //Back to search
-      $("#back").click(function()
-        {
-          $("#pages").show();
-          $("#query_results").show();
-          $("#filter_settings").hide();
-        });
+  //Filters
+  $("#filters").click(function()
+  {
+    $("#pages").hide();
+    $("#query_results").hide();
+    $("#filter_settings").show();
+  });
 
-   }
-);
+  //Back to search
+  $("#back").click(function()
+  {
+    $("#pages").show();
+    $("#query_results").show();
+    $("#filter_settings").hide();
+  });
+});
 
 
 function sendRequest(query)
@@ -155,11 +167,41 @@ function sendRequest(query)
   xmlhttp.send("search_query="+query+"&offset="+offset+"&address="+$("#user_address").val());
 }
 
+
+function adjustUnits(distance)
+{
+  var result="";
+  var temp_d=parseFloat(distance);
+
+
+    if (distance!="")
+    {
+      if (temp_d>10)
+      {
+        result=temp_d.toFixed(1)+" km";
+      }
+      else
+        if (temp_d>1)
+        {
+          result=temp_d.toFixed(2)+" km";
+        }
+        else
+          if (temp_d<1)
+          {
+            result=temp_d*1000;
+            result=temp_d.toFixed(0)+" m";
+          }
+    }
+
+    return result;
+}
+
 function styleOutput(response,query)
 {
+   //console.log(response);
    var obj=$.parseJSON(response);
 
-   if (obj[0]["results"]==0)
+   if (obj["results"]==0)
    {
       $("#query_results").html("<div style='width:100%;text-align:center;'>No results were found</div>");
       $("#pages").html("");
@@ -168,94 +210,36 @@ function styleOutput(response,query)
    {
       //Style the JSON output+++
       var output_html="";
+      var search=['%src%','%product_name%','%link%','%restaurant_name%','%price%','%distance%'];
 
-      for (var i=0;i<obj[0]["data"].length;i++)
+     for (var i=0;i<obj["data"].length;i++)
       {
-          var current=obj[0]["data"][i];
-          var dist=parseFloat(current["distance"]);
+          var current=obj["data"][i];
+          var distance=adjustUnits(current["distance"]);
 
-          if (current["distance"]!="")
-          {
-          if (dist>10)
-          {
-            dist=dist.toFixed(1)+" km";
-          }
-          else
-          if (dist>1)
-          {
-            dist=dist.toFixed(2)+" km";
-          }
-          else
-            if (dist<1)
-            {
-              dist=dist*1000;
-              dist=dist.toFixed(0)+" m";
-            }
-          }
-          else
-              {
-                dist="";
-              }
-
-
-            output_html+="<div class='item_box'><table><tr>";
-            output_html+="<td class='img_td'><img class='item_img' src='"+current["image"]+"' /></td>";
-
-            output_html+="<td valign='top'>"+current["product_name"]+"<br /><a href='/"+current["username"]+"' target='_blank'>"+current["restaurant_name"]+"</a>";
-            output_html+="<br /><br />"+current["price"]+"$</td>";
-
-            output_html+="<td valign='center' align='right' width='60px' style='color:#4d85f2;'>"+dist+"</td>";
-            output_html+="</tr></table></div>";
+          var replace=[current["image"],current["product_name"],current["link"],current["restaurant_name"],current["price"],distance];
+          output_html+=multipleReplace(search,replace,template);
       }
       //---
 
-
       $("#query_results").html(output_html);
+      $(".item_box").find("a").css({"text-decoration":"none","color":"#4d85f2"});
 
-      $(".item_box").css({
-          "font-family":default_light,
-          "background-color":"white",
-          "padding":"5px",
-          "box-shadow": "0px 0px 3px #ccc",
-          "margin-bottom":"5px"
-        });
+      //Load Pages
+      var pages=Math.ceil(obj["results"]/5); //5 results per pages
 
-      $(".item_box").find("a").css("text-decoration","none");
-      $(".item_box").find("table").css({
-        "border-collapse":"collapse",
-        "text-shadow" :"0px 0px 3px rgba(0, 0, 0, 0.20)",
-        "width" : "100%"
-      }).find("td").css("border","0px solid black");
+      var arr=[];
 
-      $(".img_td").css("padding-right","15px").width("60px");
-
-      $(".item_img").css({
-          "width":"60px",
-          "height":"60px",
-          "border":"0px solid black",
-          "margin":"5px",
-          "border-radius":"50%",
-          "box-shadow": "0px 0px 2px rgba(0, 0, 0, 0.35)"
-        });
-
-
-      var pages=Math.ceil(obj[0]["results"]/5);
-
-      var pages_html="";
       for (var i=0;i<pages;i++)
       {
-        pages_html+="<div class='page_block'>";
-
         if (i==offset)
-          pages_html+="<b>"+(i+1)+"</b>";
+           arr.push("<b>"+(i+1)+"</b>");
         else
-          pages_html+=(i+1);
-
-        pages_html+="</div>";
+           arr.push(i+1);
       }
-      pages_html="<div class='page_block' id='left_p' style='padding-top:4px;padding-bottom:2px;'><img src='/images/arrow_left.png' align='center'/></div>"+pages_html;
-      pages_html+="<div class='page_block' id='right_p' style='padding-top:4px;padding-bottom:2px;'><img src='/images/arrow_right.png' align='center'/></div>";
 
+      var pages_html="<div class='page_block'>"+arr.join("</div><div class='page_block'>")+"</div>";
+      pages_html=page_structure.replace("%pages_html%",pages_html);
 
       if (pages>1)
       {
@@ -268,8 +252,6 @@ function styleOutput(response,query)
                   var int_off=parseInt($(this).html());
                   offset=int_off-1;
                   sendRequest(query);
-
-                  //console.log($(this).html());
                }
                else
                 if ($(this).attr("id")=="left_p")
@@ -296,4 +278,17 @@ function styleOutput(response,query)
         $("#pages").html("");
       }
     }
+}
+
+
+function multipleReplace(search, replace, string)
+{
+    var result=string;
+
+    for(var i=0;i<search.length;i++)
+    {
+        result=result.replace(search[i],replace[i]);
+    }
+
+    return result;
 }

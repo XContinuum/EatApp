@@ -1,21 +1,26 @@
 var saving=false; //to avoid multiple save clicks create a lag
 
 
-$(document).ready
-(function()
+$(document).ready(function()
     {
         //Initial block
+        $("input[type='time_picker']").setTimePicker();
+
         var redirect_link="/user/setup/setup_menu.php?name=";
 
         var chain_link=$("#link_name").val();
 
-        var template=readFile("table_template.html");
-        var template=template.split("##")[0];
-        var search=['%chain_link%','%link_name%','%phone_number%','%address%','%postal_code%','%options%'];
-        var replace=[chain_link,'','','','',$("#option_template").html()];
+        var structure=readFile("table_template.html");
+        var template=structure.split("##")[0];
+
+        var schedule=structure.split("##")[2];
+        var schedule_search=["%name%", "%monday_start%", "%monday_end%", "%tuesday_start%", "%tuesday_end%", "%wednesday_start%", "%wednesday_end%", "%thursday_start%", "%thursday_end%", "%friday_start%", "%friday_end%", "%saturday_start%", "%saturday_end%", "%sunday_start%", "%sunday_end%"];
+
+
+        var search=['%chain_link%','%link_name%','%phone_number%','%address%','%postal_code%','%options%','%country%','%state_province%','%city%','%schedule%'];
+        var replace=[chain_link,'','','','',$("#option_template").html(),'','','',$("#sch_template").html()];
 
         template=multipleReplace(search,replace,template);
-
 
         setDeleteButton();
         disableSpace();
@@ -35,17 +40,75 @@ $(document).ready
             disableSpace();
          });
 
+
+        $("#create_schedule").click(function()
+          {
+            if ($(".schedule_list").length>0)
+            {
+                var schedule_replace=[chain_link+"_sch_"+($(".schedule_list").length+1),"","","","","","","","","","","","","",""];
+                var rep=multipleReplace(schedule_search,schedule_replace,schedule);
+
+                $(".schedule_list").last().after(rep);
+            }
+            else
+            {
+                var schedule_replace=[chain_link+"_sch_1","","","","","","","","","","","","","",""];
+                var rep=multipleReplace(schedule_search,schedule_replace,schedule);
+
+                $("#sch_form").html(rep);
+            }
+
+            $("input[type='time_picker']").setTimePicker();
+         });
+
+         $(".delete_sch").click(function()
+         {
+            var index=$(this).index(".delete_sch");
+
+            $(".schedule_list").eq(index).remove();
+            Save_Sch();
+
+            $(".sch_name").each(function(index)
+            {
+                $(this).html(chain_link+"_sch_"+(index+1));
+            });
+         });
+
+
+
         $("#create_menu").click(function()
            {
                 $("#menu_panel").show();
-                $("#current_menu_name").val(chain_link+"_menu_"+($(".menu_items").length+1));
+
+                if ($(".menu_items").length>0)
+                {
+                    var names=[];
+                    $(".mn_name").each(function(index)
+                    {
+                        names.push(parseInt($(this).text().replace(chain_link+"_menu_","")));
+                    });
+
+                    names.sort();
+
+                    var count=1;
+                    while (isInArray(count,names))
+                    {
+                        count++;
+                    }
+
+                    $("#current_menu_name").html(chain_link+"_menu_"+count);
+                }
+                else
+                {
+                    $("#current_menu_name").html(chain_link+"_menu_1");
+                }
            });
 
         $("#move_to_edit").click(function()
         {
             $("#menu_panel").hide();
 
-            var win = window.open(document.location.origin+redirect_link+ $("#current_menu_name").val(), '_blank');
+            var win = window.open(document.location.origin+redirect_link+ $("#current_menu_name").text(), '_blank');
 
             if(win)
             {
@@ -65,6 +128,11 @@ $(document).ready
                 Save();
             });
 
+        $("#save_schedule").click(function()
+            {
+                Save_Sch();
+            });
+
 
         $(document).mouseup(function(e)
         {
@@ -78,6 +146,64 @@ $(document).ready
                 $("#menu_panel").hide();
             }
         });
+
+        //Delete Menu
+        $(".delete_menu").click(function(e)
+        {
+            e.preventDefault();
+
+            var menuName=$(this).attr("alt");
+
+            $.post("delete_menu.php",{menu_name : menuName}).done(function(data)
+            {
+                console.log(data);
+            });
+
+            $(this).closest(".menu_items").remove();
+        });
+        //---
+
+
+        //Show
+        $("#res_btn").click(function()
+        {
+            $("#res_win").show();
+            $("#menu_win").hide();
+            $("#sch_win").hide();
+
+            $("#res_btn").stop().animate({opacity:1}, 400);
+            $("#mn_btn").stop().animate({opacity:0.5}, 400);
+            $("#sch_btn").stop().animate({opacity:0.5}, 400);
+
+        });
+        //---
+
+        //Show
+        $("#mn_btn").click(function()
+        {
+            $("#res_win").hide();
+            $("#menu_win").show();
+            $("#sch_win").hide();
+
+            $("#res_btn").stop().animate({opacity:0.5}, 400);
+            $("#mn_btn").stop().animate({opacity:1}, 400);
+            $("#sch_btn").stop().animate({opacity:0.5}, 400);
+
+        });
+        //---
+
+        //Show
+        $("#sch_btn").click(function()
+        {
+            $("#res_win").hide();
+            $("#menu_win").hide();
+            $("#sch_win").show();
+
+            $("#res_btn").stop().animate({opacity:0.5}, 400);
+            $("#mn_btn").stop().animate({opacity:0.5}, 400);
+            $("#sch_btn").stop().animate({opacity:1}, 400);
+        });
+        //---
     }
 );
 
@@ -99,6 +225,35 @@ function setDeleteButton()
         Save();
     });
 }
+
+function Save_Sch()
+{
+    if (!saving)
+    {
+        saving=true;
+        var datastring=$("#sch_form").serialize();
+
+    $.ajax({
+        type: "POST",
+        url: "save_schedule.php",
+        data: datastring,
+        dataType: "text",
+        success: function(data)
+        {
+            $("#server_result").html("Saved!");
+            $("#server_result").stop().animate({opacity:1}, 500).delay(1000).animate({opacity:0}, 500);
+
+            console.log(data);
+            saving=false;
+        },
+        error: function()
+        {
+        alert('An error has occured saving your data. Please try again.');
+        }
+        });
+    }
+}
+
 
 function Save()
 {
@@ -158,6 +313,11 @@ function multipleReplace(search, replace, string)
     }
 
     return string;
+}
+
+function isInArray(value, array)
+{
+  return array.indexOf(value) > -1;
 }
 
 function readFile(file)

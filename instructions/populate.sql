@@ -1,5 +1,5 @@
 /*
-  v2.1
+  v2.3
 
   email: michelbalamou@gmail.com
   pass: lmaolmao
@@ -16,9 +16,9 @@ VALUES ('michelbalamou@gmail.com','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/
 INSERT INTO ADMIN_PANEL (Username, Password)
 VALUES ('michael','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW');
 
-INSERT INTO RESTORANTS (OWNER_ID, R_Order, Menu_Name, Link, Country, State_Province, City, Postal_Code, Address)
+INSERT INTO RESTAURANTS (OWNER_ID, R_Order, Menu_Name, Link, Country, State_Province, City, Postal_Code, Address)
 VALUES ('1', '1', 'Menu1', 'Link1', 'Canada', 'Ontario', 'Ottawa', 'K2N5B', '101 First Ave');
 
-INSERT INTO FA_MENUS (RESTAURANT_ID,FA_Pic,FA_Order,FA_Product_Name,FA_Price,FA_Desc,FA_Contents,FA_Section)
-VALUES ('1','5653e3af25a4a.jpg','1','Salad','9.99','Has tomatoes','vegan.','none'),
-('1','5653dca4653cc.jpg','2','Burger','8.50','Contains cheese, beef, bread','meat.','none');
+INSERT INTO MENUS (OWNER_ID,Name,Picture,Product_Name,Price,Description,Contents,Section)
+VALUES ('1','Menu1','5653e3af25a4a.jpg','Salad','9.99','Has tomatoes','vegan.','none'),
+('1','Menu1','5653dca4653cc.jpg','Burger','8.50','Contains cheese, beef, bread','meat.','none');

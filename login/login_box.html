@@ -1,10 +1,10 @@
-<?php echo $error; ?>
+%error%
 <!-- Login form -->
 </br>
 </br>
 <div class="outter_box">
 
-<form action= <?php setLink("/requests/login_request.php"); ?> method="POST">
+<form action="login_request.php" method="POST">
 <table align="center" id="login_box">
 
    <tr><td align="center" style="font-size:20px;"><b>Welcome back!</b></td></tr>
@@ -41,9 +41,9 @@
 <table align="center" width="300px" id="more_table">
     <tr>
         <td align="left">
-            <a href=<?php setLink("/login/forgot_password.php");?> >Forgotten password?</a>
+            <a href="forgot_password.php">Forgotten password?</a>
         </td>
-            <td align="right"><a href=<?php setLink("/sign_up/index.php");?> >Create an account</a>
+            <td align="right"><a href="../sign_up/index.php">Create an account</a>
         </td>
     </tr>
 </table>

@@ -1,8 +1,9 @@
 <?php
 
-require("../../requests/server_connection.php");
-require("../../requests/receive_information.php");
+require_once("../../requests/receive_information.php");
         
+$db=new Db();
+
 //DATA+++
 $food_images=$_FILES["Food_Images"];
 $crop_info=$_POST["Crop_Info"];
@@ -16,11 +17,10 @@ $section_name=$_POST["Sections"];
 $sections=explode(':', $_POST["section_index"]);
        
 $currency=$_POST["currency"];
+$menu_name=$_POST["menu_name"];
 //DATA---
 
 $final_query="";
-
-$menu_name=$_POST["menu_name"];   
 
 $OWNER_ID=getChainId();
 
@@ -29,14 +29,8 @@ $intermediate_q=array(); //intermediate array
 for ($i=0;$i<count($product_name);$i++)
 {
     //Save images
-    $pic_name="none";
-
-    $pic_name=saveImage($food_images,$i,$crop_info[$i],$menu_name);
-            
-    if ($pic_name=="none")
-    {
-        $pic_name=$picture_url[$i];
-    }
+    $new_name=saveImage($food_images,$i,$crop_info[$i],$menu_name);       
+    $pic_name=($new_name=="none") ? $picture_url[$i] : $new_name;
     
     //Divide into sections+++
     $section="none";
@@ -64,20 +58,16 @@ for ($i=0;$i<count($product_name);$i++)
     }
     
     $data=array($menu_name,$OWNER_ID,$product_name[$i],$price[$i],$description[$i],$filters,$section,$pic_name,$currency);
-    array_push($intermediate_q, createQuery($data));
+    $intermediate_q[]=createQuery($data);
 }
-
-
 $final_query=implode(",", $intermediate_q);
-mysqli_query($conn,"DELETE FROM MENUS WHERE Name='$menu_name'"); //DELETE PREVIOUS MENU
+$db->query("DELETE FROM MENUS WHERE Name='$menu_name'"); //DELETE PREVIOUS MENU
 
 $sql="INSERT INTO MENUS (Name,OWNER_ID,Product_Name,Price,Description,Contents,Section,Picture,Currency) VALUES $final_query";
         
-mysqli_query($conn,$sql);
+$db->query($sql);
 
-cleanPictures($conn,$menu_name);
-
-mysqli_close($conn);
+cleanPictures($menu_name);
 
 echo "Saved!";
 
@@ -156,8 +146,9 @@ function saveImage($upload_image,$entry,$crop_info,$menu_name)
 }
 
 
-function cleanPictures($conection,$menu_name)
+function cleanPictures($menu_name)
 {
+    $db=new Db();
     $link_name=getChainLink();
     $path="../../restaurant_data/Pictures/$link_name/$menu_name";
     $files=array_diff(scandir($path), array('..', '.','.DS_Store')); 
@@ -165,12 +156,16 @@ function cleanPictures($conection,$menu_name)
 
    
     $sql="SELECT Picture FROM MENUS WHERE Name='$menu_name'";
-    $result=mysqli_query($conection,$sql);
+    $result=$db->query($sql);
     
-    while($rows[] = mysqli_fetch_array($result)[0]);
-    array_pop($rows);
+    $db_images=array();
+
+    while ($row = $result -> fetch_assoc()) 
+    {
+        $db_images[]=$row["Picture"];
+    }
     
-    $delete_files=array_merge(array_diff($rows, $files), array_diff($files, $rows)); //exclusion of the two arrays
+    $delete_files=array_merge(array_diff($db_images, $files), array_diff($files, $db_images)); //exclusion of the two arrays
     $delete_files=array_values($delete_files);
 
     

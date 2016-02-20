@@ -4,20 +4,21 @@
         $type=$_GET['type'];
         $id=$_GET['id'];
 
-        require("server_connection.php");
-        
+        require("../../requests/receive_information.php");
+        $db=new Db();
+
         if ($type=='validate')
         {
             //validation
-            $sql = "UPDATE FA_RESTORANTS SET FA_Validated='1' WHERE ID='$id'";
-            $result = mysqli_query($conn,$sql);
+            $sql = "UPDATE CHAIN_OWNER SET Validated='1' WHERE ID='$id'";
+            $db->query($sql);
         }
         else
         if ($type=='unvalidate')
         {
             //unvalidation
-            $sql = "UPDATE FA_RESTORANTS SET FA_Validated='0' WHERE ID='$id'";
-            $result = mysqli_query($conn,$sql);
+            $sql = "UPDATE CHAIN_OWNER SET Validated='0' WHERE ID='$id'";
+            $db->query($sql);
         }
         else
             if ($type=='ban')

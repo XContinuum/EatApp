@@ -23,7 +23,6 @@ $(document).ready(function()
 
     $("#save_menu_btn").click(function()
     {
-      //var datastring=$("#save_menu_form").serialize();
       var datastring=new FormData($("#save_menu_form")[0]);
 
         $.ajax({

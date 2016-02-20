@@ -34,10 +34,23 @@ $(document).ready(
             {
                 $(".drop_down_items").css("background-color","white");
                 $(this).css("background-color","#4d85f2");
+
+                if ($(this).html()=="profile")
+                {
+                    var src=$("#small_triangle").attr("src").replace("triangle","blue");
+                    $("#small_triangle").attr("src",src);
+                }
+                else
+                {
+                    var src=$("#small_triangle").attr("src").replace("blue","triangle");
+                    $("#small_triangle").attr("src",src);
+                }
             })
         .mouseout(function()
             {
                 $(this).css("background-color","white");
+                var src=$("#small_triangle").attr("src").replace("blue","triangle");
+                $("#small_triangle").attr("src",src);
             });
 
     }

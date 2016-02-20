@@ -1,53 +1,25 @@
-<div>
-    <table align="center" id="user_table">
-        <!-- Top info-->
-        <tr height="150px">
-            <td width="200px" align="center">
-            <div class="circleBase user_pic"></div>
-            </td>
-
-            <td style="text-align:left;padding-top:20px;font-size:14px;font-weight:lighter;" valign="top">
-                <div style="font-size:17px;"><b><?php echo $restaurant_name;?></b></div>
-                <div><?php echo $username;?></div>
-                <br>
-                <div><?php echo $address;?></div>
-                <div><?php echo $phone_number;?></div>
-                <div><?php echo $opening_time;?></div>
-            </td>
-        </tr>
-        <!-- Top info-->
-        <tr>
-            <td colspan="2" id="menu_row">
-                <div class="menu_elem" onClick="show_partition('Menu')">Menu</div><div class="menu_elem" onClick="show_partition('Pictures')">Pictures</div><div class="menu_elem" onClick="show_partition('Reviews')">Reviews</div><div class="menu_elem" onClick="show_partition('Contact')">Contact</div>
-            </td>
-        </tr>
-
-
-
-          <tr>
-            <td colspan='2' valign='top' height="200px" align="center">
-                <br>
-            <!--MENU-->
-            <div id="partition_menu">
-
-                <?php echo $sort_price;?>
-
-                <br>
-                <?php echo $menu; ?>
-
-                <br>
-                <br>
-                <div style="width:100%;text-align:left;font-size:13px;">
-                    <?php echo $last_modified; ?>
-                </div>
-
-            </div>
-            <!--MENU-->
-            <div id="partition_pictures" style="display:none;">Pictures</div>
-            <div id="partition_reviews" style="display:none;">Reviews</div>
-            <div id="partition_contact" style="display:none;">Contacts</div>
-
-            </td>
-        </tr>
-    </table>
+<div style="position:absolute;top:0px;left:190px;">
+   <a href="/"><img src="/images/x_small_logo.png"/></a>
 </div>
+
+<!--
+    /image_src/ /restaurant_name/ /restaurant_list/
+-->
+
+<table align="center" id="user_table" style="height:100%;">
+    <tr>
+    <td valign="top" height="150px" align="center">
+        <br/>
+        <img src='%image_src%' id="userpic"/>
+        <div id="brief_restaurant_info">
+        <div style="font-size:20px;"><b>%restaurant_name%</b></div>
+        <br/>
+    </td>
+    </tr>
+
+    <tr>
+    <td valign="top" align="center">
+         %restaurant_list%
+    </td>
+    </tr>
+</table>

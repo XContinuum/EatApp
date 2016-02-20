@@ -1,3 +1,8 @@
+<div style="position:absolute;top:0px;left:100px;">
+   <a href="/"><img src="/images/x_small_logo.png"/></a>
+</div>
+
+
 <!-- Crop image -->
 <div id="opaque_background" style="z-index:149;"></div>
 <div id="modify_image" style="z-index:150;">
@@ -23,27 +28,32 @@
 
 
 <table align="center" id="restaurants_table" style="width:67%;">
-<tr>
+<tr style="background-color:#ff9966;">
 	<td id="server_result" height="25px" align="center" style="opacity:0;background-color:#57e68e;color:white;" valign="center">
 		Saved!
 	</td>
 </tr>
 
-<tr height="100px" valign="bottom">
-	<td align="center" style="font-size:25px;">
-		Set up menu
-	</td>
+<tr>
+    <td height="70px" style="background-color:#ff9966;color:white;padding-left:15px;font-size:30px;" align="center">
+    Set up menu
+    </td>
 </tr>
 
+
 <tr>
-	<td align="center" height="20px" style="font-size:13px;color:#4d85f2;">
+	<td align="center" style="background-color:#ffaa80;color:white;" height="30px">
 		%name%
 	</td>
 </tr>
 
 
 <tr>
-	<td valign="top" height="50px">
+	<td valign="top">
+	<div style="overflow:auto;height:100%;">
+		<table width="100%" style="border-collapse:collapse;">
+			<tr>
+				<td colspan="3">
 		<form id="save_menu_form" method="POST" enctype="multipart/form-data">
 			<input type="hidden" value="%name%" name="menu_name"/>
 			<table align="center" id="menu_table" class="m_table">
@@ -73,15 +83,11 @@
 
 			</table>
 		</form>
-</td>
-</tr>
+	</td>
+	</tr>
 
-
-<tr>
-	<td valign="top">
 			<!-- Operations -->
-			<table id="operations" style="background-color:#f9f8f8;">
-			<tr>
+			<tr style="background-color:#f9f8f8;" align="center" height="30px">
 				<td>
 				<input type="button" value="add row" id="add_row" class="button_sign_up"></input>
 				</td>
@@ -94,8 +100,13 @@
 				<input type="button" value="save menu" id="save_menu_btn" class="button_sign_up"></input>
 				</td>
 			</tr>
-			</table>
 			<!-- Operations -->
-	</td>
+
+	</table>
+	</div>
+</td>
 </tr>
+
+
+
 </table>

@@ -1,71 +1,55 @@
 <?php
-    require("../../requests/receive_information.php");
 
-    if (isAdminLogged()==1)
+require_once("../../requests/receive_information.php");
+
+if (isAdminLogged()==1) //Admin logged
+{
+    $Admin=getAdminUsername();
+    $panel=setPanel();
+
+    $content=file_get_contents("main_content.html");
+    $form=file_get_contents("index_form.html");
+
+    $search=array("%admin%","%output1%","%output2%");
+    $replace=array($Admin,getChains(1),getChains(0));
+
+    $form=str_replace($search, $replace, $form);
+    $content=str_replace("%content%", $form, $content);
+
+    $head_param="<script src='settings.js'></script>";
+    include("../../user_template.html");
+}
+else
+{
+    //Admin not logged
+    header("Location: ../../index.php");
+}
+
+
+function getChains($val)
+{
+    $db=new Db();
+
+    $structure=file_get_contents("restaurant_structure.html");
+    $templates=explode("##",$structure);
+    $search=array("%path%","%link%","%restaurant_name%","%email%","%active%","%color%","%button_value%");
+    $button_value=($val ? "unvalidate" : "validate");
+    $compile="";
+
+    /* Database */
+    $sql="SELECT Link,Restaurant_Name,Email,Active FROM CHAIN_OWNER WHERE Validated='$val' ORDER BY Dat_Reg ASC LIMIT 10";
+    $result=$db->query($sql);
+
+    while ($row = $result -> fetch_assoc())
     {
-        //Admin logged
-        $username=getAdminUsername();
-
-
-        $content="<div align='center'>Welcome back, ".$username."</div>";
-        $content.="<br><br>";
-
-        $content.="<div align='center'><input type='button' value='unvalidated' onClick='show(0);'></input>";
-        $content.="<input type='button' value='validated' onClick='show(1);''></input></div>";
-
-        $content.="<br><div align='center' id='validated'>".getUsers(1)."</div>";
-        $content.="<div align='center' id='not_validated'>".getUsers(0)."</div>";
-    }
-    else
-    {
-        //Admin not logged
-        header("Location: ../../index.php");
+        $color=($row["Active"]?"background-color:#66ff99;":"background-color:#ff9980;");
+        $replace=array(setLinkMute("/".$row["Link"]),$row["Link"],$row["Restaurant_Name"],$row["Email"],($row["Active"]?"yes":"no"),$color,$button_value);
+        $compile.=str_replace($search,$replace,$templates[1]);
     }
 
-    $head_param ="<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js'></script>";
-    $head_param.="<script src='settings.js'></script>";
-
-    include("../../template.html");
+    $final=str_replace("%list%", $compile, $templates[0]);
 
 
-    function getUsers($val)
-    {
-        $list="<table id='admin_table'>";
-        $list.="<tr><td><b>Username</b></td>";
-        $list.="<td><b>Restaurant Name</b></td>";
-        $list.="<td><b>Email</b></td>";
-        $list.="<td><b>Email activated</b></td>";
-        $list.="<td><b>Validate</b></td>";
-        $list.="<td><b>Ban</b></td>";
-
-        require("server_connection.php");
-
-        $sql = "SELECT ID,FA_Username,FA_Restaurant_Name,FA_Email,FA_Active FROM FA_RESTORANTS WHERE FA_Validated='$val' ORDER BY FA_Dat_Reg ASC LIMIT 10 ";
-        $result = mysqli_query($conn,$sql);
-
-        $button_value='validate';
-
-        if ($val==1)
-        $button_value='unvalidate';
-
-        while ($row = mysqli_fetch_array($result, MYSQL_ASSOC))
-        {
-            $active="<span style='color:red;'>no</span>";
-
-            if ($row['FA_Active']==1)
-                $active="<span style='color:green;'>yes</span>";
-
-
-            $list.="<tr><td><a href='$path/".$row['FA_Username']."'>".$row['FA_Username']."</a></td>";
-            $list.="<td>".$row['FA_Restaurant_Name']."</td>";
-            $list.="<td>".$row['FA_Email']."</td>";
-            $list.="<td>".$active."</td>";
-            $list.="<td><input type='button' value='$button_value' onClick=\"$button_value('".$row['ID']."');\"></input></td>";
-            $list.="<td><input type='button' value='ban' onClick=\"ban('".$row['ID']."');\"></input></td></tr>";
-        }
-
-        $list.="</table>";
-
-        return $list;
-    }
+    return $final;
+}
 ?>

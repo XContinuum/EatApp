@@ -16,11 +16,8 @@
         {
             //Neither are logged
             $title="EatApp - Sign up";
-            $page='sign_up_form.html';
 
-            ob_start();
-            require_once($page);
-            $content=ob_get_clean();
+            $content=file_get_contents("sign_up_form.html");
 
             $head_param= "<script src='imagecrop.js'></script>";
             $head_param.= "<script src='sign_up_script.js'></script>";

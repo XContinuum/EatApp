@@ -14,11 +14,18 @@
     box-shadow:0px 0px 4px #ccc;
 }
 
-#user_table a,a:hover,a:visited
+#user_table a, #user_table a:hover, #user_table a:visited, #user_table a:link,#user_table a:active, #user_table a:link
 {
     text-decoration:none;
     color:#4d85f2;
 }
+
+#user_table input[type='text'],#user_table input[type='password']
+{
+    width:200px;
+    padding:5px;
+}
+
 
 #menu_list
 {
@@ -318,8 +325,7 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 
 #settings_table td
 {
-    padding:5px;
-    border:1px solid black;
+    border:0px solid black;
 }
 
 /*UPLOAD IMAGE*/
@@ -437,4 +443,63 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
     border:solid 1px #ced1d7;
     width: 150px;
     padding:3px;
+}
+
+/*OTHER*/
+#basic_table
+{
+    font-family:"AvenirLTStd-Light";
+
+    border-collapse:collapse;
+    background-color:white;
+
+    width:55%;
+    height:100%;
+    padding: 0px;
+    box-shadow:0px 0px 4px #ccc;
+}
+
+.menu_switch
+{
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+
+.modify_link a, .modify_link a:hover, .modify_link a:visited, .modify_link a:link,.modify_link a:active, .modify_link a:link
+{
+    text-decoration:none;
+    color:#4d85f2;
+}
+
+.schedule_list input[type='time_picker']
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+    /*border:solid 1px #ced1d7;*/
+    width: 150px;
+    padding:3px;
+    width:70px;
+    text-align: center;
+    border-width:0px;
+    background-color:#f9f8f8;
+}
+.schedule_list
+{
+    display: inline-block;
+}
+
+.schedule_list input[type='time_picker']:focus
+{
+    outline:none;
+}
+.schedule_list td
+{
+    padding: 5px;
+}
+
+#tbl td
+{
+padding:5px;
+
 }

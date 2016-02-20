@@ -1,15 +1,18 @@
 <?php
-    require("../../requests/server_connection.php");
-    require("../../requests/receive_information.php");
+    require_once("../../requests/receive_information.php");
 
+    $db=new Db();
     //Data from form
     $DB_Restaurant_Link=$_POST['link_name'];
     $DB_Address=$_POST['address'];
     $DB_Postal_Code=$_POST['postal_code'];
     $DB_Phone_Number=$_POST['phone_number'];
     $DB_Menu_Name=$_POST['menu_name'];
+    $DB_Country=$_POST['country'];
+    $DB_State_Province=$_POST['state_province'];
+    $DB_City=$_POST['city'];
+    $DB_Schedule=$_POST['schedule'];
 
-    $query="";
     $owner_id=getChainId();
     $bAdd=true;
 
@@ -20,54 +23,40 @@
     {
         $link=strtolower($DB_Restaurant_Link[$i]);
         $coord=getCoordinates($DB_Address[$i]);
-        $data=array($i+1,$owner_id,$link,$DB_Address[$i],$DB_Postal_Code[$i],$DB_Phone_Number[$i],$DB_Menu_Name[$i],$coord[0],$coord[1]);
+        $data=array($i+1,$owner_id,$link,$DB_Address[$i],$DB_Postal_Code[$i],$DB_Phone_Number[$i],$DB_Menu_Name[$i],$coord[0],$coord[1],$DB_Country[$i],$DB_State_Province[$i],$DB_City[$i],$DB_Schedule[$i]);
 
-        array_push($intermediate_q, createQuery($data));
+        $intermediate_q[]=createQuery($data);
 
         if ($link=="" || !isset($link))
         {
-             $bAdd=false;
+            $bAdd=false;
         }
     }
+
+if ($bAdd) //do not add if link is not set
+{
     $query=implode(",", $intermediate_q);
 
-    $sql="INSERT INTO RESTAURANTS (R_Order,OWNER_ID,Link,Address,Postal_Code,Phone_Number,Menu_Name,Longitude,Latitude) ";
+    $sql="INSERT INTO RESTAURANTS (R_Order,OWNER_ID,Link,Address,Postal_Code,Phone_Number,Menu_Name,Longitude,Latitude,Country,State_Province,City,Schedule_Name) ";
     $sql.="VALUES $query ON DUPLICATE KEY UPDATE ";
     $sql.="Link=VALUES(Link),Address=VALUES(Address),Postal_Code=VALUES(Postal_Code),";
-    $sql.="Phone_Number=VALUES(Phone_Number),Menu_Name=VALUES(Menu_Name),Longitude=VALUES(Longitude),Latitude=VALUES(Latitude);";
+    $sql.="Phone_Number=VALUES(Phone_Number),Menu_Name=VALUES(Menu_Name),Longitude=VALUES(Longitude),";
+    $sql.="Latitude=VALUES(Latitude),Country=VALUES(Country),State_Province=VALUES(State_Province),City=VALUES(City),Schedule_Name=VALUES(Schedule_Name);";
 
     //DELETE+++
-    $result=mysqli_query($conn,"SELECT COUNT(*) as total FROM RESTAURANTS WHERE OWNER_ID=$owner_id");
-    $rowNum=mysqli_fetch_assoc($result);
+    $rowNum=$db->fetch("SELECT COUNT(*) as total FROM RESTAURANTS WHERE OWNER_ID=$owner_id","total");
 
-    if (count($DB_Restaurant_Link)<$rowNum['total'])
+    if (count($DB_Restaurant_Link)<$rowNum)
     {
         $less_rows=count($DB_Restaurant_Link);
         $tmp="DELETE FROM RESTAURANTS WHERE OWNER_ID=$owner_id and R_Order>$less_rows;";
-        mysqli_query($conn, $tmp);
+        $db->query($tmp);
     }
     //DELETE---
 
-    if ($bAdd) //do not add if link is not set
+    if ($db->query($sql))
     {
-        if (mysqli_query($conn, $sql))
-        {
-            echo "success";
-        }
+        echo "success";
     }
-    mysqli_close($conn);
-
-
-    function getCoordinates($address)
-    {
-        $prepAddr=str_replace(' ','+',$address);
-        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output=json_decode($geocode);
-
-        $coordinates=array();
-        $coordinates[]=$output->results[0]->geometry->location->lng;
-        $coordinates[]=$output->results[0]->geometry->location->lat;
-
-        return $coordinates;
-    }
+}
 ?>
