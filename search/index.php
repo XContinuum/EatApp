@@ -3,6 +3,7 @@
     $panel=setPanel();
 
     $head_param="<script src='hintBox.js'></script>";
+    $head_param.="<script src='js/jQueryRotate.js'></script>";
     $head_param.="<script src='http://maps.google.com/maps/api/js?sensor=true'></script>";
     $head_param.="<script src='js/ajaxSearch.js'></script>";
 

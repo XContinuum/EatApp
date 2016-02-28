@@ -1,7 +1,4 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', true);
-
 require_once("../../requests/receive_information.php");
 /*
     Loads all restaurants owned by a food chain
@@ -44,8 +41,13 @@ function loadMenuList()
 
     $owner_id=getChainId();
 
+    $sql="SELECT Menu_Name,PIC_NUM,PROD_NUM,Mean FROM (SELECT Distinct(Name) as T1, COUNT(Name) as PIC_NUM FROM MENUS WHERE Picture!='none' AND OWNER_ID='$owner_id' GROUP BY Name) as A";
+    $sql.=" right join (SELECT Distinct(Name) as Menu_Name, COUNT(Product_Name) as PROD_NUM, ROUND(AVG(Price),2) as Mean FROM MENUS WHERE OWNER_ID='$owner_id' GROUP BY Name) as B on A.T1=B.Menu_Name";
+    /*
+    MOD 2017 v (Last_Modified removed)
     $sql="SELECT Menu_Name,PIC_NUM,PROD_NUM,Mean,Last_Modified FROM (SELECT Distinct(Name) as T1, COUNT(Name) as PIC_NUM FROM MENUS WHERE Picture!='none' AND OWNER_ID='$owner_id' GROUP BY Name) as A";
     $sql.=" right join (SELECT Distinct(Name) as Menu_Name, COUNT(Product_Name) as PROD_NUM, ROUND(AVG(Price),2) as Mean, Last_Modified FROM MENUS WHERE OWNER_ID='$owner_id' GROUP BY Name) as B on A.T1=B.Menu_Name";
+    */
     $result=$db->query($sql);
 
     $output="";
@@ -54,16 +56,17 @@ function loadMenuList()
     $template=explode("##",$template);
     $search=array('%menu_name%','%mean%','%pictures%','%items%','%last_modified%');
 
-    print_r($result -> fetch_assoc());
+    echo $db->error();
+
     while ($row = $result -> fetch_assoc())
     {
+        $time=readableTime(date_default_timezone_set($row["Last_Modified"])); //strtotime MOD 2017
         $pic_num=($row["PIC_NUM"]==null) ? "0": $row["PIC_NUM"];
-        $replace=array($row["Menu_Name"],"Average Price: ".$row["Mean"]." $",$pic_num." pictures",$row["PROD_NUM"]." meals","Modified ".readableTime(strtotime($row["Last_Modified"]))." ago");
+        $replace=array($row["Menu_Name"],"Average Price: ".$row["Mean"]." $",$pic_num." pictures",$row["PROD_NUM"]." meals","Modified ".$time." ago");
         $sequence=str_replace($search,$replace,$template[1]);
 
         $output.=$sequence;
     }
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 
     return $output;
 }

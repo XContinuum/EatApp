@@ -1,50 +1,61 @@
 %error%
 <!-- Login form -->
-</br>
-</br>
-<div class="outter_box">
-
-<form action="login_request.php" method="POST">
-<table align="center" id="login_box">
-
-   <tr><td align="center" style="font-size:20px;"><b>Welcome back!</b></td></tr>
-   <tr><td align="center" style="font-size:14px;">Login to your account below</td></tr>
-
-    <tr>
-        <td style="padding-top:20px;">
-        <input placeholder="Email" type="text" value="" name="Email"></input>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-        <input placeholder="Password" type="password" value="" name="Password"></input>
-        </td>
-    </tr>
-
-  <tr>
-        <td style="font-size:14px;text-align:right;">
-        <label><input type="checkbox" name="remember_me" value="ch" checked>
-        Remember me</label>
-        </td>
-  </tr>
-
-
-  <tr>
-    <td style="padding-top:20px;">
-        <input type="submit" value="Login" name="login_submit" id="login_submit"></input>
+<table align="center"  id='basic_table' style="width:67%;background-color:white;">
+<tr>
+    <td height="80px" style="background-color:#ff9966;color:white;font-size:30px;" align="center">
+        <a href="../index.php"><img src="../images/logo_transparent.png"/></a>
     </td>
-  </tr>
-</table>
-</form>
+</tr>
 
-<table align="center" width="300px" id="more_table">
-    <tr>
-        <td align="left">
-            <a href="forgot_password.php">Forgotten password?</a>
-        </td>
-            <td align="right"><a href="../sign_up/index.php">Create an account</a>
-        </td>
-    </tr>
+
+<!-- Sub panel -->
+<tr height="60px">
+    <td align="center" style="background-color:#ffaa80;font-size:20px;color:white;">Login to your account</td>
+</tr>
+
+
+<!-- Login form -->
+<tr>
+ <td valign="top">
+
+    <form action="login_request.php" method="POST">
+        <table align="center" id="login_box">
+        <tr>
+            <td align="center">
+            <input placeholder="Email" type="text" value="" name="Email"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center">
+            <input placeholder="Password" type="password" value="" name="Password"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size:15px;color:#C8C8CD;" align="center" height="50px" valign="bottom">
+            <label>
+                <input type="checkbox" name="remember_me" value="ch" checked> remember me
+            </label>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center">
+                <input type="submit" value="Login" name="login_submit" id="login_submit"></input>
+            </td>
+        </tr>
+        </table>
+    </form>
+
+    </td>
+</tr>
+
+<!-- Bottom panel -->
+<tr>
+    <td height="60px" valign="bottom">
+        <div class="bottom-table" style="width:49%;"><a href="forgot_password.php">Forgot password?</a></div>
+        <div class="bottom-table" style="width:50%;text-align:right;"><a href="../sign_up/index.php">Create an account</a></div>
+    </td>
+</tr>
 </table>
-</div>

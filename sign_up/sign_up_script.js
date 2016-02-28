@@ -5,46 +5,49 @@ var agreement=0;
 var restaurant_name_valid=2;
 var login=false;
 
-var enable_color="#ffa25e";
+var enable_color="#ff9966";
 var disable_color="#babdc6";
 
-//Load country list for location menu---
-$(document).ready(
-    function(){
-        var timer1;
-        $("input[name='DB_Email']").keyup(function (e)
-        {
-            disableLogin();
-            clearTimeout(timer1);
-            var email = $(this).val();
-            timer1 = setTimeout(function(){sendRequest(email,"Email");}, 1000);
-        });
+$(document).ready(function()
+{
+    var timer1;
+    $("input[name='DB_Email']").keyup(function (e)
+    {
+        clearTimeout(timer1);
+        var email = $(this).val();
+        timer1 = setTimeout(function(){sendRequest(email,"Email");}, 1000);
+    });
 
-        var timer2;
-        $("input[name='DB_Link_Name']").keyup(function (e)
-        {
-            disableLogin();
-            clearTimeout(timer2);
-            var link_name = $(this).val();
-            timer2 = setTimeout(function(){sendRequest(link_name,"Link");}, 1000);
-        });
+    var timer2;
+    $("input[name='DB_Link_Name']").keyup(function (e)
+    {
+        clearTimeout(timer2);
+        var link_name = $(this).val();
+        timer2 = setTimeout(function(){sendRequest(link_name,"Link");}, 1000);
+    });
 
-        $("input[type='password']").keyup(function (e)
-        {
-            checkPasswords();
-        });
+    $("input[type='password']").keyup(function (e)
+    {
+        checkPasswords();
+    });
 
-        $("input[name='DB_Restaurant_Name']").keyup(function (e)
-        {
-            checkRestaurantName();
-        });
-
+    $("input[name='DB_Restaurant_Name']").keyup(function (e)
+    {
+        checkRestaurantName();
+    });
 });
+/*
 
-//checks email and link name **need to create the php file
+    ONLOAD EVENT+++++++++
+
+*/
+
+/*
+    Checks email and link name
+*/
 function sendRequest(string,type)
 {
-    $.post('../requests/check_availability.php', {"input":string,"type":type},
+    $.post('../requests/check_availability.php',{"input":string,"type":type},
     function(data)
     {
         var result=$.trim(data);
@@ -122,7 +125,7 @@ function analyze_email(input,result,initial)
 
                 setError("Email has an improper format");
                 email_available=0;
-                setLogin();
+                setLogin(); //Disable button
             }
             else
             {
@@ -132,7 +135,7 @@ function analyze_email(input,result,initial)
 
                 setError("");
                 email_available=1;
-                setLogin();
+                setLogin(); //Disable button
             }
         break;
     }
@@ -255,21 +258,15 @@ function setLogin()
     if (email_available==1 && passwords_valid==1 && user_name_available==1 && agreement==1 && restaurant_name_valid==1)
     {
         login=true;
-        $('#next_location').css("background-color",enable_color);
-        document.getElementById('next_location').disabled=false;
+        $('#sign_up').css("background-color",enable_color);
+        document.getElementById('sign_up').disabled=false;
     }
     else
     {
         login=false;
-        $('#next_location').css("background-color",disable_color);
-        document.getElementById('next_location').disabled=true;
+        $('#sign_up').css("background-color",disable_color);
+        document.getElementById('sign_up').disabled=true;
     }
-}
-
-function disableLogin()
-{
-    $('#next_location').css("background-color",disable_color);
-    document.getElementById('next_location').disabled=true;
 }
 
 //Show error in div
@@ -300,18 +297,6 @@ function OnChangeCheckbox(checkbox)
         setLogin();
     }
 }
-
-
-function showTable(tableId)
-{
-    $("#sign_up_table").hide();
-    $("#sign_up_picture_table").hide();
-
-
-    $("#"+tableId).show();
-}
-
-
 
 
 
@@ -355,4 +340,4 @@ function imageIsLoaded(e)
 
         });
 };
-//Upload image---
+ //Upload image---

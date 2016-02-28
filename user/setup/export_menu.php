@@ -33,7 +33,7 @@ while ($row = $result -> fetch_assoc())
 
 //Output headers
 header('Content-type: "text/xml"; charset="utf8"');
-header("Content-disposition: attachment; filename=".$name);
+header("Content-disposition: attachment; filename=".$name.".xml");
 
 $dom = new DOMDocument('1.0');
 $dom->preserveWhiteSpace = false;

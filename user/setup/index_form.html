@@ -1,3 +1,9 @@
+<!--
+
+    Hidden input settings ++++++
+
+-->
+
 <div id="option_template" style="display:none;">
     %options%
 </div>
@@ -8,7 +14,9 @@
 
 
 <div style="position:absolute;top:0px;left:100px;">
-   <a href="/"><img src="/images/x_small_logo.png"/></a>
+    <a href="/">
+        <img src="/images/x_small_logo.png"/>
+    </a>
 </div>
 
 <!--
@@ -16,23 +24,30 @@
     Menu setup box ++++++
 
 -->
-<div id="menu_panel" style="display:none;background-color:rgba(0,0,0,0.6);position:fixed;top:0px;left:0px;width:100%;height:100%;">
+<div id="menu_panel">
 
-    <div id="sub_panel" style="background-color:white;position:relative;top:50%;left:50%;margin-top:-70px;margin-left:-150px;width:300px;height:140px;padding:0px;">
+<div id="sub_panel">
 
     <table style="width:100%; height:100%;" id="tbl">
         <tr style="background-color:#ff9966;color:white;">
-          <td id="current_menu_name" align="center"></td>
+        <td id="current_menu_name" align="center">
+        </td>
         </tr>
+
         <tr>
-          <td align="center">Click on create menu and don't forget to save the menu after filling in!</td>
+        <td align="center">
+            Click on create menu and don't forget to save the menu after filling in!
+        </td>
         </tr>
+
         <tr>
-            <td align="center"><input type="button" value="create menu" id="move_to_edit"/></td>
+        <td align="center">
+            <input type="button" value="create menu" id="move_to_edit"/>
+        </td>
         </tr>
     </table>
-    </div>
 
+</div>
 </div>
 <!--
 
@@ -40,31 +55,41 @@
 
 -->
 <table align="center" id="restaurants_table" style="width:67%;">
-<tr style="background-color:#ff9966;">
+
+    <tr style="background-color:#ff9966;">
     <td height="25px" align="center" style="opacity:0;background-color:#57e68e;color:white;" id="server_result" valign="center">
         Saved!
     </td>
-</tr>
+    </tr>
 
-<tr>
+    <tr>
     <td height="70px" style="background-color:#ff9966;color:white;padding-left:15px;font-size:30px;">
-    <div class="menu_switch" id="res_btn">Restaurants</div><div class="menu_switch" style="opacity:0.5;" id="mn_btn">Menus</div><div class="menu_switch" style="opacity:0.5;" id="sch_btn">Schedule</div>
+        <div class="menu_switch" id="res_btn">Restaurants</div
+        ><div class="menu_switch" style="opacity:0.5;" id="mn_btn">Menus</div
+        ><div class="menu_switch" style="opacity:0.5;" id="sch_btn">Schedule</div>
     </td>
-</tr>
+    </tr>
 
-<tr>
-<td valign="top">
+    <tr>
+    <td valign="top">
+    <!--Start of cell-->
 
-<!-- 0000000000 -->
-<div id="res_win" style="overflow:auto;height:100%;">
-    <table id="restaurant_add">
+    <!--
+    *
+    Restaurants
+    *
+    -->
+    <div id="res_win" style="overflow:auto;height:100%;">
+        <table id="restaurant_add">
 
-        <tr>
-            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">Add a list of restaurants with different locations</td>
-        </tr>
+            <tr>
+            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">
+                Add a list of restaurants with different locations
+            </td>
+            </tr>
 
-        <!--List-->
-        <tr>
+            <!--Restaurant List-->
+            <tr>
             <td>
                 <div id="res_win">
                 <form id="restaurants_form">
@@ -72,79 +97,88 @@
                 </form>
                 </div>
             </td>
-        </tr>
-        <!--List-->
+            </tr>
+            <!--Restaurant List-->
 
-        <tr>
+            <tr>
             <td align="center">
                 <input id="add_restaurant" type="button" value="add restaurant"/>
                 <input type="button" id="save_restaurant" value="save"/>
             </td>
-        </tr>
+            </tr>
         </table>
     </div>
-<!--
-
-    Menus ++++++++
-
- -->
+    <!--
+    *
+    Menus
+    *
+    -->
    <div id="menu_win" style="display:none;overflow:auto;height:100%;">
+        <table id="restaurant_add">
+            <tr>
+            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">
+                Create menus to add to restaurants
+            </td>
+            </tr>
 
-    <table id="restaurant_add">
-          <tr>
-            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">Create menus to add to restaurants</td>
-        </tr>
-
-
-        <!--Menu List-->
-        <tr>
+            <!--Menu List-->
+            <tr>
             <td class="modify_link">
                  %menu%
             </td>
-        </tr>
-        <!--Menu List-->
+            </tr>
+            <!--Menu List-->
 
-        <tr>
+            <tr>
             <td align="center">
                 <input id="create_menu" type="button" value="create menu"/>
-                <input id="import_menu" type="button" value="import menu"/>
+
+                <form id="menu_importer" style="display:inline-block;">
+                    <label>
+                        <input id="import_menu" type="file" value="import menu" name="import_menu" style="display:none;"/>
+                        <input type="hidden" name="next_menu_name" value=""/>
+                        <input type="button" value="import menu"/>
+                    </label>
+                </form>
+
                 <input type="button" id="save_menus" value="save"/>
             </td>
-        </tr>
-    </table>
-  </div>
-<!--
+            </tr>
+        </table>
+    </div>
+    <!--
+    *
+    Schedule
+    *
+    -->
+    <div id="sch_win" style="display:none;overflow:auto;height:100%;">
+        <table id="restaurant_add">
+            <tr>
+            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">
+                Create schedule to attach to restaurants
+            </td>
+            </tr>
 
-    Schedule ++++++++
-
- -->
- <div id="sch_win" style="display:none;overflow:auto;height:100%;">
-    <table id="restaurant_add">
-          <tr>
-            <td align="center" style="background-color:#ffaa80;color:white;" height="30px">Create schedule to attach to restaurants</td>
-        </tr>
-
-
-        <!--Shcedule List-->
-        <tr>
+            <!--Shcedule List-->
+            <tr>
             <td class="modify_link">
                 <form id="sch_form">
                  %schedule%
                 </form>
             </td>
-        </tr>
-        <!--Shcedule List-->
+            </tr>
+            <!--Shcedule List-->
 
-        <tr>
+            <tr>
             <td align="center">
                 <input id="create_schedule" type="button" value="create schedule"/>
                 <input type="button" id="save_schedule" value="save"/>
             </td>
-        </tr>
-    </table>
-</div>
+            </tr>
+        </table>
+    </div>
 
-<!-- 000000000000 -->
-</td>
-</tr>
+    <!-- End of cell -->
+    </td>
+    </tr>
 </table>

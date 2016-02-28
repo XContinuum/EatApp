@@ -7,23 +7,40 @@
 		<td>Link</td>
 		<td>Restaurant Name</td>
 		<td>Email</td>
+		<td>Menu</td>
 		<td>Email Activated</td>
 		<td>Validate</td>
 		<td>Ban</td>
+		<td>Add menu</td>
+		<td>Login</td>
 	</tr>
 	%list%
 </table>
 
  ##
 <!--
-	/path/ /link/ /restaurant_name/ /email/ /active/ /button_value/ /color/
+	/path/ /link/ /restaurant_name/ /email/ /menu_num/ /active/ /button_value/ /color/
+	/ID/
 -->
 
 <tr>
-	<td><a href=%path% target="_blank">%link%</a></td>
+	<td><a href=%path% target="_blank" >%link%</a></td>    
 	<td>%restaurant_name%</td>
     <td>%email%</td>
-    <td style='%color%' align="center">%active%</td>
-    <td><input type="button" value="%button_value%"/></td>
+    <td align="center">%menu_num%</td>
+    <td style='%color%' align="center">%active%</td>    
+    <td><input type="button" value="%button_value%" class="action_%button_value% action"/></td>
     <td><input type="button" value="ban"/></td>
+    <td>    
+    	<!--Attach OCR processed menu-->
+    	<form class="attach_menu" style="display:inline-block;">    
+			<label>
+				<input type="file" value="attach menu" class="attach_button" name="DB_Menu" style="display:none;"/>
+				<input type="hidden" value="%ID%" name="chain_ID" class="chain_ID"/>
+				<input type="button" value="attach menu"/>
+			</label>
+		</form>
+		<!--Attach OCR processed menu-->
+    </td>
+    <td><input type="button" value="login" class="login"></td>
 </tr>

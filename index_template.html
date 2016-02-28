@@ -12,7 +12,7 @@
         <title>EatApp</title>
             <link rel="stylesheet" type="text/css" href="style.css">
             <script src='jquery.js'></script>
-            <script src=<?php setLink("/requests/set_panel.js");?> ></script>
+            <script src="/requests/set_panel.js"></script>
 
             <script src='/search/hintBox.js'></script>
     </head>
@@ -20,73 +20,79 @@
 
     $(document).ready(function()
     {
-        $("#search_box").setHintBox(function(obj){
-                 if($(obj).val().length>0)
-                  {
-                      window.location.href = "/search/index.php?q="+$(obj).val();
-                  }
-            });
+        $("#search_box").setHintBox(function(obj)
+        {
+            var query=$("#search_box").val().replace(/ /g,'');
+
+            if(query.length>0)
+            {
+                window.location.href="/search/index.php?q="+$(obj).val();
+            }
+        });
 
         $(".in_row").mouseover(function()
+        {
+            $(".in_row").css("font-size","30px");
+            $(this).css("font-size","45px");
+        });
+
+        $(".in_row").mouseout(function()
+        {
+            $(".in_row").css("font-size","30px");
+        });
+
+         $(".in_row").click(function()
+        {
+            var code=70656+$(this).text().charCodeAt(1);
+            var codeHex=code.toString(16).toUpperCase();
+            var tag="";
+
+            switch(codeHex)
             {
-                $(".in_row").css("font-size","30px");
-                $(this).css("font-size","45px");
-            });
+                case "1F357":
+                    tag="chicken";
+                break;
 
-         $(".in_row").mouseout(function()
-            {
-                $(".in_row").css("font-size","30px");
-            });
+                case "1F35D":
+                    tag="spaghetti";
+                break;
 
-         $(".in_row").click(
-            function()
-            {
-                //var char_code=$(this).html().charCodeAt(1);
-                var code=70656+$(this).text().charCodeAt(1);
-                var codeHex=code.toString(16).toUpperCase();
-                var tag="";
+                case "1F367":
+                    tag="ice cream";
+                break;
 
-                switch(codeHex)
-                {
-                    case "1F357":
-                        tag="chicken";
-                    break;
+                case "1F355":
+                    tag="pizza";
+                break;
 
-                    case "1F35D":
-                        tag="spaghetti";
-                    break;
+                case "1F354":
+                    tag="hamburger";
+                break;
 
-                    case "1F367":
-                        tag="ice cream";
-                    break;
+                case "1F35F":
+                    tag="fries";
+                break;
 
-                    case "1F355":
-                        tag="pizza";
-                    break;
-
-                    case "1F354":
-                        tag="hamburger";
-                    break;
-
-                    case "1F35F":
-                        tag="fries";
-                    break;
-
-                    case "1F364":
-                        tag="sea food";
-                    break;
-
-                }
-
-                $("#search_box").val($("#search_box").val()+" "+tag);
+                case "1F364":
+                    tag="sea food";
+                break;
             }
-            );
+
+            if ($("#search_box").val().length==0)
+            {
+                $("#search_box").val(tag);
+            }
+            else
+                {
+                    $("#search_box").val($("#search_box").val()+" "+tag);
+                }
+        });
     });
     </script>
 <body>
 
 <!-- DROP DOWN PANEL -->
-    <?php echo $panel; ?>
+<?php echo $panel; ?>
 <!-- DROP DOWN PANEL -->
 
 <table id="overall_table">

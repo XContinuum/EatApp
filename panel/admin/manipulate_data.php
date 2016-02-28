@@ -1,30 +1,27 @@
 <?php
-    if (isset($_GET['id']) && isset($_GET['type']))
+require("../../requests/receive_information.php");
+
+if (isAdminLogged() && isset($_GET['id']) && isset($_GET['type']))
+{
+    $type=$_GET['type'];
+    $id=$_GET['id'];
+
+    $db=new Db();
+
+    switch ($type)
     {
-        $type=$_GET['type'];
-        $id=$_GET['id'];
-
-        require("../../requests/receive_information.php");
-        $db=new Db();
-
-        if ($type=='validate')
-        {
-            //validation
+        case "validate":
             $sql = "UPDATE CHAIN_OWNER SET Validated='1' WHERE ID='$id'";
             $db->query($sql);
-        }
-        else
-        if ($type=='unvalidate')
-        {
-            //unvalidation
+        break;
+
+        case "unvalidate":
             $sql = "UPDATE CHAIN_OWNER SET Validated='0' WHERE ID='$id'";
             $db->query($sql);
-        }
-        else
-            if ($type=='ban')
-            {
-               //ban
-            }
+        break;
 
+        case "ban":
+        break;
     }
+}
 ?>

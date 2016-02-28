@@ -43,11 +43,6 @@
     background-color:#eee;
 }
 
-#brief_restaurant_info
-{
-    font-family:"AvenirLTStd-Light";
-    padding-top:15px;
-}
 
 /*Menu section*/
 .menu_elem
@@ -445,6 +440,36 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
     padding:3px;
 }
 
+#menu_panel
+{
+    display:none;
+    background-color:rgba(0,0,0,0.6);
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+}
+
+#sub_panel
+{
+    background-color:white;
+    position:relative;
+    top:50%;
+    left:50%;
+    margin-top:-70px;
+    margin-left:-150px;
+    width:300px;
+    height:140px;
+    padding:0px;
+}
+
+#server_result
+{
+   opacity:0;
+   background-color:#57e68e;
+   color:white;
+}
 /*OTHER*/
 #basic_table
 {
@@ -502,4 +527,38 @@ input::-webkit-input-placeholder,textarea::-webkit-textarea-placeholder,
 {
 padding:5px;
 
+}
+
+
+/*ADMIN*/
+.btn-default
+{
+    font-family:"AvenirLTStd-Light";
+    background-color:#ff9966;
+    -moz-border-radius:42px;
+    -webkit-border-radius:42px;
+    border-radius:42px;
+    border:2px solid white;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:17px;
+    padding:12px 31px;
+    text-decoration:none;
+}
+.btn-default:hover
+{
+    background-color:#ff8833;
+}
+.btn-default:active
+{
+    position:relative;
+    top:1px;
+}
+
+.mnt_item
+{
+    display:inline-block;
+    margin-right:30px;
+    margin-left:30px;
 }

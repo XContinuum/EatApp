@@ -1,8 +1,81 @@
 var saving=false; //to avoid multiple save clicks create a lag
 
 
+function importIntoDatabase()
+{
+    var chain_link=$("#link_name").val();
+
+    if ($(".menu_items").length>0)
+    {
+        var names=[];
+        $(".mn_name").each(function(index)
+        {
+            names.push(parseInt($(this).text().replace(chain_link+"_menu_","")));
+        });
+
+        names.sort();
+
+        var count=1;
+        while (isInArray(count,names))
+        {
+            count++;
+        }
+
+        $("input[name='next_menu_name']").val(chain_link+"_menu_"+count);
+    }
+    else
+    {
+        $("input[name='next_menu_name']").val(chain_link+"_menu_1");
+    }
+
+
+    var datastring=new FormData($("#menu_importer")[0]);
+
+    $.ajax({
+    type: "POST",
+    url: "menu_importer.php",
+    data: datastring,
+    dataType: "text",
+    async: false,
+        success: function(data)
+    {
+            console.log(data);
+        },
+        error: function()
+        {
+            alert('An error has occured. Please try again.');
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
+
+function readURL(input)
+{
+    if (input.files && input.files[0])
+    {
+        var reader = new FileReader();
+
+        reader.onload = function (e)
+        {
+            importIntoDatabase();
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+
 $(document).ready(function()
     {
+
+$("#import_menu").change(function()
+{
+    readURL(this);
+});
+
         //Initial block
         $("input[type='time_picker']").setTimePicker();
 

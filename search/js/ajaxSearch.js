@@ -1,14 +1,108 @@
-var default_light="AvenirLTStd-Light";
+/* Set global variables */
 var offset=0;
-
-var source_file=readTextFile("js/search_struct.html");
-source_file=source_file.split("##");
+var source_file=readTextFile("js/search_struct.html").split("##");
 var template=source_file[0];
-var page_structure=source_file[1];
+var no_result=source_file[1];
+
+$(document).ready(function()
+{
+  /* Set waiting logo rotation */
+  var rotation = function()
+  {
+    $("#wait").rotate({
+    angle:0,
+    animateTo:360,
+    callback: rotation});
+  }
+  rotation();
+
+  /* Load cookies into fields*/
+  $("#user_address").val((getCookie("location")=="")?"":getCookie("location"));
+  $("#max_radius").val((getCookie("max_radius")=="")?"10.0":getCookie("max_radius"));
+  $("#min_radius").val((getCookie("min_radius")=="")?"0.00":getCookie("min_radius"));
+  $("#max_price").val((getCookie("max_price")=="")?"$20.00":getCookie("max_price"));
+  $("#min_price").val((getCookie("min_price")=="")?"$0.00":getCookie("min_price"));
+
+  sendRequest($("#search_box_query").val());
+  geolocateUser();
+
+  /*
+    setHindBox on searchBox
+    and add event on enter key
+  */
+
+  $("#search_box_query").shiftBox(-20);
+
+  $("#search_box_query").setHintBox(function(obj)
+  {
+    var query=$("#search_box_query").val().replace(/ /g,'');
+
+    if (query.length>0)
+    {
+      offset=0;
+      sendRequest($("#search_box_query").val());
+      $("#livesearch").hide();
+    }
+  });
+
+  /* Open search parameters on click */
+  $("#filters").click(function()
+  {
+    $("#pages").hide();
+    $("#query_results").hide();
+    $("#filter_settings").show();
+  });
+
+  /* Back to search */
+  $("#back").click(function()
+  {
+    $("#pages").show();
+    $("#query_results").show();
+    $("#filter_settings").hide();
+  });
+
+  /* Save cookies */
+  $("#save_settings").click(function()
+  {
+      var storageTime=365;
+      setCookie("location",$("#user_address").val(),storageTime);
+      setCookie("max_radius",$("#max_radius").val(),storageTime);
+      setCookie("min_radius",$("#min_radius").val(),storageTime);
+      setCookie("max_price",$("#max_price").val(),storageTime);
+      setCookie("min_price",$("#min_price").val(),storageTime);
+      setCookie("currency",$("#currency option:selected").text(),storageTime);
+  });
+
+});
+/*
+
+  ONLOAD EVENT+++++++++
+
+*/
+
+function setCookie(cname, cvalue, exdays)
+{
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname)
+{
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
 
 function readTextFile(file)
 {
-    var xhttp = new XMLHttpRequest();
+    var xhttp=new XMLHttpRequest();
     xhttp.open("GET", file, false);
     xhttp.send();
 
@@ -18,10 +112,7 @@ function readTextFile(file)
 function writeAddressName(latLng)
 {
   var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({
-  "location": latLng
-  },
-
+  geocoder.geocode({"location": latLng},
   function(results, status)
   {
     if (status == google.maps.GeocoderStatus.OK)
@@ -34,7 +125,6 @@ function writeAddressName(latLng)
       for (var i = 0, component; component = components[i]; i++)
       {
           //console.log(component);
-
           switch (component.types[0])
           {
             case "street_number":
@@ -55,27 +145,27 @@ function writeAddressName(latLng)
     //console.log('Postal code: ' + postal_code);
     //console.log(results[0].formatted_address);
 
-    var show_address="";
+      var show_address="";
 
-    if (postal_code!=null)
-    {
-      show_address=postal_code;
+      if (postal_code!=null)
+      {
+        show_address=postal_code;
+      }
+      else
+        if (street_number!=null && street!=null)
+        {
+          show_address=street_number+" "+street;
+        }
+
+
+      $("#user_address").val(show_address);
     }
     else
-    if (street_number!=null && street!=null)
-    {
-      show_address=street_number+" "+street;
-    }
-
-
-    $("#user_address").val(show_address);
-    }
-    else
-    {
-            $("#error").val("Unable to retrieve your address" + "<br />");
-          }
+      {
+        $("#error").val("Unable to retrieve your address" + "<br />");
+      }
     });
-  }
+}
 
 function geolocationError(positionError)
 {
@@ -85,7 +175,7 @@ function geolocationError(positionError)
 
 function geolocationSuccess(position)
 {
-    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var userLatLng=new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     //Write the formatted address
     writeAddressName(userLatLng);
 }
@@ -95,8 +185,7 @@ function geolocateUser()
     //If the browser supports the Geolocation API
     if (navigator.geolocation)
     {
-      var positionOptions =
-      {
+      var positionOptions={
         enableHighAccuracy: true,
         timeout: 10 * 1000 // 10 seconds
       };
@@ -109,62 +198,33 @@ function geolocateUser()
 }
 
 
-$(document).ready(function()
-{
-  geolocateUser();
-  sendRequest($("#search_box").val());
-
-  $("#search_box").setHintBox(function(obj)
-  {
-    offset=0;
-    sendRequest($("#search_box").val());
-    $("#livesearch").hide();
-  });
-
-  //Filters
-  $("#filters").click(function()
-  {
-    $("#pages").hide();
-    $("#query_results").hide();
-    $("#filter_settings").show();
-  });
-
-  //Back to search
-  $("#back").click(function()
-  {
-    $("#pages").show();
-    $("#query_results").show();
-    $("#filter_settings").hide();
-  });
-});
-
+  /*
+  *
+  SEARCH REQUEST
+  *
+  */
 
 function sendRequest(query)
 {
-  if (window.XMLHttpRequest)
-  {
-    //code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  }
-  else
-  {
-    //code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
+  $("#output").css("opacity","0.5");
+  $("#loading_display").show();
 
-  xmlhttp.onreadystatechange=function()
-  {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-      //console.log(xmlhttp.responseText)
-      styleOutput(xmlhttp.responseText, query);
-    }
-  }
+  var data={
+    search_query:query,
+    pageOffset:offset,
+    address:$("#user_address").val(),
+    maxRadius:$("#max_radius").val(),
+    minRadius:$("#min_radius").val(),
+    maxPrice:$("#max_price").val(),
+    minPrice:$("#min_price").val(),
+    currency:$("#currency option:selected").text()
+  };
 
 
-  xmlhttp.open("POST",document.location.origin+"/search/js/retrieve_search.php",true);
-  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xmlhttp.send("search_query="+query+"&offset="+offset+"&address="+$("#user_address").val());
+  $.post("js/retrieve_search.php",data,function(data)
+  {
+    styleOutput(data,query);
+  });
 }
 
 
@@ -198,21 +258,22 @@ function adjustUnits(distance)
 
 function styleOutput(response,query)
 {
-   //console.log(response);
    var obj=$.parseJSON(response);
+
+   $("#output").css("opacity","1");
+   $("#loading_display").hide();
 
    if (obj["results"]==0)
    {
-      $("#query_results").html("<div style='width:100%;text-align:center;'>No results were found</div>");
-      $("#pages").html("");
+      $("#output").html(no_result);
    }
    else
    {
-      //Style the JSON output+++
+      /* Style the JSON output */
       var output_html="";
       var search=['%src%','%product_name%','%link%','%restaurant_name%','%price%','%distance%'];
 
-     for (var i=0;i<obj["data"].length;i++)
+      for (var i=0;i<obj["data"].length;i++)
       {
           var current=obj["data"][i];
           var distance=adjustUnits(current["distance"]);
@@ -220,64 +281,34 @@ function styleOutput(response,query)
           var replace=[current["image"],current["product_name"],current["link"],current["restaurant_name"],current["price"],distance];
           output_html+=multipleReplace(search,replace,template);
       }
-      //---
 
-      $("#query_results").html(output_html);
-      $(".item_box").find("a").css({"text-decoration":"none","color":"#4d85f2"});
+      var numberOfPages=Math.ceil(obj["results"]/5);
 
-      //Load Pages
-      var pages=Math.ceil(obj["results"]/5); //5 results per pages
+      if (numberOfPages>offset+1) /* Add load more only if more results are available */
+      output_html+="<div id='load_more' style='color:#C8C8CD;'>Load more</div>";
 
-      var arr=[];
 
-      for (var i=0;i<pages;i++)
+      if(offset==0)
       {
-        if (i==offset)
-           arr.push("<b>"+(i+1)+"</b>");
-        else
-           arr.push(i+1);
-      }
-
-      var pages_html="<div class='page_block'>"+arr.join("</div><div class='page_block'>")+"</div>";
-      pages_html=page_structure.replace("%pages_html%",pages_html);
-
-      if (pages>1)
-      {
-        $("#pages").html(pages_html);
-
-        $(".page_block").click(function()
-          {
-               if($(this).attr("id")!="left_p" && $(this).attr("id")!="right_p")
-               {
-                  var int_off=parseInt($(this).html());
-                  offset=int_off-1;
-                  sendRequest(query);
-               }
-               else
-                if ($(this).attr("id")=="left_p")
-                {
-                  if (offset>0)
-                  {
-                    offset--;
-                    sendRequest(query);
-                  }
-                }
-                else
-                if ($(this).attr("id")=="right_p")
-                {
-                  if (offset<pages-1)
-                  {
-                    offset++;
-                    sendRequest(query);
-                  }
-                }
-          });
+        $("#output").html(output_html);
       }
       else
       {
-        $("#pages").html("");
+        $("#load_more").remove();
+        $("#output").html($("#output").html()+output_html);
       }
+
+      loadMore(query);
     }
+}
+
+function loadMore(query)
+{
+  $("#load_more").click(function()
+  {
+      offset++;
+      sendRequest(query);
+  });
 }
 
 

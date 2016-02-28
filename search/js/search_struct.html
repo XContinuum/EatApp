@@ -4,22 +4,22 @@
 	/src/ /product_name/ /link/ /restaurant_name/ /price/ /distance/
 -->
 
-<table class='item_box' style="font-family:AvenirLTStd-Light;background-color:#f9f8f8;padding:5px;margin-bottom:5px;width:100%">
+<table class="item_box">
 	<tr>
-		<td style="padding-right,15px;width:60px;">
+		<td style="padding-right:15px;width:60px;">
 			<img src='%src%' style="width:60px;height:60px;margin:5px;border-radius:50%;"/>
 		</td>
 		
-		<td valign='top'>
+		<td valign="top">
 			%product_name%
 			<br/>
-			<a href='%link%' target='_blank'>%restaurant_name%</a>
+			<a href="%link%" target="_blank">%restaurant_name%</a>
          	<br/>
          	<br/>
 			$%price%
 		</td>
             
-		<td valign='center' align='right' width='60px' style='color:#4d85f2;'>
+		<td valign="center" align="right" width="60px" style="color:#4d85f2;">
 			%distance%
 		</td>
     </tr>
@@ -27,15 +27,17 @@
 
 ##
 <!--
-	/pages_htm/
+	No results
 -->
 
-<div class='page_block' id='left_p' style='padding-top:4px;padding-bottom:2px;'>
-	<img src='/images/arrow_left.png' align='center'/>
-</div>
+</br>
+<div id='no_result'>
+	<br/>
+	<br/>
+	<br/>
 
-	%pages_html%
-
-<div class='page_block' id='right_p' style='padding-top:4px;padding-bottom:2px;'>
-	<img src='/images/arrow_right.png' align='center'/>
+	<div style="font-size:55px;">
+		&#x1F613;
+	</div>
+	No results were found
 </div>

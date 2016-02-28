@@ -1,26 +1,43 @@
 <div style="position:absolute;top:0px;left:100px;">
-   <a href="/"><img src="/images/x_small_logo.png"/></a>
+   <a href="/">
+   	<img src="/images/x_small_logo.png"/>
+   </a>
 </div>
 
 
-<!-- Crop image -->
-<div id="opaque_background" style="z-index:149;"></div>
+<!--
+*
+Crop image
+*
+-->
+<div id="opaque_background" style="z-index:149;">
+</div>
+
 <div id="modify_image" style="z-index:150;">
-<table style="width:100%;height:100%;padding:0px;">
-    <tr height="30px"><td colspan="2" align="center" style="font-size:25px;font-family:'AvenirLTStd-Light';">Position and size photo</td></tr>
-  	<tr><td colspan="2" align="center" valign="top">
+	<table style="width:100%;height:100%;padding:0px;">
+    	<tr height="30px">
+    	<td colspan="2" align="center" style="font-size:25px;font-family:'AvenirLTStd-Light';">
+    		Position and size photo</td>
+    	</tr>
 
-        <img id='uploaded_image' src='#'/>
+  		<tr>
+  		<td colspan="2" align="center" valign="top">
+        	<img id='uploaded_image' src='#'/>
+    	</td>
+    	</tr>
 
-    </td></tr>
+    	<tr>
+    	<td colspan="2">
+    	</td>
+		</tr>
 
-    <tr><td colspan="2"></td></tr>
-    <tr height="40px" align="center">
-      <td align="center" colspan="2">
-        <input type="button" value="Cancel" class="set_picture_btn" id="cancel_image" ></input> <input type="button" value="Apply" class="set_picture_btn" id="apply_cropping"></input>
-      </td>
-    </tr>
-</table>
+    	<tr height="40px" align="center">
+      	<td align="center" colspan="2">
+        	<input type="button" value="Cancel" class="set_picture_btn" id="cancel_image"/>
+        	<input type="button" value="Apply" class="set_picture_btn" id="apply_cropping"/>
+      	</td>
+    	</tr>
+	</table>
 </div>
 <!-- Crop image-->
 
@@ -28,85 +45,108 @@
 
 
 <table align="center" id="restaurants_table" style="width:67%;">
-<tr style="background-color:#ff9966;">
-	<td id="server_result" height="25px" align="center" style="opacity:0;background-color:#57e68e;color:white;" valign="center">
+	<tr style="background-color:#ff9966;">
+	<td id="server_result" height="25px" align="center" valign="center">
 		Saved!
-	</td>
-</tr>
-
-<tr>
-    <td height="70px" style="background-color:#ff9966;color:white;padding-left:15px;font-size:30px;" align="center">
-    Set up menu
-    </td>
-</tr>
-
-
-<tr>
-	<td align="center" style="background-color:#ffaa80;color:white;" height="30px">
-		%name%
-	</td>
-</tr>
-
-
-<tr>
-	<td valign="top">
-	<div style="overflow:auto;height:100%;">
-		<table width="100%" style="border-collapse:collapse;">
-			<tr>
-				<td colspan="3">
-		<form id="save_menu_form" method="POST" enctype="multipart/form-data">
-			<input type="hidden" value="%name%" name="menu_name"/>
-			<table align="center" id="menu_table" class="m_table">
-			<!-- Header -->
-			<tr class="under" id="menu_header" style="background-color:#f9f8f8;">
-    			<td width='20px'></td>
-    			<td align='center' width="50px">Picture</td>
-    			<td align='center'>Meal/drink name*</td>
-    			<td align='center'>Price*
-    				<div class='empty_select'>(<select name="currency"><option value='CAD' select>CAD</option><option value='USD'>USD</option></select>)
-    			</td>
-    		<td align='center'>Description</td>
-    		<td align='center'>Tags</td>
-    		<td></td>
-			</tr>
-
-
-			<!--Menu-->
-				%Menu%
-			<!--Menu-->
-
-			<tr>
-				<td colspan="7" align="center">
-					<input type="hidden" name="section_index" value=""/>
-				</td>
-			</tr>
-
-			</table>
-		</form>
 	</td>
 	</tr>
 
-			<!-- Operations -->
-			<tr style="background-color:#f9f8f8;" align="center" height="30px">
+	<tr>
+	<td height="70px" style="background-color:#ff9966;color:white;padding-left:15px;font-size:30px;" align="center">
+	    Set up menu
+	</td>
+	</tr>
+
+
+	<tr>
+	<td align="center" style="background-color:#ffaa80;color:white;" height="30px">
+		%name%
+	</td>
+	</tr>
+
+
+	<tr>
+	<td valign="top">
+		<div style="overflow:auto;height:100%;">
+			<table width="100%" style="border-collapse:collapse;">
+				<tr>
+				<td colspan="3">
+
+					<form id="save_menu_form" method="POST" enctype="multipart/form-data">
+						<input type="hidden" value="%name%" name="menu_name"/>
+
+					<table align="center" id="menu_table" class="m_table">
+
+					<!-- Header begin -->
+					<tr class="under" id="menu_header" style="background-color:#f9f8f8;">
+    				<td width='20px'>
+    				</td>
+
+    				<td align='center' width="50px">
+    					Picture
+    				</td>
+
+    				<td align='center'>
+    					Meal/drink*
+    				</td>
+
+    				<td align='center'>Price*
+    				<div class='empty_select'>
+    					(<select name="currency">
+    					<option value='CAD' select>CAD</option>
+    					<option value='USD'>USD</option>
+    					</select>)
+					</td>
+
+    				<td align='center'>
+    					Description
+    				</td>
+
+    				<td align='center'>
+    					Tags
+    				</td>
+
+    				<td>
+    				</td>
+					</tr>
+					<!-- Header end -->
+
+
+					<!--Menu-->
+						%Menu%
+					<!--Menu-->
+
+					<tr>
+					<td colspan="7" align="center">
+						<input type="hidden" name="section_index" value=""/>
+					</td>
+					</tr>
+					</table>
+
+
+					</form>
+
+				</td>
+				</tr>
+
+				<!-- Operations -->
+				<tr style="background-color:#f9f8f8;" align="center" height="30px">
 				<td>
-				<input type="button" value="add row" id="add_row" class="button_sign_up"></input>
+					<input type="button" value="add row" id="add_row" class="button_sign_up"/>
 				</td>
 
 				<td>
-				<input type="button" value="add section" id="add_section" class="button_sign_up"></input>
+					<input type="button" value="add section" id="add_section" class="button_sign_up"/>
 				</td>
 
 				<td>
-				<input type="button" value="save menu" id="save_menu_btn" class="button_sign_up"></input>
+					<input type="button" value="save menu" id="save_menu_btn" class="button_sign_up"/>
 				</td>
-			</tr>
-			<!-- Operations -->
+				</tr>
+				<!-- Operations -->
 
-	</table>
-	</div>
-</td>
-</tr>
-
-
-
+			</table>
+		</div>
+	</td>
+	</tr>
 </table>

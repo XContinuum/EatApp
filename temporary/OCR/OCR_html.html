@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OCR Processing for EatApp</title>
+        <script src=<?php setLink("/jquery.js");?> ></script>
+        <script src="analyze.js"></script>
+
+        <style>
+        
+        html
+		{
+    		width:100%;
+    		height:100%;
+		}
+
+
+
+body
+{
+    font-family:"AvenirLTStd-Roman";
+
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+}
+
+        #overall_table
+        {
+        	border:solid 0px black;
+    		height:100%;
+    		width:100%;
+    		margin:0px;
+    		padding:0px;
+    		border-collapse:collapse;
+        }
+
+#overall_table td
+{
+    padding:0;
+    margin:0;
+    border:solid 0px black;
+}
+input[type='password'], input[type='text']
+{
+    font-family:"AvenirLTStd-Light";
+    font-size: 15px;
+    border-width:0px;
+    padding:2px;
+    width:50px;
+}
+input[type='password']:focus, input[type='text']:focus
+{
+    outline:none;
+}
+
+
+#btn-default {
+	background-color:#ff9966;
+	-moz-border-radius:42px;
+	-webkit-border-radius:42px;
+	border-radius:42px;
+	border:2px solid white;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:12px 31px;
+	text-decoration:none;
+}
+#btn-default:hover {
+	background-color:#ff8833;
+}
+#btn-default:active {
+	position:relative;
+	top:1px;
+}
+
+#output_table
+{
+	border-collapse: collapse;
+}
+       #output_table td
+       {
+       	padding: 5px;
+       } 
+        </style>
+	</head>
+<body>
+<table id="overall_table">
+	<tr style="background-color:#ff9966;" height="45px">
+	<td width="100px">
+		<img src="../images/logo.png" style="max-width:50px;"/>
+	</td>
+	<td align="center">
+		<form id="images_file" method="POST" enctype="multipart/form-data">
+
+			<label>
+				<input type="file" name="picture" id="imgInp" style="display:none;"/>
+				<input type="button" id="btn-default" value="Load menu"/>
+			</label>
+
+		<form/>
+		</br>
+	</td>
+	</tr>
+	
+	<tr height="20px" align="center">
+		<td colspan="2">
+			<div id="process" style="display:none;">Analyzing...</div>
+		</td>
+	</tr>
+
+	<tr>
+	<td valign="top" colspan="2">
+		<table>
+			<tr>
+			<td valign="top">	
+				<img src="template.png" id="blah" style="max-width:200px;"/>
+			</td>
+		
+			<td valign="top">
+				<div id="results" style="background-color:#F2F2F2;"></div>
+			</td>
+			<td valign="top">
+				<textarea id="raw"></textarea>
+			</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+</table>
+
+</body>
+</html>

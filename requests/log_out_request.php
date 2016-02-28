@@ -1,7 +1,7 @@
 <?php
-    require("receive_information.php");
+require("receive_information.php");
 
-    LogOut();
+LogOut();
 
-    header("Location: ../index.php");
+header("Location: ../index.php");
 ?>

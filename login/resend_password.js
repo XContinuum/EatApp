@@ -1,18 +1,21 @@
-$(document).ready(
-    function(){
-
+$(document).ready(function()
+{
     var x_timer;
+
     $("#check_email").keyup(function (e)
     {
         clearTimeout(x_timer);
         var email = $(this).val();
         x_timer = setTimeout(function(){check_email_ajax(email);}, 1000);
     });
-
 });
+/*
 
+    ONLOAD EVENT+++++++++
 
-//check email
+*/
+
+/* check email */
 function send_email(email)
 {
     var xhttp;
@@ -36,5 +39,4 @@ function send_email(email)
 
     xmlhttp.open("POST", "check_email.php", true);
     xmlhttp.send();
-
 }

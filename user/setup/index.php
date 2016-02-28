@@ -12,6 +12,9 @@ else
         //if the chain owner is logged
         require("load_restaurant_list.php");
 
+        $head_param="<script src='js/time_picker.js'></script>";
+        $head_param.="<script src='js/script.js'></script>";
+
         $panel=setPanel();
         $chainLink=getChainLink();
 
@@ -25,9 +28,6 @@ else
         $content=str_replace("%options%",loadMenuOptions('none'),$content); //global variable for the JavaScript to read
         $content=str_replace("%schedule_hidden_list%",loadScheduleOptions('none'),$content); //global variable for the JavaScript to read
         $content.="<input type='hidden' value='$chainLink' id='link_name' />";
-
-        $head_param="<script src='js/time_picker.js'></script>";
-        $head_param.="<script src='js/script.js'></script>";
 
         include_once("../../user_template.html");
     }

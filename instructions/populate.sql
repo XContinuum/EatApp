@@ -10,8 +10,8 @@
 */
 USE EatApp;
 
-INSERT INTO CHAIN_OWNER (Email, Password, Link, Restaurant_Name, Picture)
-VALUES ('michelbalamou@gmail.com','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW','Balamou','McDonalds','5689e28439460.png');
+INSERT INTO CHAIN_OWNER (Email, Password, Link, Restaurant_Name, Picture, Active, Validated)
+VALUES ('michelbalamou@gmail.com','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW','Balamou','McDonalds','5689e28439460.png', '1', '1');
 
 INSERT INTO ADMIN_PANEL (Username, Password)
 VALUES ('michael','$2a$10$ae11f5212398c736c468auIqanzbH7e3mou6x/pPUci/qZ3IW5FKW');

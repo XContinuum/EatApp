@@ -8,11 +8,11 @@ function getChainLink() //get_restaurant_username
 
     if(!isset($_SESSION))
         session_start();
-        
+
     if (isset($_SESSION['chain_owner_token']))
     {
         $sql="SELECT Link FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
-        
+
         return $db->fetch($sql,"Link");
     }
     else
@@ -25,14 +25,14 @@ function getChainLink() //get_restaurant_username
 function getChainId() //get_restaurant_id
 {
      $db=new Db();
-        
+
     if(!isset($_SESSION))
         session_start();
-        
+
     if (isset($_SESSION['chain_owner_token']))
     {
         $sql="SELECT ID FROM CHAIN_OWNER WHERE Token='".$_SESSION['chain_owner_token']."'";
-            
+
         return $db->fetch($sql,"ID");
     }
     else
@@ -42,11 +42,11 @@ function getChainId() //get_restaurant_id
 }
 
 function getMenuOwnerID($menu_name)
-{ 
+{
     $db=new Db();
-        
+
     $sql="SELECT OWNER_ID FROM MENUS WHERE Name='$menu_name'";
-    
+
     return $db->fetch($sql,"OWNER_ID");
 }
 
@@ -56,9 +56,9 @@ function getMenuOwnerID($menu_name)
 function getInfo($link,$info)
 {
     $db=new Db();
-   
+
     $sql="SELECT ID,Email,Restaurant_Name,Hash,Picture,Website FROM CHAIN_OWNER WHERE Link='$link'";
-    
+
     return $db->fetch($sql,$info);
 }
 
@@ -66,9 +66,9 @@ function getInfo($link,$info)
 function getInfoFromID($chain_id,$info)
 {
     $db=new Db();
-   
+
     $sql="SELECT ID,Email,Hash,Picture,Website,Link FROM CHAIN_OWNER WHERE ID='$chain_id'";
-   
+
     return $db->fetch($sql,$info);
 }
 
@@ -77,24 +77,24 @@ function getInfoFromID($chain_id,$info)
 function checkChainStatus($link_name)
 {
     $db=new Db();
-       
+
     $sql="SELECT Link FROM CHAIN_OWNER WHERE Link='$link_name'";
-  
+
     return ($db->countRows($sql)>0) ? 1 : 0;
 }
-    
+
 //set a global path for files that are in different directories
 function setLink($string)
 {
     $config=parse_ini_file("settings.ini");
-    
+
     echo "'".$config['path'].$string."'";
 }
 
 function setLinkMute($string)
 {
     $config=parse_ini_file("settings.ini");
-    
+
     return "'".$config['path'].$string."'";
 }
 
@@ -104,7 +104,7 @@ function checkIfValidated($link_name) //checkIfValidated($username_)
     $db=new Db();
 
     $sql="SELECT Validated FROM CHAIN_OWNER WHERE Link='$link_name'";
-   
+
     return $db->fetch($sql,"Validated");
 }
 
@@ -112,7 +112,7 @@ function checkIfValidated($link_name) //checkIfValidated($username_)
 function checkIfEmailValidated($link_name)
 {
     $db=new Db();
-    
+
     $sql="SELECT Active FROM CHAIN_OWNER WHERE Link='$link_name'";
 
     return $db->fetch($sql,"Active");
@@ -123,18 +123,18 @@ function isOwnerLogged()//isUserLogged
 {
     if(!isset($_SESSION))
         session_start();
-        
+
     return isset($_SESSION['chain_owner_token']);
 }
 
 //Send an email
 function sendEmail($email_address,$username,$hash)
 {
-    $subject='Signup | Verification'; 
+    $subject='Signup | Verification';
     $path="http://".$_SERVER['HTTP_HOST'];
 
-    $content=file_get_contents("email_template.html");
-        
+    $content=file_get_contents("../requests/email_template.html"); // MOD 2017 path changed to relative
+
     $search=array('%link_name%','%path%','%email_address%','%$hash%');
     $data=array($username,$path,$email_address,$hash);
     $message=str_replace($search,$data,$content);
@@ -148,7 +148,7 @@ function isAdminLogged()
 {
     if(!isset($_SESSION))
         session_start();
-        
+
     return isset($_SESSION['admin_token']);
 }
 
@@ -157,13 +157,13 @@ function getAdminUsername()
 {
     if(!isset($_SESSION))
         session_start();
-        
+
     if (isset($_SESSION['admin_token']))
     {
         $db=new Db();
-        
+
         $sql="SELECT Username FROM ADMIN_PANEL WHERE Token='".$_SESSION['admin_token']."'";
-        
+
         return $db->fetch($sql,"Username"); //logged
     }
     else
@@ -172,9 +172,11 @@ function getAdminUsername()
     }
 }
 
-//LogOut
+/*
+    LogOut
+*/
 function LogOut()
-{  
+{
     $db=new Db();
 
     if(!isset($_SESSION))
@@ -184,7 +186,7 @@ function LogOut()
     {
         $sql="UPDATE CHAIN_OWNER SET Token='0' WHERE Token='" . $_SESSION['chain_owner_token'] . "'";
         $db->query($sql);
-    
+
         session_unset(); //remove all session variables
         session_destroy(); //destroy the session
     }
@@ -193,7 +195,7 @@ function LogOut()
         {
             $sql="UPDATE ADMIN_PANEL SET Token='0' WHERE Token='" . $_SESSION['admin_token'] . "'";
             $db->query($sql);
-    
+
             session_unset(); //remove all session variables
             session_destroy(); //destroy the session
         }
@@ -204,7 +206,7 @@ function LogOut()
 function getPicLink($link_name)
 {
     $src=getInfo($link_name,"Picture");
-    
+
     return ($src=="default") ? setLinkMute("/images/default.png") : setLinkMute("/restaurant_data/Profile/".$src);
 }
 
@@ -224,15 +226,15 @@ function getRelativePath($from,$to)
     $to=explode('/', $to);
     $relPath=$to;
 
-    foreach($from as $depth => $dir) 
+    foreach($from as $depth => $dir)
     {
         // find first non-matching dir
-        if($dir === $to[$depth]) 
+        if($dir === $to[$depth])
         {
             //ignore this directory
             array_shift($relPath);
-        } 
-        else 
+        }
+        else
         {
             // get number of remaining dirs to $from
             $remaining = count($from) - $depth;
@@ -241,8 +243,8 @@ function getRelativePath($from,$to)
                 $padLength = (count($relPath) + $remaining - 1) * -1;
                 $relPath = array_pad($relPath, $padLength, '..');
                 break;
-            } 
-            else 
+            }
+            else
             {
                 $relPath[0] = './' . $relPath[0];
             }
@@ -262,10 +264,10 @@ function setPanel()
     {
         $LinkName=getChainLink();
         $image_src=getPicLink($LinkName);
-            
+
         $search=array("%link_name%","%image_src%","%triangle%","%profile%","%settings%","%log_out%");
         $replace=array($LinkName,$image_src,setLinkMute("/images/triangle.png"),setLinkMute("/".$LinkName),setLinkMute("/settings/index.php"),setLinkMute("/requests/log_out_request.php"));
-       
+
         $panel=str_replace($search,$replace,$structure[0]);
     }
     else
@@ -290,24 +292,24 @@ function setPanel()
 
 
 //Function to get the client IP address
-function get_client_ip() 
+function get_client_ip()
 {
     $ipaddress = '';
     if ($_SERVER['HTTP_CLIENT_IP'])
         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    else 
+    else
         if($_SERVER['HTTP_X_FORWARDED_FOR'])
         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else 
+    else
         if($_SERVER['HTTP_X_FORWARDED'])
         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    else 
+    else
         if($_SERVER['HTTP_FORWARDED_FOR'])
         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    else 
+    else
         if($_SERVER['HTTP_FORWARDED'])
         $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    else 
+    else
         if($_SERVER['REMOTE_ADDR'])
         $ipaddress = $_SERVER['REMOTE_ADDR'];
     else
@@ -331,10 +333,10 @@ function saveSearch($query,$count)
 
     $ip_address=get_client_ip();
     $chain_id=(getChainId()==-1) ? 'null' : getChainId();
-    
+
     $sql="INSERT INTO SEARCHES (IP_Address, Input, Chain_id, Results_Found)";
     $sql.=" VALUES ('$ip_address','$query',$chain_id,'$count')";
-    
+
     $db->query($sql);
 }
 
@@ -342,8 +344,9 @@ function saveSearch($query,$count)
 function readableTime($time)
 {
     $time=time()-$time; //to get the time since that moment
-    $time=($time<1)? 1 : $time;
-    $tokens=array (
+    $time=($time<1) ? 1 : $time;
+
+    $tokens=array(
         31536000 => 'year',
         2592000 => 'month',
         604800 => 'week',
@@ -355,9 +358,9 @@ function readableTime($time)
 
     foreach ($tokens as $unit => $text)
     {
-        if ($time < $unit) continue;
-            
-        $numberOfUnits= floor($time / $unit);
+        if ($time<$unit) continue;
+
+        $numberOfUnits=floor($time/$unit);
         return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
     }
 }
@@ -377,7 +380,7 @@ function getToken($item)
 {
     $salt=rand(403,600) . "P20x" . rand(760,930);
     $string=time() . $salt . $item . $salt;
-            
+
     return sha1($string);
 }
 
@@ -393,6 +396,43 @@ function getCoordinates($address) //[0]=> Longitude, [1]=> Latitude
     $coordinates[]=$output->results[0]->geometry->location->lat;
 
     return $coordinates;
+}
+
+
+/*
+    Deletes a non-empty directory
+*/
+function rrmdir($dir)
+{
+    if (is_dir($dir))
+    {
+        $objects = scandir($dir);
+
+        foreach ($objects as $object)
+        {
+            if ($object != "." && $object != "..")
+            {
+                if (filetype($dir."/".$object) == "dir")
+                    rrmdir($dir."/".$object);
+                else
+                    unlink($dir."/".$object);
+            }
+        }
+
+    reset($objects);
+    rmdir($dir);
+   }
+}
+
+
+function createDir($path)
+{
+    if (!is_dir($path))
+    {
+        mkdir($path);
+    }
+
+    return $path."/";
 }
 
 ?>

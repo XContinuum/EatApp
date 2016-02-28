@@ -1,9 +1,11 @@
-<!--Edit section-->
+<!--
+    Edit section
+-->
 <tr style="background-color:#f9f8f8;">
-    <td colspan='7' align='center'>
-        <input type='text' placeholder='Section %section%' value='%section_name%' name='Sections[]' style="background-color:#f9f8f8;" maxlength="100"/>
-        <input type='image' alt='Delete' class='remove_section' src='images/delete.png' align="center"/>
-    </td>
+<td colspan='7' align='center'>
+    <input type='text' placeholder='Section %section%' value='%section_name%' name='Sections[]' style="background-color:#f9f8f8;" maxlength="100"/>
+    <input type='image' alt='Delete' class='remove_section' src='images/delete.png' align="center"/>
+</td>
 </tr>
 
 ##
@@ -15,56 +17,64 @@
     /order/ /picture_url/ /product_name/ /price/ /description/ /i/ /food_content/
 -->
 <tr class='additional_row'>
+<td align="center">
+    %order%
+</td>
 
-    <td align="center">%order%</td>
-
-    <td align="center">
-        <label align="center"><input type='file' value='Select picture' name='Food_Images[]' style='width:110px;display:none;'/>
-        <img src='%SRC%' align='center' class='Display_IMG' style="border-radius:50%;max-width:50px;"/></label>
+<td align="center">
+    <label align="center"><input type='file' value='Select picture' name='Food_Images[]' style='width:110px;display:none;'/>
+        <img src='%SRC%' align='center' class='Display_IMG' style="border-radius:50%;max-width:50px;"/>
+    </label>
     
-        <input type='hidden' name='Crop_Info[]'/>
-        <input type='hidden' name='Picture_URL[]' value='%picture_url%'/>
-    </td>
+    <input type='hidden' name='Crop_Info[]'/>
+    <input type='hidden' name='Picture_URL[]' value='%picture_url%'/>
+</td>
 
-    <td><input type='text' name='Product_name[]' value='%product_name%' placeholder='Meal' autocomplete="off" autocorrect="off"maxlength="200"/></td>
-    <td><input type='text' name='Price[]' value='%price%' placeholder='Price' style='width:40px;'/></td>
-    <td><input type='text' name='Description[]' value='%description%' placeholder='Description' maxlength="200"/></td>
+<td>
+    <input type='text' name='Product_name[]' value='%product_name%' placeholder='Meal' autocomplete="off" autocorrect="off"maxlength="200"/>
+</td>
 
-    <td>
-        <select name='Food_Contents[%i%][]' class='multi_select' style='width:200px;border:0px;' multiple>%food_content%</select>
-    </td>
+<td>
+    <input type='text' name='Price[]' value='%price%' placeholder='Price' style='width:40px;'/>
+</td>
 
-    <td>
-        <a class='up'><img src='images/up_arrow.png' /></a>
-        <a class='down'><img src='images/down_arrow.png' /></a>
-        <a class='delete_row'><img src='images/delete.png' /></a>
-    </td>
+<td>
+    <input type='text' name='Description[]' value='%description%' placeholder='Description' maxlength="200"/>
+</td>
 
+<td>
+    <select name='Food_Contents[%i%][]' class='multi_select' style='width:200px;border:0px;' multiple>
+        %food_content%
+    </select>
+</td>
+
+<td>
+    <a class='up'><img src='images/up_arrow.png'/></a>
+    <a class='down'><img src='images/down_arrow.png'/></a>
+    <a class='delete_row'><img src='images/delete.png'/></a>
+</td>
 </tr>
 
 ##
 
-<!-- Menu Row -->
+<!--  
+    Menu Row 
+    /pic/ /Product_Name/ /Price/ /Result/
+-->
 <tr>
-    <td width='100px'>
-        <img src="%pic%" style='width:50px;border-radius:50%;box-shadow:0px 0px 2px #999999;'/>
-    </td>
+<td width='100px'>
+    <img src="%pic%" style="border-radius:50%;max-width:50px;"/>
+</td>
 
-    <td width='50%'>%Product_Name%</td>
-    <td width='50%' align='right'>%Price%</td>
-        
-    <div class='tags'>%Result%</div>
-    <div class='wrap'>%Result%</div>
-    <td width='%Tag_Width%' align='right'>%Result%</td>
-</tr>
+<td>
+    %Product_Name%
+</td>
 
-##
-
-<!--Edit section-->
-<tr style="background-color:#f9f8f8;">
-    <td colspan='7' align='center'>
-        <input type='text' placeholder='Section %section%' name='Sections[]' style="background-color:#f9f8f8;"/>
-        <input type='button' value='Delete' class='remove_section delete_button'/>
-    </td>
-</tr>
+<td align='right'>
+    %Price%
+</td>
     
+<td>    
+    %Result%
+</td>
+</tr>

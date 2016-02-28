@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OCR Processing for EatApp</title>
+        <script src=<?php setLink("/jquery.js");?> ></script>
+        <script src="analyze.js"></script>
+
+         <link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+<body>
+<table id="overall_table">
+	<tr style="background-color:#ff9966;color:white;" height="45px">
+
+	<td width="100px">
+		<a href="../../../index.php"><img src="../../../images/logo_transparent.png" style="max-width:50px;"/></a>
+	</td>
+	<td align="center">
+		<form id="images_file" method="POST" enctype="multipart/form-data">
+
+			<label>
+				<input type="file" name="picture" id="imgInp" style="display:none;"/>
+				<input type="button" id="btn-default" value="Load menu"/>
+			</label>
+
+		<form/>
+		</br>
+	</td>
+	<td width="100px" align="right" style="padding-right:5px;">
+		<?php echo $Admin;?>
+	</td>
+	</tr>
+	
+	<tr height="20px" align="center">
+		<td colspan="3">
+			<div id="process" style="display:none;">Analyzing...</div>
+		</td>
+	</tr>
+
+	<tr>
+	<td valign="top" colspan="3">
+		<table>
+			<tr>
+			<td valign="top">	
+				<img src="template.png" id="blah" style="max-width:200px;"/>
+			</td>
+		
+			<td valign="top">
+				<div id="results"></div>
+			</td>
+			<td valign="top">
+				<div id="raw"></div>
+			</td>
+		</tr>
+
+		<tr>
+		<td colspan="3" valign="top">
+			<input type="button" value="export as XML" id="export"/></br>
+			<input type="button" value="clean $" id="clean"/>
+			<input type="button" value="8=3=$" id="template_clean"/>
+			<input type="button" value="clean spaces" id="space_clean"/>
+			<input type="button" value="replace comma by dot in price" id="dot_replace"/>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+</table>
+<iframe id="download_frame" style="display:none"></iframe>
+</body>
+</html>

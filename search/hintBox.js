@@ -1,24 +1,15 @@
 (function($)
 {
+  var shift=false;
+  var inc_shift=0;
 
   function sendRequest(query_,inputbox)
   {
-    if (window.XMLHttpRequest)
-    {
-      //code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {
-      //code for IE6, IE5
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
+    var data={search_query : query_};
 
-    xmlhttp.onreadystatechange=function()
+    $.post(document.location.origin+"/search/hintParser.php",data,function(data)
     {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-      {
-        var obj=$.parseJSON(xmlhttp.responseText);
+      var obj=$.parseJSON(data);
 
         if (obj.length>0)
         {
@@ -28,12 +19,8 @@
         {
             $("#livesearch").hide();
         }
-      }
-    }
+    });
 
-    xmlhttp.open("POST",document.location.origin+"/search/hintParser.php",true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("search_query="+query_);
   }
 
   function showOutput(response,inputbox)
@@ -54,15 +41,6 @@
 
     $("#livesearch").html(list_code);
     $("#livesearch").show();
-
-    $(".dropdown").css({
-      "font":"AvenirLTStd-Light",
-      "box-sizing":"border-box",
-      "border":"0px solid black",
-      "height":"32px",
-      "padding":"5px",
-      "font-size":"16px"
-    });
 
 
     $("#livesearch").height("128px");//Reset hint box size
@@ -98,6 +76,12 @@
   function setUp(inputbox)
   {
     var pos=$(inputbox).position();
+    var left=pos.left;
+
+    if (shift==true)
+    {
+      left+=inc_shift;
+    }
 
     $("<div id='livesearch'></div>").insertAfter($(inputbox));
 
@@ -105,16 +89,17 @@
     {
       "position":"absolute",
       top:pos.top+$(inputbox).height()+($(inputbox).css("padding-top"))+1,
-      left:pos.left,
+      left:left,
       width:$(inputbox).width()+15+1+2,
       height:"128px",
-      //border:"1px solid #ced1d7",
       "box-shadow":"0px 0px 3px #ccc",
       padding:"0px",
       margin:"0px",
       "text-align":"left",
       "background-color":"white",
-      "overflow":"auto"
+      "color":"black",
+      "overflow":"auto",
+      "z-index":"20"
     });
 
     $("#livesearch").hide();
@@ -132,6 +117,12 @@
     });
   }
 
+$.fn.shiftBox=function(inc)
+{
+  shift=true;
+  inc_shift=inc;
+}
+
 $.fn.setHintBox=function(onEnter)
 {
     return this.each(function()
@@ -147,9 +138,9 @@ $.fn.setHintBox=function(onEnter)
             38 - arrow up - go up the hint list
             Any key code - hint search
       */
-      $(this).keyup(function (e)
+      $(this).keyup(function(e)
       {
-    	   switch(e.keyCode)
+         switch(e.keyCode)
    		   {
               case 13: //Enter
                   onEnter(this);
@@ -158,23 +149,30 @@ $.fn.setHintBox=function(onEnter)
 
 
               case 40: //Arrow down
+                if ($("#livesearch").is(":visible"))
+                {
+
       	           if ($(".dropdown").length>current_item+1)
    		 	             current_item++;
 
    			            $(".dropdown").css("background-color","white");
       	           $(".dropdown").eq(current_item).css("background-color","#4d85f2"); //Set selection color
       	           $("#search_box").val($(".dropdown").eq(current_item).find(".cleanDropdown").html()); //Set the search value with current selection
-    	       break;
+    	         }
+             break;
 
 
 
     	       case 38: //Arrow up
-    			        if (current_item>0)
+              if ($("#livesearch").is(":visible"))
+                {
+      		        if (current_item>0)
    				         current_item--;
 
     			         $(".dropdown").css("background-color","white");
 				          $(".dropdown").eq(current_item).css("background-color","#4d85f2"); //Set selection color
   				        $(this).val($(".dropdown").eq(current_item).find(".cleanDropdown").html()); //Set the search value with current selection
+                }
             break;
 
 
@@ -192,6 +190,7 @@ $.fn.setHintBox=function(onEnter)
  			            sendRequest($(this).val(),this); //send request to parse for hints
 		        break;
           }
+
       });
 
 

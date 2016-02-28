@@ -2,22 +2,22 @@
 ----------SIGN UP
 */
 
-input[type='time_picker']
+.basic_btn
 {
-    font-size: 15px;
-    font-family:"AvenirLTStd-Light";
-    font-weight:lighter;
-    border:solid 1px #ced1d7;
-    padding-left:15px;
-    width:70px;
-    padding:5px;
+    background-color:#ff9966;
+    -moz-border-radius:42px;
+    -webkit-border-radius:42px;
+    border-radius:42px;
+    border:2px solid white;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:12px 31px;
+    text-decoration:none;
+    width:200px;
 }
-
-input[type='time_picker']:focus
-{
-    outline:none;
-}
-
 
 
 #error_box
@@ -34,42 +34,33 @@ input[type='time_picker']:focus
 }
 #sign_up_table
 {
-    width:450px;
+    width:100%;
     font-family:"AvenirLTStd-Light";
 
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:15px;
-    padding-bottom:30px;
-
-    background-color:white;
-    box-shadow: 0px 0px 2px #dad9d9;
+    border-collapse: collapse;
 }
-#sign_up_table input[type='text'], input[type='password']
+#sign_up_table td
 {
-    width:200px;
-    padding:5px;
+    border:0px solid black;
+    padding:2px;
+    padding-right:10px;
 }
-.button_sign_up
+
+#sign_up_table a
 {
-    border:solid 0px black;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+    color:#4d85f2;
+}
 
-    width:49%;
-    height:35px;
-    background-color:#ffa25e;
-    color:white;
-    font-weight: bold;
-    padding:0px;
-
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
+#sign_up_table input[type='text'],#sign_up_table input[type='password']
+{
+    font-family:"AvenirLTStd-Light";
+    display:block-inline;
+    font-size:18px;
+    width:60%;
+    height:40px;
+    border:solid 0px #4d85f2;
+    box-sizing:border-box;
+    text-align: center;
 }
 .pic_result
 {
@@ -89,114 +80,6 @@ input[type='time_picker']:focus
 {
     border:solid 1px #31dc78 !important;
 }
-/*LOCATION*/
-#sign_up_location_table
-{
-    font-family:"AvenirLTStd-Light";
-    display:none;
-    width:300px;
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:30px;
-    padding-bottom:30px;
-    text-align:left;
-
-
-    background-color:white;
-    box-shadow: 0px 0px 2px #dad9d9;
-}
-#sign_up_location_table input[type=text], input[type=password]
-{
-    width:200px;
-    padding:5px;
-}
-
-/*Additional information*/
-#sign_up_more_table
-{
-    display: none;
-    width:450px;
-    font-family:"AvenirLTStd-Light";
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:15px;
-    padding-bottom:30px;
-
-    background-color:white;
-    box-shadow: 0px 0px 2px #dad9d9;
-}
-
-#sign_up_more_table input[type=text], input[type=week],input[type=time]
-{
-    font-family:"AvenirLTStd-Light";
-    width:200px;
-    padding:5px;
-}
-/*Pictures*/
-#sign_up_picture_table
-{
-    display: none;
-    width:450px;
-    font-family:"AvenirLTStd-Light";
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-
-    text-align:left;
-    padding:40px;
-    padding-top:15px;
-    padding-bottom:30px;
-
-    background-color:white;
-    box-shadow: 0px 0px 2px #dad9d9;
-}
-
-
-/*SELECT*/
-.select-style
-{
-    padding: 5px;
-    margin: 0px;
-    border: 1px solid #ccc;
-    width: 200px;
-    border-radius: 3px;
-    overflow: hidden;
-    background-color: #fff;
-
-    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 185px 50%;
-}
-.select-style select
-{
-    font-size: 15px;
-    font-family:"AvenirLTStd-Roman";
-
-    padding: 1px 5px;
-    width: 175px;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.select-style select:focus
-{
-    outline:none;
-}
-
 
 /*UPLOAD IMAGE*/
 #modify_image
@@ -256,33 +139,4 @@ input[type='time_picker']:focus
 
     font-size: 15px;
     font-family:"AvenirLTStd-Roman";
-}
-
-/*INPUT TYPE=FILE*/
-.custom-file-input::-webkit-file-upload-button
-{
-  visibility: hidden;
-}
-.custom-file-input::before
-{
-  content:'Select picture';
-  color:white;
-  background-color:#4d85f2;
-  display: inline-block;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 10pt;
-}
-.custom-file-input:hover::before
-{
-  border-color: black;
-}
-.custom-file-input:active::before
-{
-
 }
