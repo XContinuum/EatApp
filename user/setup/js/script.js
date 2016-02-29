@@ -38,7 +38,7 @@ function importIntoDatabase()
     dataType: "text",
     async: false,
         success: function(data)
-    {
+        {
             console.log(data);
         },
         error: function()

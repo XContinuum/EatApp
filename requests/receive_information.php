@@ -128,15 +128,15 @@ function isOwnerLogged()//isUserLogged
 }
 
 //Send an email
-function sendEmail($email_address,$username,$hash)
+function sendEmail($email_address,$link_name,$hash)
 {
     $subject='Signup | Verification';
     $path="http://".$_SERVER['HTTP_HOST'];
 
-    $content=file_get_contents("../requests/email_template.html"); // MOD 2017 path changed to relative
+    $content="";//file_get_contents("email_template.html");
 
     $search=array('%link_name%','%path%','%email_address%','%$hash%');
-    $data=array($username,$path,$email_address,$hash);
+    $data=array($link_name,$path,$email_address,$hash);
     $message=str_replace($search,$data,$content);
 
     $headers='From:noreply@eatapp.ca'."\r\n";
@@ -327,15 +327,15 @@ function createQuery($data)
 /*
     Save search in the database
 */
-function saveSearch($query,$count)
+function saveSearch($query,$count,$device)
 {
     $db=new Db();
 
     $ip_address=get_client_ip();
     $chain_id=(getChainId()==-1) ? 'null' : getChainId();
 
-    $sql="INSERT INTO SEARCHES (IP_Address, Input, Chain_id, Results_Found)";
-    $sql.=" VALUES ('$ip_address','$query',$chain_id,'$count')";
+    $sql="INSERT INTO SEARCHES (IP_Address, Input, Chain_id, Results_Found, Device)";
+    $sql.=" VALUES ('$ip_address','$query',$chain_id,'$count','$device')";
 
     $db->query($sql);
 }

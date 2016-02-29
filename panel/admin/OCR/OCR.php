@@ -11,4 +11,5 @@ else
     //Admin not logged
     header("Location: ../../index.php");
 }
+    
 ?>

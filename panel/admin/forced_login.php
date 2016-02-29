@@ -47,4 +47,5 @@ function saveSession($token,$time,$type)
         $_SESSION['time']=$time;
     }
 }
+
 ?>

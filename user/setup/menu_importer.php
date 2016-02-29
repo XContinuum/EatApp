@@ -2,23 +2,14 @@
 require_once("../../requests/receive_information.php");
 $db=new Db();
 
-//Make directory+++
 $link_name=getChainLink();
-$path="../../restaurant_data/XML/$link_name";
-
-if (!is_dir($path)) 
-{
-    mkdir($path);
-}
-
-$path=$path."/";
-//Make directiry---
+$path=createDir("../../restaurant_data/XML/$link_name");
 
 $xml_file=getXML("import_menu",$path); //Load XML on server
 
-if (file_exists($path."/".$xml_file)) 
+if (file_exists($path.$xml_file))
 {
-    $xml=simplexml_load_file($path."/".$xml_file);
+    $xml=simplexml_load_file($path.$xml_file);
    
     $intermediate=array();
     $Owner_ID=getChainId();
@@ -41,6 +32,7 @@ if (file_exists($path."/".$xml_file))
 
         $intermediate[]=createQuery($data);
     }
+    
     $query=implode(",", $intermediate);
     $sql="INSERT INTO MENUS (Name,OWNER_ID,Product_Name,Price,Description,Contents,Section,Picture,Currency) VALUES $query";    
 
@@ -68,7 +60,6 @@ function getXML($field,$dir='')
     if (is_uploaded_file($file_tmp)) 
     {
         move_uploaded_file($file_tmp,$dir.$file_name);
-        //echo "file: $file_name size: $file_size done !";
     } 
 
     return $file_name;

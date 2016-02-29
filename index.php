@@ -1,7 +1,7 @@
 <?php
-  require("requests/receive_information.php");
+require("requests/receive_information.php");
 
-  $panel=setPanel();
+$panel=setPanel();
 
-  include("index_template.html");
+include("index_template.html");
 ?>

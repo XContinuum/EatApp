@@ -12,7 +12,7 @@ if (isset($_FILES['picture']))
 	$tesseract = new TesseractOCR($_FILES['picture']['tmp_name']);
 	$tesseract->setWhitelist(range('A','Z'),range('a','z'), range(0,9), '-#.,$');
 	$text=$tesseract->recognize();
-
+	
   	$data=array(formatOuput($text),$text);
 
 	echo implode("##",$data);
@@ -31,9 +31,9 @@ function formatOuput($input)
 		$t0=(in_array($arr[$i],$rn_array)) ? true : false;
 		$t1=(in_array($arr[$i-1],$rn_array)) ? true : false;
 		$t2=(in_array($arr[$i+1],$rn_array)) ? true : false;
-
+		
 		if ($t0 || (($arr[$i]=="," || $arr[$i]==".") && ($t1 || $t2)))
-		{
+		{	
 			if ($n==false)
 			{
 				$output.="</td><td style='background-color:#cde6fe;color:#4d85f2;' class='edit price' align='right' width='50px'>";
@@ -57,4 +57,5 @@ function formatOuput($input)
 	}
 	return "<table id='output_table'>".$output."</table>";
 }
+
 ?>

@@ -217,9 +217,9 @@ function sendRequest(query)
     minRadius:$("#min_radius").val(),
     maxPrice:$("#max_price").val(),
     minPrice:$("#min_price").val(),
-    currency:$("#currency option:selected").text()
+    currency:$("#currency option:selected").text(),
+    device: "Website"
   };
-
 
   $.post("js/retrieve_search.php",data,function(data)
   {

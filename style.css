@@ -1,13 +1,13 @@
 @font-face {
     font-family: "AvenirLTStd-Roman";
-    src: url(Fonts/AvenirLTStd-Roman.otf);
+    src: url(http://eatapp.ca/Fonts/AvenirLTStd-Roman.otf);
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "AvenirLTStd-Light";
-    src: url(Fonts/AvenirLTStd-Light.otf);
+    src: url(http://eatapp.ca/Fonts/AvenirLTStd-Light.otf);
 }
 
 

@@ -10,17 +10,17 @@ $pieces=explode("##", $structure);
 function LoadMenu($menu_name)
 {
     $db=new Db();
-            
+
     $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture,Currency ";
     $sql.="FROM MENUS WHERE Name='$menu_name'";
     $result=$db->query($sql);
-        
+
     $menu="";
     $count=0;
-       
+
     $old_section_name="none";
 
-    while ($row = $result -> fetch_assoc()) 
+    while ($row = $result -> fetch_assoc())
     {
         $count++;
         $colspan_img="";
@@ -43,9 +43,9 @@ function LoadMenu($menu_name)
         }
         //PICTURE---
 
-        
+
         //CONTENTS+++
-        
+
         if ($contents!="none" && $contents!="")
         {
             $contents=explode(".",$row['Contents']);
@@ -65,22 +65,22 @@ function LoadMenu($menu_name)
             $tag_width="0%";
         }
 
-       
+
         $data=array($pic_url,$row['Product_Name'],$row['Price'],$tag_width,$reslt);
         $search=array('%pic%','%Product_Name%','%Price%','%Tag_Width%','%Result%');
         $menu=str_replace($search,$data,$pieces[2]);
     }
-        
+
     if ($count==0)
     {
         $menu="0";
     }
-        
+
     return $menu;
 }
 
 /*
-    Load menu from the menu_name and fill in an edit field 
+    Load menu from the menu_name and fill in an edit field
     via %structure% for editing
 */
 function load_editMenu($menu_name)
@@ -89,16 +89,16 @@ function load_editMenu($menu_name)
 
     $sql="SELECT Product_Name,Price,Description,Contents,Section,Picture FROM MENUS WHERE Name='$menu_name'";
     $result=$db->query($sql);
-            
+
     $count=0;
     $data=array('1','0','none','none','','','','');
-        
+
     //Sections
     $menu="";
     $previous_section="";
     $section_count=0;
 
-    while ($row = $result -> fetch_assoc()) 
+    while ($row = $result -> fetch_assoc())
     {
         $count++;
         $section_name=$row['Section'];
@@ -113,9 +113,9 @@ function load_editMenu($menu_name)
         $data=array($count,$count-1,$row['Picture'],$row['Picture'],$row['Product_Name'],$row['Price'],$row['Description'],$row['Contents']);
         $menu.=fillRow($data,$menu_name);
     }
-        
+
     if ($count==0)
-        $menu=fillRow($data);
+        $menu=fillRow($data, $menu_name); // MOD 2017 $menu_name was a missing argument
 
     return $menu;
 }
@@ -135,7 +135,7 @@ function fillRow($data_,$menu_name)
     {
         $pic="../../restaurant_data/Pictures/$chain_link/$menu_name/".$data_[2];
     }
-    
+
     $data_[2]=$pic;
     //PICTURE
 
@@ -165,9 +165,8 @@ function getLastModified($menu_name)
 
     $sql="SELECT Last_Modified FROM MENUS WHERE Name='$menu_name'";
     $time=strtotime($db->fetch($sql,"Last_Modified"));
-        
+
     return "Last updated ".readableTime($time)." ago";
 }
-    
 
 ?>

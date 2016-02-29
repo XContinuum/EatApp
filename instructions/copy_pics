@@ -1,3 +1,4 @@
 #!/bin/bash
 
 cp -a balamou/. ../restaurant_data/Pictures/balamou/
+cp -a smith/. ../restaurant_data/Pictures/smith/

@@ -6,7 +6,8 @@ if (isset($_POST['search_query']))
     /* Initial settings */
     $search_query=$_POST['search_query'];
     $offset=$_POST['pageOffset']*5;
-    //$coord=getCoordinates($_POST['address']);//coordinates // COMMENTED OUT MOD 2017
+    //$coord=getCoordinates($_POST['address']);//coordinates MOD 2017 commented out distance
+    $device=$_POST["device"];
 
     /* Default parameters */
     $data["max_distance"]=$_POST['maxRadius'];
@@ -22,6 +23,18 @@ if (isset($_POST['search_query']))
 
     $input=cleanString($search_query);
     $numOfResults=0;
+
+
+    switch ($device)
+    {
+        case "iOS":
+        $relative_path="http://www.eatapp.ca";
+        break;
+
+        default:
+        $relative_path="../..";
+        break;
+    }
 
     /*
         Max price:
@@ -84,11 +97,11 @@ if (isset($_POST['search_query']))
     {
         while ($row = $result -> fetch_assoc())
         {
-            $img_src="../../images/none.png";
+            $img_src=$relative_path."/images/none.png";
 
             if ($row["Picture"]!="none")
             {
-                $img_src="../../restaurant_data/Pictures/".$row["MainLink"]."/".$row["Name"]."/".$row["Picture"];
+                $img_src=$relative_path."/restaurant_data/Pictures/".$row["MainLink"]."/".$row["Name"]."/".$row["Picture"];
             }
 
             $distance_output=(isset($row["distance"])) ? $row["distance"] : "";
@@ -107,7 +120,7 @@ if (isset($_POST['search_query']))
     /*
         Output the results
     */
-    saveSearch($_POST['search_query'],$numOfResults); //save search
+    saveSearch($_POST['search_query'],$numOfResults,$device); //save search
 
     $output=array(
        'results' => $numOfResults,
@@ -183,7 +196,7 @@ function generateQuery($input,&$numOfResults,$offset,$data)
 
     /* Retrieve actual search */
     $new_query="MENUS.Name,MENUS.Product_Name,MENUS.Price,MENUS.Picture,CHAIN_OWNER.Restaurant_Name,CHAIN_OWNER.Link as MainLink,RESTAURANTS.Link as MinorLink,MENUS.Contents";
-    //$new_query.=$distance_query; // COMMENTED OUT MOD 2017
+    $new_query.=$distance_query;
 
     $sql=str_replace("COUNT(*) as total",$new_query,$sql);
     $sql.=" OFFSET $offset";

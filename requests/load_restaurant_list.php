@@ -29,4 +29,5 @@ function loadRestaurantList($template)
 
     return $output;
 }
+
 ?>
